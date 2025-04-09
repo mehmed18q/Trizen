@@ -1,0 +1,97 @@
+﻿@using Trizen.Data.Tour.Dto
+@using Trizen.Infrastructure.Utilities
+@model CategoryTourDto
+@{
+    ViewData["Title"] = Resource.List;
+}
+@section Styles{
+    <style>
+        input[type="checkbox"]{
+            opacity: 1 !important;
+            pointer-events: fill !important;
+        }
+    </style>
+}
+
+<div class="block-header">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <ul class="breadcrumb breadcrumb-style ">
+                <li class="breadcrumb-item bcrumb-1">
+                    <a asp-controller="Home" asp-action="Index">
+                        <i class="fas fa-home"></i> @Resource.Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item bcrumb-2">
+                    <a href="#" onclick="return false;">@Resource.Category</a>
+                </li>
+                <li class="breadcrumb-item active">@Resource.Tour</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    <strong>@Resource.Category</strong> @Resource.Tour <strong> @ViewBag.Tour.Title</strong>
+                    <form method="post"> 
+                        <input type="hidden" asp-for="TourId" />
+                        <input type="hidden" asp-for="TourCategories" />
+                    <button type="submit" class="btn btn-primary m-t-15 waves-effect ">@Resource.Confirm</button>
+                    </form>
+                </h2>
+            </div>
+            <div class="body">
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="card">
+                            <div class="body table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>@Resource.Title</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (ListViewModel item in ViewBag.Categories.Data)
+                                        {
+                                            <tr>
+                                                <th scope="row"><input type="checkbox" @(Model.TourCategoriesList.Contains(item.Id) ? "checked" : "") onchange="ChangeCheckBox(this, @item.Id)" /></th>
+                                                <td>@item.Title</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var _tourCategories = [@Model.TourCategories];
+
+        function ChangeCheckBox(el, id){
+            var tourCategories = document.getElementById('TourCategories');
+            if (el.checked){
+                if (!_tourCategories.includes(id)){
+                    _tourCategories.push(id);
+                }
+            }
+            else {
+                 if (_tourCategories.includes(id)){
+                    _tourCategories.pop(id);
+                }
+            }
+            tourCategories.value = _tourCategories.toString();
+        }
+    </script>
+}

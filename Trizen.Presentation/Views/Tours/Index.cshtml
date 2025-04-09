@@ -1,0 +1,11 @@
+﻿@using Trizen.Data.Tour.ViewModel
+@using Trizen.Infrastructure.Enumerations
+@model SearchTourViewModel
+
+@{
+    ViewData["Title"] = Resource.Tours;
+}
+
+@await Component.InvokeAsync("SearchToursComponent", new { model = Model })
+
+@await Component.InvokeAsync("ToursListComponent", new { model = Model })

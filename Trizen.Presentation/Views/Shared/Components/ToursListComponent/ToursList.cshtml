@@ -1,0 +1,228 @@
+﻿@using Trizen.Infrastructure.Enumerations
+@using Trizen.Data.Tour.ViewModel
+
+@model TourListViewModel
+
+@if (Model.SearchModel.CallerPage == CallerPage.Search && Model.Tours.Data.Any())
+{
+    <!-- ================================
+        START CARD AREA
+    ================================= -->
+    <section class="card-area section--padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="filter-wrap margin-bottom-30px">
+                        <div class="filter-top pb-4">
+                            <h3 class="title font-size-24">@Model.SearchModel.Title: @(Model.Tours.Pagination.TotalCount) تور پیدا شد</h3>
+                            <p class="font-size-14"><span class="mr-1 pt-1">با اطمینان رزرو کن : </span>بدون هزینه رزرو</p>
+                        </div><!-- end filter-top -->
+                    </div><!-- end filter-wrap -->
+                </div><!-- end col-lg-12 -->
+            </div><!-- end row -->
+            <div class="row">
+                @foreach (TourViewModel item in Model.Tours.Data)
+                {
+                    <div class="col-lg-4">
+                        <div class="card-item trending-card">
+                            <div class="card-img">
+                                <a asp-controller="Tours" asp-action="Details" asp-route-id="@item.Id" class="d-block">
+                                    <img src="@item.Image" alt="@item.Title" title="@item.Title">
+                                </a>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <span class="badge" style="cursor:pointer" onclick="LikeTour(@item.Id)">
+                                        @if (item.Liked)
+                                        {
+                                            <i class="la la-heart"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="la la-heart-o"></i>
+                                        }
+                                    </span>
+                                }
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-title"><a asp-controller="Tours" asp-action="Details" asp-route-id="@item.Id">@item.Title</a></h3>
+                                <p class="card-meta">@item.Destination.Title</p>
+                                <div class="card-rating">
+                                    <span class="badge text-white">@item.TourTypeTitle</span>
+                                    <span class="review__text">@item.Destination.DestinationTypeTitle</span>
+                                </div>
+                                <div class="card-price d-flex align-items-center justify-content-between">
+                                    <p>
+                                        <span class="price__num">@item.Price.To3Digit() تومان</span>
+                                    </p>
+                                    <a asp-controller="Tours" asp-action="Details" asp-route-id="@item.Id" class="btn-text">مشاهده جزئیات<i class="la la-angle-left"></i></a>
+                                </div>
+                                <a class="theme-btn  theme-btn-transparent" asp-controller="Travels" asp-action="AddTravel" asp-route-tourId="@item.Id" style="width: 80%;text-align: center;margin: 0 10% 0 10%;">بریم سفر</a>
+                            </div>
+                        </div><!-- end card-item -->
+                    </div>
+
+                    <!-- end col-lg-4 -->
+                }
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </section>
+    <!-- end card-area -->
+    <!-- ================================
+        END CARD AREA
+    ================================= -->
+}
+else if (Model.SearchModel.CallerPage == CallerPage.User && Model.Tours.Data.Any()){
+    <div class="row clearfix">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="card">
+                <div class="header">
+                    <h2>
+                        <strong>شاید برات جالب باشه</strong>
+                    </h2>
+                </div>
+                <div class="body">
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card">
+                                <div class="body table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>@Resource.Image</th>
+                                                <th>@Resource.Title</th>
+                                                <th>@Resource.Destination</th>
+                                                <th>@Resource.TourType</th>
+                                                <th>@Resource.Duration</th>
+                                                <th>@Resource.AgePeriod</th>
+                                                <th>@Resource.MaximumPassenger</th>
+                                                <th>@Resource.StartTime</th>
+                                                <th>@Resource.EndTime</th>
+                                                <th>@Resource.Price</th>
+                                                <th>@Resource.Status</th>
+                                                <th>@Resource.Commands</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{
+                                                int counter = 0;
+                                            }
+                                            @foreach (var item in Model.Tours.Data)
+                                            {
+                                                <tr>
+                                                    <th scope="row">@(++counter)</th>
+                                                    <td><img src="@item.Image" title="@item.Title" alt="@item.Title" style="width: 5rem;height: 5rem;" /></td>
+                                                    <td>@item.Title</td>
+                                                    <td>@item.Destination.Title</td>
+                                                    <td>@item.TourTypeTitle</td>
+                                                    <td>@Message.Format(Message.TourDuration, item.SleepNightsCount, item.DaysCount)</td>
+                                                    <td>@item.MinimumAge - @item.MaximumAge</td>
+                                                    <td>@item.MaximumPassenger</td>
+                                                    <td>@item.StartTime.ToShamsiWithTime()</td>
+                                                    <td>@item.EndTime.ToShamsiWithTime()</td>
+                                                    <td>@item.Price</td>
+                                                    @if (item.StartTime < DateTime.Now)
+                                                    {
+                                                        <td>@Resource.NotStart</td>
+                                                    }
+                                                    else if (item.EndTime < DateTime.Now)
+                                                    {
+                                                        <td>@Resource.NotEnd</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>@Resource.Ended</td>
+                                                    }
+                                                    <td>
+                                                        <a href="javascript:void(0)" onclick="LikeTour(@item.Id)">@Resource.Delete</a>
+                                                        <a asp-controller="Tours" asp-action="Details" asp-route-id="@item.Id">@Resource.Visit</a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else if (Model.Tours.Data.Any())
+{
+    <!-- ================================
+        START TRENDING AREA
+    ================================= -->
+    <section class="trending-area position-relative section-bg section-padding ">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-heading text-center">
+                        @if (Model.SearchModel.CallerPage == CallerPage.Home)
+                        {
+                            <h2 class="sec__title">تور های فعال</h2>
+                        }
+                        else if (Model.SearchModel.CallerPage == CallerPage.Search || Model.SearchModel.CallerPage == CallerPage.Details)
+                        {
+                            <h2 class="sec__title text-white">شاید برات جالب باشه</h2>
+                        }
+                    </div><!-- end section-heading -->
+                </div><!-- end col-lg-12 -->
+            </div><!-- end row -->
+            <div class="row padding-top-50px">
+                <div class="col-lg-12">
+                    <div class="trending-carousel carousel-action">
+                        @foreach (TourViewModel item in Model.Tours.Data)
+                        {
+                            <div class="card-item trending-card mb-0">
+                                <div class="card-img">
+                                    <a asp-controller="Tours" asp-action="Details" asp-route-id="@item.Id" class="d-block">
+                                        <img src="@item.Image" alt="@item.Title" title="@item.Title">
+                                    </a>
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <span class="badge" style="cursor:pointer" onclick="LikeTour(@item.Id)">
+                                            @if (item.Liked)
+                                            {
+                                                <i class="la la-heart"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="la la-heart-o"></i>
+                                            }
+                                        </span>
+                                    }
+                                </div>
+                                <div class="card-body">
+                                    <h3 class="card-title"><a asp-controller="Tours" asp-action="Details" asp-route-id="@item.Id">@item.Title</a></h3>
+                                    <p class="card-meta">@item.Destination.Title</p>
+                                    <div class="card-rating">
+                                        <span class="badge text-white">@item.TourTypeTitle</span>
+                                        <span class="review__text">@item.Destination.DestinationTypeTitle</span>
+                                    </div>
+                                    <div class="card-price d-flex align-items-center justify-content-between">
+                                        <p>
+                                            <span class="price__num">@item.Price.To3Digit()  تومان</span>
+                                        </p>
+                                        <a asp-controller="Tours" asp-action="Details" asp-route-id="@item.Id" class="btn-text">مشاهده جزئیات<i class="la la-angle-left"></i></a>
+                                    </div>
+                                    <a class="theme-btn  theme-btn-transparent" asp-controller="Travels" asp-action="AddTravel" asp-route-tourId="@item.Id" style="width: 80%;text-align: center;margin: 0 10% 0 10%;">بریم سفر</a>
+                                </div>
+                            </div>
+
+                            <!-- end card-item -->
+                        }
+                    </div><!-- end car-carousel -->
+                </div><!-- end col-lg-12 -->
+            </div><!-- end row -->
+        </div><!-- end container -->
+        <svg class="hero-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 10 0 0 A 90 59, 0, 0, 0, 100 0 L 100 10 Z"></path></svg>
+    </section>
+
+    <!-- end trending-area -->
+    <!-- ================================
+        END TRENDING AREA
+    ================================= -->
+}

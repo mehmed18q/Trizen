@@ -1,0 +1,101 @@
+﻿@using Trizen.Data.Tour.ViewModel
+@using Trizen.Infrastructure.Utilities
+@model List<TourViewModel>
+@{
+    ViewData["Title"] = Resource.List;
+}
+
+<div class="block-header">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <ul class="breadcrumb breadcrumb-style ">
+                <li class="breadcrumb-item bcrumb-1">
+                    <a asp-controller="Home" asp-action="Index">
+                        <i class="fas fa-home"></i> @Resource.Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item bcrumb-2">
+                    <a href="#" onclick="return false;">@Resource.Tour</a>
+                </li>
+                <li class="breadcrumb-item active">@Resource.List</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    <strong>@Resource.List</strong> @Resource.Tours
+                </h2>
+            </div>
+            <div class="body">
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="card">
+                            <div class="body table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>@Resource.Image</th>
+                                            <th>@Resource.Title</th>
+                                            <th>@Resource.Destination</th>
+                                            <th>@Resource.TourType</th>
+                                            <th>@Resource.Duration</th>
+                                            <th>@Resource.AgePeriod</th>
+                                            <th>@Resource.MaximumPassenger</th>
+                                            <th>@Resource.StartTime</th>
+                                            <th>@Resource.EndTime</th>
+                                            <th>@Resource.Price</th>
+                                            <th>@Resource.Status</th>
+                                            <th>@Resource.Commands</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            int counter = 0;
+                                        }
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <th scope="row">@(++counter)</th>
+                                                <td><img src="@item.Image" title="@item.Title" alt="@item.Title" style="width: 5rem;height: 5rem;" /></td>
+                                                <td>@item.Title</td>
+                                                <td>@item.Destination.Title</td>
+                                                <td>@item.TourTypeTitle</td>
+                                                <td>@Message.Format(Message.TourDuration, item.SleepNightsCount, item.DaysCount)</td>
+                                                <td>@item.MinimumAge - @item.MaximumAge</td>
+                                                <td>@item.MaximumPassenger</td>
+                                                <td>@item.StartTime.ToShamsiWithTime()</td>
+                                                <td>@item.EndTime.ToShamsiWithTime()</td>
+                                                <td>@item.Price</td>
+                                                @if (item.StartTime < DateTime.Now)
+                                                {
+                                                    <td>@Resource.NotStart</td>
+                                                }
+                                                else if (item.EndTime < DateTime.Now)
+                                                {
+                                                    <td>@Resource.NotEnd</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@Resource.Ended</td>
+                                                }
+                                                <td>
+                                                    <a asp-controller="Tours" asp-action="Details" asp-route-id="@item.Id">@Resource.Visit</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

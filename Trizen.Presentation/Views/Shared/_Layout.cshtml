@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="author" content="arezohosseini">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> @ViewData["Title"] - @Resource.Trizen</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&amp;display=swap" rel="stylesheet">
+
+    <!-- Template CSS Files -->
+    <link rel="stylesheet" href="/Trizen/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/Trizen/css/bootstrap-rtl.min.css">
+    <link rel="stylesheet" href="/Trizen/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="/Trizen/css/line-awesome.css">
+    <link rel="stylesheet" href="/Trizen/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/Trizen/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/Trizen/css/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/Trizen/css/daterangepicker.css">
+    <link rel="stylesheet" href="/Trizen/css/datepicker-theme.css" media="all">
+    <link rel="stylesheet" href="/Trizen/css/animated-headline.css">
+    <link rel="stylesheet" href="/Trizen/css/jquery-ui.css">
+    <link rel="stylesheet" href="/Trizen/css/jquery.filer.css">
+    <link rel="stylesheet" href="/Trizen/css/flag-icon.min.css">
+    <link rel="stylesheet" href="/Trizen/css/style.css">
+    <link rel="stylesheet" href="/Trizen/css/style-rtl.css">
+    <link rel="stylesheet" href="~/customize/css/styletoast/jquery.toast.css" />
+    <link rel="stylesheet" href="~/css/styletoast/jquery.toast.css" />
+    <link rel="stylesheet" href="https://unpkg.com/@@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+    <!-- start cssload-loader -->
+    <div class="preloader" id="preloader">
+        <div class="loader">
+            <svg class="spinner" viewBox="0 0 50 50">
+                <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+            </svg>
+        </div>
+    </div>
+    <!-- ================================
+                START HEADER AREA
+    ================================= -->
+    <header class="header-area">
+        <div class="header-menu-wrapper padding-right-100px padding-left-100px">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="menu-wrapper justify-content-between">
+                            <a href="#" class="down-button"><i class="la la-angle-down"></i></a>
+                            <div class="logo">
+                                <a href="/"><img src="/Trizen/images/logo.png" alt="@Resource.Trizen" title="@Resource.Trizen"></a>
+                                <div class="menu-toggler">
+                                    <i class="la la-bars"></i>
+                                    <i class="la la-times"></i>
+                                </div><!-- end menu-toggler -->
+                            </div><!-- end logo -->
+                            <div class="main-menu-content pr-0 ml-0">
+                                <nav>
+                                    <ul>
+                                        <li>
+                                            <a href="/"> @Resource.Home </a>
+                                        </li>
+                                        
+                                        <li>
+                                            <a asp-controller="Tours" asp-action="Index"> @Resource.Tours </a>
+                                        </li>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <li>
+                                                <a href="/User/Profile/Panel" class="mr-1">@Resource.UserPanel</a>
+                                            </li>
+                                            <li>
+                                                <a href="/Travels/Basket" class="mr-1">@Resource.TravelBasket</a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </nav>
+                            </div><!-- end main-menu-content -->
+                            <div class="nav-btn">
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <a href="User/Profile/Panel" class="mr-1">@User.GetFullName()</a>
+                                    <a asp-controller="Account" asp-action="Logout" class="theme-btn theme-btn-small theme-btn-transparent mr-1">@Resource.Logout</a>
+                                }
+                                else
+                                {
+                                    <a asp-controller="Account" asp-action="Register" class="theme-btn theme-btn-small theme-btn-transparent mr-1">@Resource.Register</a>
+                                    <a asp-controller="Account" asp-action="Login" class="theme-btn theme-btn-small">@Resource.Login</a>
+                                }
+                            </div><!-- end nav-btn -->
+                        </div><!-- end menu-wrapper -->
+                    </div><!-- end col-lg-12 -->
+                </div><!-- end row -->
+            </div><!-- end container-fluid -->
+        </div><!-- end header-menu-wrapper -->
+    </header>
+    <!-- ================================
+             END HEADER AREA
+    ================================= -->
+    @RenderBody()
+
+    <div class="section-block"></div>
+
+
+    <!-- ================================
+           START FOOTER AREA
+    ================================= -->
+    <section class="footer-area section-bg padding-top-50px padding-bottom-10px">
+        <div class="container">
+            <div class="row">
+                <div class="footer-logo padding-bottom-30px">
+                    <a href="/" class="foot__logo"><img src="/Trizen/images/logo.png" alt="@Resource.Trizen" title="@Resource.Trizen"></a>
+                </div><!-- end logo -->
+                <div class="col-lg-3 responsive-column">
+                    <div class="footer-item">
+
+                        <p class="footer__desc">ترایزن؛ وب سایت خرید آنلاین، بلیط هواپیما، رزرو هتل، رزرو خودرو، سفرهای دریایی و تور</p>
+                    </div><!-- end footer-item -->
+                </div><!-- end col-lg-3 -->
+                <div class="col-lg-3 responsive-column">
+                    <div class="footer-item">
+                        <p class="footer__desc"><a href="tell:+989217074647" dir="ltr">+98-921-707-4647</a></p>
+                    </div><!-- end footer-item -->
+                </div><!-- end col-lg-3 -->
+                <div class="col-lg-3 responsive-column">
+                    <div class="footer-item">
+                        <p class="footer__desc"><a href="mailto:mehmed2002q@gmail.com">mehmed2002q@gmail.com</a></p>
+                    </div><!-- end footer-item -->
+                </div><!-- end col-lg-3 -->
+            </div><!-- end row -->
+        </div><!-- end container -->
+        <div class="section-block mt-4"></div>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <div class="copy-right padding-top-30px">
+                        <p class="copy__desc">
+                            کپی رایت &copy; تمامی حقوق محفوظ است . توسعه با
+                            <span class="la la-heart"></span>  توسط محمد صادق کیومرثی
+                        </p>
+                    </div><!-- end copy-right -->
+                </div><!-- end col-lg-7 -->
+                <div class="col-lg-5">
+                    <div class="copy-right-content d-flex align-items-center justify-content-end padding-top-30px">
+                        <h3 class="title font-size-15 pr-2">قبول میکنیم</h3>
+                        <img src="/Trizen/images/payment-img.png" alt="">
+                    </div><!-- end copy-right-content -->
+                </div><!-- end col-lg-5 -->
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </section><!-- end footer-area -->
+    <!-- ================================
+           START FOOTER AREA
+    ================================= -->
+    <!-- start back-to-top -->
+    <div id="back-to-top">
+        <i class="la la-angle-up" title="برو بالا"></i>
+    </div>
+    <!-- end back-to-top -->
+    <!-- Template JS Files -->
+    <script src="/Trizen/js/jquery-3.4.1.min.js"></script>
+    <script src="/Trizen/js/jquery-ui.js"></script>
+    <script src="/Trizen/js/popper.min.js"></script>
+    <script src="/Trizen/js/bootstrap.min.js"></script>
+    <script src="/Trizen/js/bootstrap-select.min.js"></script>
+    <script src="/Trizen/js/moment.min.js"></script>
+    <script src="/Trizen/js/moment-jalaali.js"></script>
+    <script src="/Trizen/js/daterangepicker-fa-ex.js"></script>
+    <script src="/Trizen/js/owl.carousel.min.js"></script>
+    <script src="/Trizen/js/jquery.fancybox.min.js"></script>
+    <script src="/Trizen/js/jquery.countTo.min.js"></script>
+    <script src="/Trizen/js/animated-headline.js"></script>
+    <script src="/Trizen/js/jquery.filer.min.js"></script>
+    <script src="/Trizen/js/jquery.ripples-min.js"></script>
+    <script src="/Trizen/js/main-rtl.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/@@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
+    <script type="text/javascript" src="~/js/jquery.toast.js/jquery.toast.js"></script> @*اسکریت مربوط به آلرت*@
+    <script type="text/javascript" src="~/js/site.js"></script> 
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

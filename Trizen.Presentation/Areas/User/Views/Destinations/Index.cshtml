@@ -1,0 +1,81 @@
+﻿@using Trizen.Data.Destination.ViewModel
+@using Trizen.Infrastructure.Utilities
+@model List<DestinationViewModel>
+@{
+    ViewData["Title"] = Resource.List;
+}
+
+<div class="block-header">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <ul class="breadcrumb breadcrumb-style ">
+                <li class="breadcrumb-item bcrumb-1">
+                    <a asp-controller="Home" asp-action="Index">
+                        <i class="fas fa-home"></i> @Resource.Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item bcrumb-2">
+                    <a href="#" onclick="return false;">@Resource.Tour</a>
+                </li>
+                <li class="breadcrumb-item active">@Resource.List</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    <strong>@Resource.List</strong> @Resource.Destination
+                </h2>
+                <a href="/User/Destinations/Create">@Resource.Create</a>
+            </div>
+            <div class="body">
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="card">
+                            <div class="body table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>@Resource.Image</th>
+                                            <th>@Resource.Title</th>
+                                            <th>@Resource.GeographicalLocation</th>
+                                            <th>@Resource.DestinationType</th>
+                                            <th>@Resource.Commands</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            int counter = 0;
+                                        }
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <th scope="row">@(++counter)</th>
+                                                <td>
+                                                    <img src="@item.Image" title="@item.Title" alt="@item.Title" style="width: 5rem;height: 5rem;" />
+                                                </td>
+                                                <td>@item.Title</td>
+                                                <td>@item.GeographicalLocationTitle</td>
+                                                <td>@item.DestinationTypeTitle</td>
+                                                <td>
+                                                    <a href="/User/Destinations/Categories/@item.Id">@Resource.Category</a>
+                                                    <a href="/User/Destinations/Edit/@item.Id">@Resource.Edit</a>
+                                                    <a href="/User/Destinations/Delete/@item.Id">@Resource.Delete</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

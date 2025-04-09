@@ -1,0 +1,175 @@
+﻿@using Trizen.Data.Tour.ViewModel
+@using Trizen.Infrastructure.Enumerations
+@model TourViewModel
+@{
+    ViewData["Title"] = Resource.Tour;
+}
+
+<!-- ================================
+    START CARD AREA
+================================= -->
+<section class="card-area section--padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card-item blog-card blog-card-layout-2 blog-single-card mb-5">
+                    <div class="card-img before-none">
+                        <img src="@Model.Image" alt="@Model.Title" title="@Model.Title">
+                    </div>
+                    <div class="card-body px-0 pb-0">
+                        <h3 class="card-title font-size-28">@Model.Title</h3>
+                        <div class="single-tour-feature d-flex align-items-center mb-3">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3" style="cursor:pointer" onclick="LikeTour(@Model.Id)">
+                                    @if (Model.Liked)
+                                    {
+                                        <i class="la la-heart"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="la la-heart-o"></i>
+                                    }
+                                </div>
+                            }
+                        </div>
+                        <div class="section-block"></div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-4 responsive-column">
+                                <div class="single-tour-feature d-flex align-items-center mb-3">
+                                    <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
+                                        <i class="la la-clock-o"></i>
+                                    </div>
+                                    <div class="single-feature-titles">
+                                        <h3 class="title font-size-15 font-weight-medium">@Resource.Duration</h3>
+                                        <span class="font-size-13">@Message.Format(Message.TourDuration, Model.SleepNightsCount, Model.DaysCount)</span>
+                                    </div>
+                                </div><!-- end single-tour-feature -->
+                            </div><!-- end col-lg-4 -->
+                            <div class="col-lg-4 responsive-column">
+                                <div class="single-tour-feature d-flex align-items-center mb-3">
+                                    <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
+                                        <i class="la la-users"></i>
+                                    </div>
+                                    <div class="single-feature-titles">
+                                        <h3 class="title font-size-15 font-weight-medium">@Resource.MaximumPassenger</h3>
+                                        <span class="font-size-13">@Model.MaximumPassenger نفر (@Model.Capacity نفر باقی مانده)</span>
+                                    </div>
+                                </div><!-- end single-tour-feature -->
+                            </div><!-- end col-lg-4 -->
+                            <div class="col-lg-4 responsive-column">
+                                <div class="single-tour-feature d-flex align-items-center mb-3">
+                                    <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
+                                        <i class="la la-globe"></i>
+                                    </div>
+                                    <div class="single-feature-titles">
+                                        <h3 class="title font-size-15 font-weight-medium">نوع تور</h3>
+                                        <span class="font-size-13">تور @Model.TourTypeTitle</span>
+                                    </div>
+                                </div><!-- end single-tour-feature -->
+                            </div><!-- end col-lg-4 -->
+                            <div class="col-lg-4 responsive-column">
+                                <div class="single-tour-feature d-flex align-items-center mb-3">
+                                    <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
+                                        <i class="la la-calendar"></i>
+                                    </div>
+                                    <div class="single-feature-titles">
+                                        <h3 class="title font-size-15 font-weight-medium">تاريخ</h3>
+                                        <span class="font-size-13">@Model.EndTime.ToShamsiMonthInLetters() - @Model.StartTime.ToShamsiMonthInLetters()</span>
+                                    </div>
+                                </div><!-- end single-tour-feature -->
+                            </div><!-- end col-lg-4 -->
+                            <div class="col-lg-4 responsive-column">
+                                <div class="single-tour-feature d-flex align-items-center mb-3">
+                                    <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
+                                        <i class="la la-user"></i>
+                                    </div>
+                                    <div class="single-feature-titles">
+                                        <h3 class="title font-size-15 font-weight-medium">@Resource.AgePeriod</h3>
+                                        <span class="font-size-13">@Model.MaximumAge - @Model.MinimumAge</span>
+                                    </div>
+                                </div><!-- end single-tour-feature -->
+                            </div><!-- end col-lg-4 -->
+
+                            <div class="col-lg-4 responsive-column">
+                                <div class="single-tour-feature d-flex align-items-center mb-3">
+                                    <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
+                                        <i class="la la-dollar"></i>
+                                    </div>
+                                    <div class="single-feature-titles">
+                                        <h3 class="title font-size-15 font-weight-medium">@Resource.Price</h3>
+                                        <span class="font-size-13">@Model.Price تومان</span>
+                                    </div>
+                                </div><!-- end single-tour-feature -->
+                            </div><!-- end col-lg-4 -->
+                            <div class="col-lg-4 responsive-column">
+                                <div class="single-tour-feature d-flex align-items-center mb-3">
+                                    <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
+                                        <i class="la la-map-marker-alt"></i>
+                                    </div>
+                                    <div class="single-feature-titles">
+                                        <h3 class="title font-size-15 font-weight-medium">@Resource.Destination</h3>
+                                        <span class="font-size-13">@Model.Destination.Title </span>
+                                    </div>
+                                </div><!-- end single-tour-feature -->
+                            </div><!-- end col-lg-4 -->
+                            <div class="col-lg-4 responsive-column">
+                                <div class="single-tour-feature d-flex align-items-center mb-3">
+                                    <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
+                                        <i class="la la-map-pin"></i>
+                                    </div>
+                                    <div class="single-feature-titles">
+                                        <h3 class="title font-size-15 font-weight-medium">@Resource.DestinationType</h3>
+                                        <span class="font-size-13">@Model.Destination.DestinationTypeTitle </span>
+                                    </div>
+                                </div><!-- end single-tour-feature -->
+                            </div><!-- end col-lg-4 -->
+                            <div class="col-lg-4 responsive-column">
+                                <div class="single-tour-feature d-flex align-items-center mb-3">
+                                    <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
+                                        <i class="la la-map-signs"></i>
+                                    </div>
+                                    <div class="single-feature-titles">
+                                        <h3 class="title font-size-15 font-weight-medium">@Resource.GeographicalLocation</h3>
+                                        <span class="font-size-13">@Model.Destination.GeographicalLocationTitle</span>
+                                    </div>
+                                </div><!-- end single-tour-feature -->
+                            </div><!-- end col-lg-4 -->
+                        </div>
+                        <p class="card-text py-3">@Model.Description </p>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a class="theme-btn  theme-btn-transparent" asp-controller="Travels" asp-action="AddTravel" asp-route-tourId="@Model.Id" style="width: 80%;text-align: center;margin: 0 10% 0 10%;">بریم سفر</a>
+                        }
+                        <div class="post-tag-wrap d-flex align-items-center justify-content-between py-4">
+                            <ul class="tag-list">
+                                @foreach (var item in Model.Categories)
+                                {
+                                    <li><a asp-controller="Tours" asp-action="Index" asp-route-CategoryId="@item.Id">@item.Title</a></li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="card-img before-none">
+                            <h4 class="card-title font-size-28">@Model.Destination.Title</h4>
+                            <img src="@Model.Destination.Image" alt="@Model.Destination.Title" title="@Model.Destination.Title">
+                            <div class="post-tag-wrap d-flex align-items-center justify-content-between py-4">
+                                <ul class="tag-list">
+                                    @foreach (var item in Model.Destination.Categories)
+                                    {
+                                        <li><a asp-controller="Tours" asp-action="Index" asp-route-CategoryId="@item.Id">@item.Title</a></li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- end card-item -->
+            </div><!-- end col-lg-8 -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section>
+<!-- end card-area -->
+<!-- ================================
+    END CARD AREA
+================================= -->
+@await Component.InvokeAsync("ToursListComponent", new { model = new SearchTourViewModel { CallerPage = CallerPage.Details, UserId = User.GetUserId() } })

@@ -1,0 +1,100 @@
+﻿@using Trizen.Data.Destination.Dto
+@model CreateDestinationDto
+@{
+    ViewData["Title"] = Resource.Create;
+}
+
+<div class="block-header">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <ul class="breadcrumb breadcrumb-style ">
+                <li class="breadcrumb-item bcrumb-1">
+                    <a asp-controller="Home" asp-action="Index">
+                        <i class="fas fa-home"></i> @Resource.Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item bcrumb-2">
+                    <a href="#" onclick="return false;">@Resource.Destination</a>
+                </li>
+                <li class="breadcrumb-item active">@Resource.Create</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    <strong>@Resource.Create</strong> @Resource.Destination
+                </h2>
+            </div>
+            <div class="body">
+                <form method="post" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+                    <label asp-for="Title"></label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input class="form-control" asp-for="Title">
+                            <span asp-validation-for="Title"></span>
+                        </div>
+                    </div>
+                   
+                    <label asp-for="DestinationTypeId"></label>
+                    <div class="form-group select-wrapper col-6">
+                        <select asp-for="DestinationTypeId" style="display:flex" class="theme-black btn-primary">
+                            <option value="">
+                                @Resource.PleaseSelect
+                            </option>
+                            @foreach (ListViewModel item in ViewBag.DestinationTypes.Data)
+                            {
+                                <option value="@item.Id">
+                                    @item.Title
+                                </option>
+                            }
+                        </select>
+                        <span asp-validation-for="DestinationTypeId"></span>
+                    </div>
+                    <label asp-for="GeographicalLocation"></label>
+                    <div class="form-group select-wrapper col-6">
+                        <select asp-for="GeographicalLocation" style="display:flex" class="theme-black btn-primary">
+                            <option value="">
+                                @Resource.PleaseSelect
+                            </option>
+                            @foreach (ListViewModel item in ViewBag.GeographicalLocations.Data)
+                            {
+                                <option value="@item.Id">
+                                    @item.Title
+                                </option>
+                            }
+                        </select>
+                        <span asp-validation-for="GeographicalLocation"></span>
+                    </div>
+
+                    <div style="display:flex">
+                        <div class="col-6">
+                            <label asp-for="Image"></label>
+                            <div class="file-field input-field col-6">
+                                <div class="btn theme-black btn-primary">
+                                    <span>@Resource.Select</span>
+                                    <input asp-for="UploadImage" type="file" accept="image/*" onchange="readURL(this, 'ImagePreview')">
+                                    <span asp-validation-for="UploadImage"></span>
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <img style="width: 6rem; height: 8rem;" src="@Model.Image" id="ImagePreview" />
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary m-t-15 waves-effect ">@Resource.Create</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

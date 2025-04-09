@@ -1,0 +1,341 @@
+﻿@using Trizen.Data.Base.ViewModel
+@using Trizen.Data.Tour.ViewModel
+@using Trizen.Data.Travel.ViewModel
+@using Trizen.Infrastructure.Enumerations
+@model BasketViewModel
+
+@{
+    ViewData["Title"] = Resource.Payment;
+}
+
+<!-- ================================
+    START BOOKING AREA
+================================= -->
+<section class="booking-area padding-top-100px padding-bottom-70px">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="form-box">
+                    <div class="form-title-wrap">
+                        <h3 class="title">اطلاعات شخصی شما</h3>
+                    </div><!-- form-title-wrap -->
+                    <div class="form-content ">
+                        <div class="contact-form-action">
+                            <form method="post">
+                                <div class="row">
+                                    <div class="col-lg-6 responsive-column">
+                                        <div class="input-box">
+                                            <label class="label-text">@Resource.FirstName</label>
+                                            <div class="form-group">
+                                                <span class="la la-user form-icon"></span>
+                                                <input class="form-control" type="text" readonly value="@Model.User.FirstName">
+                                            </div>
+                                        </div>
+                                    </div><!-- end col-lg-6 -->
+                                    <div class="col-lg-6 responsive-column">
+                                        <div class="input-box">
+                                            <label class="label-text">@Resource.LastName</label>
+                                            <div class="form-group">
+                                                <span class="la la-user form-icon"></span>
+                                                <input class="form-control" type="text" readonly value="@Model.User.LastName">
+                                            </div>
+                                        </div>
+                                    </div><!-- end col-lg-6 -->
+                                    <div class="col-lg-6 responsive-column">
+                                        <div class="input-box">
+                                            <label class="label-text">@Resource.Email</label>
+                                            <div class="form-group">
+                                                <span class="la la-envelope-o form-icon"></span>
+                                                <input class="form-control" type="email" readonly value="@Model.User.Email">
+                                            </div>
+                                        </div>
+                                    </div><!-- end col-lg-6 -->
+                                    <div class="col-lg-6 responsive-column">
+                                        <div class="input-box">
+                                            <label class="label-text">@Resource.PhoneNumber</label>
+                                            <div class="form-group">
+                                                <span class="la la-phone form-icon"></span>
+                                                <input class="form-control" type="text" readonly value="@Model.User.PhoneNumber">
+                                            </div>
+                                        </div>
+                                    </div><!-- end col-lg-6 -->
+                                    <div class="col-lg-6 responsive-column">
+                                        <div class="input-box">
+                                            <label class="label-text">@Resource.Passenger</label>
+                                            <input type="hidden" value="@Model.PassengersList" id="StringListPassengers" />
+                                            <div class="form-group">
+                                                <select style="display:flex" class="btn dropdown-toggle btn-light" onchange="AddPassenger(this)" id="SelectUserElement">
+                                                    <option value="">
+                                                        @Resource.PleaseSelect
+                                                    </option>
+                                                    @foreach (ListViewModel item in ViewBag.Users)
+                                                    {
+                                                        <option id="ListUser_@item.Id" value="@item.Id">
+                                                            @item.Title
+                                                        </option>
+                                                    }
+                                                </select>
+                                            </div>
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>@Resource.FullName</th>
+                                                        <th>@Resource.Commands</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="TableUserElement">
+                                                    @{
+                                                        int counter = 0;
+                                                    }
+                                                    @foreach (var item in Model.PassengersList)
+                                                    {
+                                                        <tr id="TableUser_@item.Id">
+                                                            <th scope="row">@(++counter)</th>
+                                                            <td>@item.User.FullName</td>
+                                                            <td>
+                                                                @if (User.GetUserId() == item.User.Id)
+                                                                {
+                                                                    <a href="javascript:void(0)" disabled">خودم</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a href="javascript:void(0)" onclick="RemovePassenger(@item.User.Id, '@item.User.FullName')">@Resource.Delete</a>
+                                                                }
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div><!-- end col-lg-6 -->
+                                </div>
+                            </form>
+                        </div><!-- end contact-form-action -->
+                    </div><!-- end form-content -->
+                </div><!-- end form-box -->
+                <div class="form-box">
+                    <div class="form-title-wrap">
+                        <h3 class="title">@Resource.Payment</h3>
+                        <ul class="list-items list-items-2 pt-3">
+                            <li><span id="price">قیمت: @Model.Tour.Price تومان </span></li>
+                            <li><span id="tax">مالیات: @(Model.Tour.Price / 10) تومان </span></li>
+                            <li><span id="totalPrice">قیمت کل: @((Model.Tour.Price / 10) + Model.Tour.Price) تومان </span></li>
+                        </ul>
+                        <div class="custom-checkbox">
+                            <input type="checkbox" id="agreechb">
+                            <label for="agreechb">برای ادامه دادن،  با <a href="#">شرایط و ضوابط </a> موافقت میکنم . </label>
+                        </div>
+                        <a class="theme-btn  theme-btn-transparent" asp-controller="Travels" asp-action="Pay" asp-route-travelId="@Model.Id" style="width: 80%;text-align: center;margin: 0 10% 0 10%;">@Resource.Payment</a>
+                        <a asp-controller="Travels" asp-action="Cancel" asp-route-travelId="@Model.Id" class="btn-text">لفو<i class="la la-trash"></i></a>
+                    </div><!-- form-title-wrap -->
+                    <div class="form-content">
+                    </div><!-- end form-content -->
+                </div><!-- end form-box -->
+            </div><!-- end col-lg-8 -->
+            <div class="col-lg-4">
+                <div class="form-box booking-detail-form">
+                    <div class="form-title-wrap">
+                        <h3 class="title">جزئیات رزرو</h3>
+                    </div><!-- end form-title-wrap -->
+                    <div class="form-content">
+                        <div class="card-item shadow-none radius-none mb-0">
+                            <div class="card-img pb-4">
+                                <a asp-controller="Tours" asp-action="Details" asp-route-id="@Model.Tour.Id" class="d-block">
+                                    <img src="@Model.Tour.Image" alt="@Model.Tour.Title" title="@Model.Tour.Title">
+                                </a>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h3 class="card-title">@Model.Tour.Title</h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 responsive-column">
+                                        <div class="single-tour-feature d-flex align-items-center mb-3">
+                                            <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3" onclick="LikeTour(@Model.Tour.Id)">
+                                                @if (Model.Tour.Liked)
+                                                {
+                                                    <i class="la la-heart"></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="la la-heart-o"></i>
+                                                }
+                                            </div>
+                                            <div class="single-feature-titles">
+                                                <h3 class="title font-size-15 font-weight-medium">افزودن به علاقه مندی</h3>
+                                            </div>
+                                        </div><!-- end single-tour-feature -->
+                                    </div><!-- end col-lg-4 -->
+                                    <div class="col-lg-6 responsive-column">
+                                        <div class="single-tour-feature d-flex align-items-center mb-3">
+                                            <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
+                                                <i class="la la-clock-o"></i>
+                                            </div>
+                                            <div class="single-feature-titles">
+                                                <h3 class="title font-size-15 font-weight-medium">@Resource.Duration</h3>
+                                                <span class="font-size-13">@Message.Format(Message.TourDuration, Model.Tour.SleepNightsCount, Model.Tour.DaysCount)</span>
+                                            </div>
+                                        </div><!-- end single-tour-feature -->
+                                    </div><!-- end col-lg-4 -->
+                                    <div class="col-lg-6 responsive-column">
+                                        <div class="single-tour-feature d-flex align-items-center mb-3">
+                                            <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
+                                                <i class="la la-users"></i>
+                                            </div>
+                                            <div class="single-feature-titles">
+                                                <h3 class="title font-size-15 font-weight-medium">@Resource.MaximumPassenger</h3>
+                                                <span class="font-size-13">@Model.Tour.MaximumPassenger نفر (@Model.Tour.Capacity نفر باقی مانده)</span>
+                                            </div>
+                                        </div><!-- end single-tour-feature -->
+                                    </div><!-- end col-lg-4 -->
+                                    <div class="col-lg-6 responsive-column">
+                                        <div class="single-tour-feature d-flex align-items-center mb-3">
+                                            <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
+                                                <i class="la la-globe"></i>
+                                            </div>
+                                            <div class="single-feature-titles">
+                                                <h3 class="title font-size-15 font-weight-medium">نوع تور</h3>
+                                                <span class="font-size-13">تور @Model.Tour.TourTypeTitle</span>
+                                            </div>
+                                        </div><!-- end single-tour-feature -->
+                                    </div><!-- end col-lg-4 -->
+                                    <div class="col-lg-6 responsive-column">
+                                        <div class="single-tour-feature d-flex align-items-center mb-3">
+                                            <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
+                                                <i class="la la-calendar"></i>
+                                            </div>
+                                            <div class="single-feature-titles">
+                                                <h3 class="title font-size-15 font-weight-medium">تاريخ</h3>
+                                                <span class="font-size-13">@Model.Tour.EndTime.ToShamsiMonthInLetters() - @Model.Tour.StartTime.ToShamsiMonthInLetters()</span>
+                                            </div>
+                                        </div><!-- end single-tour-feature -->
+                                    </div><!-- end col-lg-4 -->
+                                    <div class="col-lg-6 responsive-column">
+                                        <div class="single-tour-feature d-flex align-items-center mb-3">
+                                            <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
+                                                <i class="la la-user"></i>
+                                            </div>
+                                            <div class="single-feature-titles">
+                                                <h3 class="title font-size-15 font-weight-medium">@Resource.AgePeriod</h3>
+                                                <span class="font-size-13">@Model.Tour.MaximumAge - @Model.Tour.MinimumAge</span>
+                                            </div>
+                                        </div><!-- end single-tour-feature -->
+                                    </div><!-- end col-lg-4 -->
+
+                                    <div class="col-lg-6 responsive-column">
+                                        <div class="single-tour-feature d-flex align-items-center mb-3">
+                                            <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
+                                                <i class="la la-dollar"></i>
+                                            </div>
+                                            <div class="single-feature-titles">
+                                                <h3 class="title font-size-15 font-weight-medium">@Resource.Price</h3>
+                                                <span class="font-size-13">@Model.Tour.Price تومان</span>
+                                            </div>
+                                        </div><!-- end single-tour-feature -->
+                                    </div><!-- end col-lg-4 -->
+                                    <div class="col-lg-6 responsive-column">
+                                        <div class="single-tour-feature d-flex align-items-center mb-3">
+                                            <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
+                                                <i class="la la-map-marker-alt"></i>
+                                            </div>
+                                            <div class="single-feature-titles">
+                                                <h3 class="title font-size-15 font-weight-medium">@Resource.Destination</h3>
+                                                <span class="font-size-13">@Model.Tour.Destination.Title </span>
+                                            </div>
+                                        </div><!-- end single-tour-feature -->
+                                    </div><!-- end col-lg-4 -->
+                                    <div class="col-lg-6 responsive-column">
+                                        <div class="single-tour-feature d-flex align-items-center mb-3">
+                                            <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
+                                                <i class="la la-map-pin"></i>
+                                            </div>
+                                            <div class="single-feature-titles">
+                                                <h3 class="title font-size-15 font-weight-medium">@Resource.DestinationType</h3>
+                                                <span class="font-size-13">@Model.Tour.Destination.DestinationTypeTitle </span>
+                                            </div>
+                                        </div><!-- end single-tour-feature -->
+                                    </div><!-- end col-lg-4 -->
+                                    <div class="col-lg-6 responsive-column">
+                                        <div class="single-tour-feature d-flex align-items-center mb-3">
+                                            <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
+                                                <i class="la la-map-signs"></i>
+                                            </div>
+                                            <div class="single-feature-titles">
+                                                <h3 class="title font-size-15 font-weight-medium">@Resource.GeographicalLocation</h3>
+                                                <span class="font-size-13">@Model.Tour.Destination.GeographicalLocationTitle</span>
+                                            </div>
+                                        </div><!-- end single-tour-feature -->
+                                    </div><!-- end col-lg-4 -->
+                                </div>
+                            </div>
+                        </div><!-- end card-item -->
+                    </div><!-- end form-content -->
+                </div><!-- end form-box -->
+            </div><!-- end col-lg-4 -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section>
+<!-- end booking-area -->
+<!-- ================================
+    END BOOKING AREA
+================================= -->
+@await Component.InvokeAsync("ToursListComponent", new { model = new SearchTourViewModel { CallerPage = CallerPage.Details, UserId = User.GetUserId() } })
+
+@section Scripts {
+    <script>
+        var stringListPassengers = document.getElementById('StringListPassengers');
+        var SelectUserElement = document.getElementById("SelectUserElement");
+        var TableUserElement = document.getElementById("TableUserElement");
+
+        var ListPassengers = [@Model.PassengersList];
+
+        function AddPassenger(el){
+            var selectedIndex = el.options[el.options.selectedIndex];
+            var id = selectedIndex.value;
+            if (!ListPassengers.includes(id)){
+                ListPassengers.push(id);
+                stringListPassengers.value = ListPassengers.toString();
+                TryRemoveElementById(`ListUser_${id}`);
+                TableUserElement.innerHTML += `<tr id="TableUser_${id}">
+                                                            <th scope="row">جدید</th>
+                                                            <td>${selectedIndex.innerHTML}</td>
+                                                            <td>
+                                                                <a href="javascript:void(0)" onclick="RemovePassenger(${id}, '${selectedIndex.innerHTML}')">حذف</a>
+                                                            </td>
+                                                        </tr>`;
+                CalculatePrices();
+            }
+
+        }
+
+        function RemovePassenger(userId, name){
+            if (ListPassengers.includes(userId)){
+                ListPassengers.pop(userId);
+                stringListPassengers.value = ListPassengers.toString();
+                SelectUserElement.innerHTML += `<option id="ListUser_${userId}" value="${userId}">${name}</option>`;
+                TryRemoveElementById(`TableUser_${userId}`);
+                CalculatePrices();
+            }
+        }
+
+        function TryRemoveElementById(id){
+            var element = document.getElementById(id);
+            if(element != undefined && element != null){
+                element.remove();
+            }
+        }
+
+         function CalculatePrices(){
+            TravelPassengers(@Model.Id, ListPassengers.toString());
+            var basePrice = @(Model.Tour.Price);
+            var passengersCount = ListPassengers.length;
+            var price = basePrice * passengersCount;
+            document.getElementById('price').innerHTML = `قیمت: ${price} تومان `;
+            document.getElementById('tax').innerHTML = `مالیات: ${price / 10} تومان `;
+            document.getElementById('totalPrice').innerHTML = `قیمت: ${(price / 10) + price} تومان `;
+        }
+    </script>
+}

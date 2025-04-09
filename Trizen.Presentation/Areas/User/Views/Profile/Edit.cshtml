@@ -1,0 +1,113 @@
+﻿@model UpdateProfileDto
+@{
+    ViewData["Title"] = Resource.Edit;
+}
+
+<div class="block-header">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <ul class="breadcrumb breadcrumb-style ">
+                <li class="breadcrumb-item bcrumb-1">
+                    <a asp-controller="Home" asp-action="Index">
+                        <i class="fas fa-home"></i> @Resource.Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item bcrumb-2">
+                    <a href="#" onclick="return false;">@Resource.Profile</a>
+                </li>
+                <li class="breadcrumb-item active">@Resource.Edit</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    <strong>@Resource.Edit</strong> @Resource.Profile
+                </h2>
+            </div>
+            <div class="body">
+                <form method="post" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+                    <input hidden asp-for="Id" />
+                    <label asp-for="FirstName"></label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input class="form-control" asp-for="FirstName">
+                            <span asp-validation-for="FirstName"></span>
+                        </div>
+                    </div>
+                    <label asp-for="LastName"></label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input class="form-control" asp-for="LastName">
+                            <span asp-validation-for="LastName"></span>
+                        </div>
+                    </div>
+                    <label asp-for="BirthDay"></label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input class="form-control" type="text" data-jdp asp-for="BirthDay">
+                            <span asp-validation-for="BirthDay"></span>
+                        </div>
+                    </div>
+                    <label asp-for="NationalCode"></label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input class="form-control" asp-for="NationalCode">
+                            <span asp-validation-for="NationalCode"></span>
+                        </div>
+                    </div>
+                    <label asp-for="Email"></label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input class="form-control" asp-for="Email">
+                            <span asp-validation-for="Email"></span>
+                        </div>
+                    </div>
+
+                    <div style="display:flex">
+                        <div class="col-6">
+                            <label asp-for="UploadImageProfile"></label>
+                            <div class="file-field input-field col-6">
+                                <div class="btn theme-black btn-primary">
+                                    <span>@Resource.Select</span>
+                                    <input asp-for="UploadImageProfile" type="file" accept="image/*" onchange="readURL(this, 'ImageProfilePreview')">
+                                    <span asp-validation-for="UploadImageProfile"></span>
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <img style="width: 6rem; height: 8rem;" src="@Model.ImageProfile" alt="@Model.FullName" id="ImageProfilePreview" />
+                        </div>
+                    </div>
+
+                    <label asp-for="PersonalityId"></label>
+                    <div class="form-group select-wrapper col-6">
+                        <select asp-for="PersonalityId" style="display:flex" class="theme-black btn-primary">
+                            <option value="">
+                                @Resource.PleaseSelect
+                            </option>
+                            @foreach (ListViewModel item in ViewBag.Personalities.Data)
+                            {
+                                <option value="@item.Id">
+                                    @item.Title: @item.Description
+                                </option>
+                            }
+                        </select>
+                        <span asp-validation-for="PersonalityId"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary m-t-15 waves-effect ">@Resource.Edit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

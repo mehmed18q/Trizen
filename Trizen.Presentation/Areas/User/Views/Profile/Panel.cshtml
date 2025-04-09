@@ -1,0 +1,130 @@
+﻿@using Trizen.Data.Tour.ViewModel
+@using Trizen.Data.User.ViewModel
+@model UserPanelViewModel
+@{
+    ViewData["Title"] = Resource.Home;
+}
+
+@section Styles {
+    <style>
+        button.close {
+            position: absolute;
+            left: 10px;
+        }
+    </style>
+}
+<div class="container-fluid">
+    <div class="text-center">
+        <h3 class="display-6">@Model.FullName خوش آمدید!</h3>
+        <br />
+        <p>ممنون که ترایزن را برای سفر های خود اتخاب کرده اید.</p>
+    </div>
+
+    @if (!Model.IsImportantProfileCompleted)
+    {
+        <div class="alert alert-warning" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>@Model.FullName!</strong> لطفا از طریق این <a href="#" class="alert-link">لینک</a> اطلاعات خود را تکمیل کنید.
+        </div>
+    }
+
+    @if (!Model.IsProfileCompleted)
+    {
+        <div class="alert alert-warning" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>@Model.FullName!</strong> لطفا از طریق این <a href="#" class="alert-link">لینک</a> پروفایل خود را تکمیل کنید.
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>@Model.FullName!</strong> بابت تکمیل پروفایل خود و اعتمادتون صمیمانه متشکریم.
+        </div>
+    }
+
+    @if (!Model.HaveTravel)
+    {
+        <div class="alert alert-info" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>@Model.FullName!</strong> میبینم که هنوز سفر نرفتی! وسایلتو جمع کن و از این <a href="#" class="alert-link">لینک</a> توری که دوست داری بری رو انتخاب کن.
+        </div>
+    }
+    @if (User.CheckRole(UserRoles.Admin))
+    {
+        <!-- Widgets -->
+        <div>
+            <div class="row">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="info-box7 l-bg-green order-info-box7">
+                        <div class="info-box7-block">
+                            <h4 class="m-b-20">
+                                تعداد کاربران
+                            </h4>
+                            <h2 class="text-right">
+                                <i class="ti-user pull-left"></i>
+                                <span>
+                                    @Model.UsersCounts
+                                </span>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="info-box7 l-bg-purple order-info-box7">
+                        <div class="info-box7-block">
+                            <h4 class="m-b-20">
+                                تعداد تور ها
+                            </h4>
+                            <h2 class="text-right">
+                                <i class="ti-map pull-left"></i>
+                                <span>
+                                    @Model.ToursCounts
+                                </span>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="info-box7 l-bg-orange order-info-box7">
+                        <div class="info-box7-block">
+                            <h4 class="m-b-20">
+                                تعداد مقصد ها
+                            </h4>
+                            <h2 class="text-right">
+                                <i class="ti-flag pull-left"></i>
+                                <span>
+                                    @Model.DestinationsCounts
+                                </span>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="info-box7 l-bg-cyan order-info-box7">
+                        <div class="info-box7-block">
+                            <h4 class="m-b-20">
+                                تعداد سفر ها
+                            </h4>
+                            <h2 class="text-right">
+                                <i class="ti-map-alt pull-left"></i>
+                                <span>
+                                    @Model.TravelsCounts
+                                </span>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @await Component.InvokeAsync("ToursListComponent", new { model = new SearchTourViewModel { CallerPage = CallerPage.User, UserId = Model.UserId } })
+</div>

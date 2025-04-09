@@ -1,0 +1,165 @@
+﻿@using Trizen.Data.Tour.Dto
+@model UpdateTourDto
+@{
+    ViewData["Title"] = Resource.Edit;
+}
+
+<div class="block-header">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <ul class="breadcrumb breadcrumb-style ">
+                <li class="breadcrumb-item bcrumb-1">
+                    <a asp-controller="Home" asp-action="Index">
+                        <i class="fas fa-home"></i> @Resource.Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item bcrumb-2">
+                    <a href="#" onclick="return false;">@Resource.Tours</a>
+                </li>
+                <li class="breadcrumb-item active">@Resource.Edit</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    <strong>@Resource.Edit</strong> @Resource.Tour
+                </h2>
+            </div>
+            <div class="body">
+                <form method="post" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+                    <input hidden asp-for="Id" />
+                    <label asp-for="Title"></label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input class="form-control" asp-for="Title">
+                            <span asp-validation-for="Title"></span>
+                        </div>
+                    </div>
+                    <label asp-for="Description"></label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <textarea class="form-control" asp-for="Description"></textarea>
+                            <span asp-validation-for="Description"></span>
+                        </div>
+                    </div>
+                    <label asp-for="MinimumAge"></label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input class="form-control" asp-for="MinimumAge">
+                            <span asp-validation-for="MinimumAge"></span>
+                        </div>
+                    </div>
+                    <label asp-for="MaximumAge"></label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input class="form-control" asp-for="MaximumAge">
+                            <span asp-validation-for="MaximumAge"></span>
+                        </div>
+                    </div>
+                    <label asp-for="MaximumPassenger"></label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input class="form-control" asp-for="MaximumPassenger">
+                            <span asp-validation-for="MaximumPassenger"></span>
+                        </div>
+                    </div>
+                    <label asp-for="DaysCount"></label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input class="form-control" asp-for="DaysCount">
+                            <span asp-validation-for="DaysCount"></span>
+                        </div>
+                    </div>
+                    <label asp-for="SleepNightsCount"></label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input class="form-control" asp-for="SleepNightsCount">
+                            <span asp-validation-for="SleepNightsCount"></span>
+                        </div>
+                    </div>
+
+                    <label asp-for="StartTime"></label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input class="form-control" type="text" data-jdp asp-for="StartTime">
+                            <span asp-validation-for="StartTime"></span>
+                        </div>
+                    </div>
+                    <label asp-for="EndTime"></label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input class="form-control" type="text" data-jdp asp-for="EndTime">
+                            <span asp-validation-for="EndTime"></span>
+                        </div>
+                    </div>
+                    <label asp-for="Price"></label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input class="form-control" asp-for="Price">
+                            <span asp-validation-for="Price"></span>
+                        </div>
+                    </div>
+
+                    <label asp-for="DestinationId"></label>
+                    <div class="form-group select-wrapper col-6">
+                        <select asp-for="DestinationId" style="display:flex" class="theme-black btn-primary">
+                            <option value="">
+                                @Resource.PleaseSelect
+                            </option>
+                            @foreach (ListViewModel item in ViewBag.Destinations.Data)
+                            {
+                                <option value="@item.Id">
+                                    @item.Title
+                                </option>
+                            }
+                        </select>
+                        <span asp-validation-for="DestinationId"></span>
+                    </div>
+                    <label asp-for="TourTypeId"></label>
+                    <div class="form-group select-wrapper col-6">
+                        <select asp-for="TourTypeId" style="display:flex" class="theme-black btn-primary">
+                            <option value="">
+                                @Resource.PleaseSelect
+                            </option>
+                            @foreach (ListViewModel item in ViewBag.TourTypes.Data)
+                            {
+                                <option value="@item.Id">
+                                    @item.Title
+                                </option>
+                            }
+                        </select>
+                        <span asp-validation-for="TourTypeId"></span>
+                    </div>
+
+                    <div style="display:flex">
+                        <div class="col-6">
+                            <label asp-for="Image"></label>
+                            <div class="file-field input-field col-6">
+                                <div class="btn theme-black btn-primary">
+                                    <span>@Resource.Select</span>
+                                    <input asp-for="UploadImage" type="file" accept="image/*" onchange="readURL(this, 'ImagePreview')">
+                                    <span asp-validation-for="UploadImage"></span>
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <img style="width: 6rem; height: 8rem;" src="@Model.Image" id="ImagePreview" />
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary m-t-15 waves-effect ">@Resource.Edit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

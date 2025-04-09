@@ -1,0 +1,28 @@
+﻿@using Trizen.Data.Base.ViewModel
+@model ErrorViewModel
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="limiter">
+	<div class="container-login100">
+		<div class="wrap-login100">
+			<form class="login100-form">
+				<span class="error-header p-b-45">
+					@Model.ErrorCode
+				</span>
+				<span class="error-subheader2 p-b-5">
+					@Model.ErrorMessage
+				</span>
+
+				<div class="container-login100-form-btn p-t-30	">
+					<a class="login100-form-btn" asp-controller="Home" asp-action="Index">
+						برو به صفحه اصلی
+					</a>
+				</div>
+			</form>
+			<div class="login100-more" style="background-image: url('/wwwroot/user/images/bg-03.png');">
+			</div>
+		</div>
+	</div>
+</div>

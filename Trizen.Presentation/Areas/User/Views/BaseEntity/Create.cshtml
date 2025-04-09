@@ -1,0 +1,46 @@
+﻿@using Trizen.Data.Base.Dto
+@using Trizen.Infrastructure.Utilities
+@model CreateBaseEntityDto
+@{
+    ViewData["Title"] = Resource.Create;
+}
+
+<div class="block-header">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <ul class="breadcrumb breadcrumb-style ">
+                <li class="breadcrumb-item bcrumb-1">
+                    <a asp-controller="Home" asp-action="Index">
+                        <i class="fas fa-home"></i> @Resource.Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item active">@Model.Entity</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    <strong>@Model.Entity</strong>
+                    <form method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" asp-for="Entity" />
+
+                        <label asp-for="Title"></label>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input class="form-control" asp-for="Title">
+                                <span asp-validation-for="Title"></span>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary m-t-15 waves-effect ">@Resource.Create</button>
+                    </form>
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+﻿@using Trizen.Data.Travel.ViewModel
+@model List<BasketViewModel>
+@{
+    ViewData["Title"] = Resource.TravelBasket;
+}
+
+<div class="row">
+    <div class="col-lg-10">
+        @foreach (var item in Model)
+        {
+            <div class="card-item card-item-list " style="margin: 5% 10% 5% 10%;">
+                <div class="card-img">
+                    <a asp-controller="Tours" asp-action="Details" asp-route-id="@item.Tour.Id" class="d-block">
+                        <img src="@item.Tour.Image" alt="@item.Tour.Title" title="@item.Tour.Title">
+                    </a>
+                    <div class="add-to-wishlist icon-element" data-toggle="tooltip" data-placement="top" title="" data-original-title="ذخیره" onclick="LikeTour(@item.Tour.Id)">
+                        @if (item.Tour.Liked)
+                        {
+                            <i class="la la-heart-o"></i>
+                        }
+                        else
+                        {
+                            <i class="la la-heart"></i>
+                        }
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title"><a asp-controller="Tours" asp-action="Details" asp-route-id="@item.Tour.Id">@item.Tour.Title</a></h3>
+                    <p class="card-meta">@item.Tour.Destination.Title</p>
+                    <div class="card-rating">
+                        <span class="badge text-white">@item.Tour.TourTypeTitle</span>
+                        <span class="review__text">@item.Tour.Destination.DestinationTypeTitle</span>
+                    </div>
+                    <div class="card-price d-flex align-items-center justify-content-between">
+                        <p>
+                            <span class="price__num">@item.Tour.Price.To3Digit() تومان</span>
+                        </p>
+                        <a asp-controller="Tours" asp-action="Details" asp-route-id="@item.Tour.Id" class="btn-text">مشاهده جزئیات<i class="la la-angle-left"></i></a>
+                        <a asp-controller="Travels" asp-action="AddTravel" asp-route-tourId="@item.Tour.Id" class="btn-text">تکمیل<i class="la la-receipt"></i></a>
+                        <a asp-controller="Travels" asp-action="Cancel" asp-route-travelId="@item.Id" class="btn-text">لفو<i class="la la-trash"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- end card-item -->
+        }
+    </div><!-- end col-lg-12 -->
+</div>

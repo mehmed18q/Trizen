@@ -1,0 +1,68 @@
+﻿@model RegisterUserDto
+
+@{
+     ViewData["Title"] = Resource.Register;
+}
+
+<div class="modal-content">
+    <div class="modal-header">
+        <div>
+            <h5 class="modal-title title" id="exampleModalLongTitle">@Resource.Register</h5>
+            <p class="font-size-14">سلام! خوش اومدی ،  ایجاد یک حساب جدید</p>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" class="la la-close"></span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="contact-form-action">
+            <form asp-controller="Account" asp-action="Register"  method="post">
+                @Html.AntiForgeryToken()
+                <div class="input-box">
+                    <label class="label-text" asp-for="UserName"></label>
+                    <div class="form-group">
+                        <span class="la la-user form-icon"></span>
+                        <input class="form-control" asp-for="UserName" placeholder="نام کاربریت رو وارد کن">
+                        <span asp-validation-for="UserName"></span>
+                    </div>
+                </div><!-- end input-box -->
+                <div class="input-box">
+                    <label class="label-text" asp-for="PhoneNumber"></label>
+                    <div class="form-group">
+                        <span class="la la-phone form-icon"></span>
+                        <input class="form-control" asp-for="PhoneNumber" placeholder="شماره تماست رو وارد کن">
+                        <span asp-validation-for="PhoneNumber"></span>
+                    </div>
+                </div><!-- end input-box -->
+                <div class="input-box">
+                    <label class="label-text" asp-for="InviteCode"></label>
+                    <div class="form-group">
+                        <span class="la la-hands-helping form-icon"></span>
+                        <input class="form-control" asp-for="InviteCode" placeholder="اگر کد دعوت داری وارد کن">
+                        <span asp-validation-for="InviteCode"></span>
+                    </div>
+                </div><!-- end input-box -->
+                <div class="input-box">
+                    <label class="label-text" asp-for="Password"> </label>
+                    <div class="form-group">
+                        <span class="la la-lock form-icon"></span>
+                        <input class="form-control" type="password" asp-for="Password" placeholder="رمز عبور رو وارد کن">
+                        <span asp-validation-for="Password"></span>
+                    </div>
+                </div><!-- end input-box -->
+                <div class="input-box">
+                    <label class="label-text" asp-for="RePassword"></label>
+                    <div class="form-group">
+                        <span class="la la-lock form-icon"></span>
+                        <input class="form-control" type="password" asp-for="RePassword" placeholder="رمز عبورت رو دوباره وارد کن">
+                        <span asp-validation-for="RePassword"></span>
+                    </div>
+                </div><!-- end input-box -->
+                <div class="btn-box pt-3 pb-4">
+                    <input type="hidden" asp-for="ReturnUrl" />
+                    <button type="submit" class="theme-btn w-100">@Resource.Register</button>
+                </div>
+            </form>
+        </div><!-- end contact-form-action -->
+    </div>
+</div>

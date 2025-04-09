@@ -1,0 +1,286 @@
+﻿<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>@ViewData["Title"] - @Resource.Trizen</title>
+    <!-- Plugins Core Css -->
+    <link href="/user/css/app.min.css" rel="stylesheet">
+    <link href="/user/js/bundles/materialize-rtl/materialize-rtl.min.css" rel="stylesheet">
+    <!-- Custom Css -->
+    <link href="/user/css/style.css" rel="stylesheet" />
+    <!-- Theme style. You can choose a theme from css/themes instead of get all themes -->
+    <link href="/user/css/styles/all-themes.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/@@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
+
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+
+<body class="light rtl">
+    <!-- Page Loader -->
+    <div class="page-loader-wrapper">
+        <div class="loader">
+            <div class="m-t-30">
+                <img class="loading-img-spin" src="~/logo.png" alt="@Resource.Trizen" title="@Resource.Trizen">
+            </div>
+            <p>لطفا صبر کنید...</p>
+        </div>
+    </div>
+    <!-- #END# Page Loader -->
+    <!-- Overlay For Sidebars -->
+    <div class="overlay"></div>
+    <!-- #END# Overlay For Sidebars -->
+    <!-- Top Bar -->
+    <nav class="navbar">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="#" onClick="return false;" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"
+                   aria-expanded="false"></a>
+                <a href="#" onClick="return false;" class="bars"></a>
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                    <img src="/Trizen/images/logo.png" alt="@Resource.Trizen" title="@Resource.Trizen" />
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <a href="#" onClick="return false;" class="sidemenu-collapse">
+                            <i class="nav-hdr-btn ti-align-left"></i>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- Full Screen Button -->
+                    <li class="fullscreen">
+                        <a href="javascript:;" class="fullscreen-btn">
+                            <i class="nav-hdr-btn ti-fullscreen"></i>
+                        </a>
+                    </li>
+                    <!-- #END# Full Screen Button -->
+                    <li class="dropdown user_profile">
+                        <div class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="@User.GetUserProfileImage()" alt="user" style="margin-top: 1rem;width: 2rem;height: 2rem;">
+                        </div>
+                        <ul class="dropdown-menu pullDown">
+                            <li class="body">
+                                <ul class="user_dw_menu">
+                                    <li>
+                                        <a href="#" onClick="return false;">
+                                            <i class="material-icons">person</i>@Resource.Profile
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-controller="Account" asp-action="Logout" onClick="return false;">
+                                            <i class="material-icons">power_settings_new</i>@Resource.Logout
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- #END# Tasks -->
+                    <li class="pull-right">
+                        <a href="#" onClick="return false;" class="js-right-sidebar" data-close="true">
+                            <i class="nav-hdr-btn ti-layout-grid2"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- #Top Bar -->
+    <div>
+        <!-- Left Sidebar -->
+        <aside id="leftsidebar" class="sidebar">
+            <!-- Menu -->
+            <div class="menu">
+                <ul class="list">
+                    <li>
+                        <div class="sidebar-profile clearfix">
+                            <div class="profile-img">
+                                <img src="@User.GetUserProfileImage()" alt="profile">
+                            </div>
+                            <div class="profile-info">
+                                <h3>@User.GetFullName()</h3>
+                                <p>خوش آمدید !</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="active">
+                        <a asp-controller="Home" asp-action="Index" class=" waves-effect waves-block">
+                            <i class="menu-icon ti-home"></i>
+                            <span>@Resource.Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="return false;" class="menu-toggle waves-effect waves-block">
+                            <i class="menu-icon ti-user"></i>
+                            <span>@Resource.Profile</span>
+                            <div class="waves-ripple " data-hold="1742227403506" data-scale="scale(26)" data-x="172" data-y="29" style="top:29px;left:172px;-webkit-transform:scale(26);-moz-transform:scale(26);-ms-transform:scale(26);-o-transform:scale(26);transform:scale(26);opacity:1;-webkit-transition-duration:750ms;-moz-transition-duration:750ms;-o-transition-duration:750ms;transition-duration:750ms;-webkit-transition-timing-function:cubic-bezier(0.250, 0.460, 0.450, 0.940);-moz-transition-timing-function:cubic-bezier(0.250, 0.460, 0.450, 0.940);-o-transition-timing-function:cubic-bezier(0.250, 0.460, 0.450, 0.940);transition-timing-function:cubic-bezier(0.250, 0.460, 0.450, 0.940);"></div>
+                        </a>
+                        <ul class="ml-menu" style="display: none;">
+                            <li>
+                                <a href="/User/Profile/Panel" class=" waves-effect waves-block">@Resource.UserPanel</a>
+                            </li>
+                            <li>
+                                <a href="/User/Profile/Edit" class=" waves-effect waves-block">@Resource.Edit</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Account" asp-action="Logout" class=" waves-effect waves-block">@Resource.Logout</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" onclick="return false;" class="menu-toggle waves-effect waves-block">
+                            <i class="menu-icon ti-map"></i>
+                            <span>@Resource.Tours</span>
+                            <div class="waves-ripple " data-hold="1742227403506" data-scale="scale(26)" data-x="172" data-y="29" style="top:29px;left:172px;-webkit-transform:scale(26);-moz-transform:scale(26);-ms-transform:scale(26);-o-transform:scale(26);transform:scale(26);opacity:1;-webkit-transition-duration:750ms;-moz-transition-duration:750ms;-o-transition-duration:750ms;transition-duration:750ms;-webkit-transition-timing-function:cubic-bezier(0.250, 0.460, 0.450, 0.940);-moz-transition-timing-function:cubic-bezier(0.250, 0.460, 0.450, 0.940);-o-transition-timing-function:cubic-bezier(0.250, 0.460, 0.450, 0.940);transition-timing-function:cubic-bezier(0.250, 0.460, 0.450, 0.940);"></div>
+                        </a>
+                        <ul class="ml-menu" style="display: none;">
+                            @if (User.CheckRole(UserRoles.Admin))
+                            {
+                                <li>
+                                    <a href="/User/Tours/Index" class=" waves-effect waves-block">@Resource.List</a>
+                                </li>
+                                <li>
+                                    <a href="/User/Tours/Create" class=" waves-effect waves-block">@Resource.Add</a>
+                                </li>
+                            }
+                            <li>
+                                <a href="/User/Tours/My" class=" waves-effect waves-block">تور های من</a>
+                            </li>
+                            <li>
+                                <a href="/Travels/Basket" class=" waves-effect waves-block">سبد سفر</a>
+                            </li>
+                            <li>
+                                <a href="/User/Tours/FavoriteTours" class=" waves-effect waves-block">لیست علاقه مندی ها</a>
+                            </li>
+                            <li>
+                                <a href="/User/Tours/Suggested" class=" waves-effect waves-block">تور های پیشنهادی</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    @if (User.CheckRole(UserRoles.Admin))
+                    {
+                        <li>
+                            <a href="#" onclick="return false;" class="menu-toggle waves-effect waves-block">
+                                <i class="menu-icon ti-flag"></i>
+                                <span>@Resource.Destination</span>
+                                <div class="waves-ripple " data-hold="1742227403506" data-scale="scale(26)" data-x="172" data-y="29" style="top:29px;left:172px;-webkit-transform:scale(26);-moz-transform:scale(26);-ms-transform:scale(26);-o-transform:scale(26);transform:scale(26);opacity:1;-webkit-transition-duration:750ms;-moz-transition-duration:750ms;-o-transition-duration:750ms;transition-duration:750ms;-webkit-transition-timing-function:cubic-bezier(0.250, 0.460, 0.450, 0.940);-moz-transition-timing-function:cubic-bezier(0.250, 0.460, 0.450, 0.940);-o-transition-timing-function:cubic-bezier(0.250, 0.460, 0.450, 0.940);transition-timing-function:cubic-bezier(0.250, 0.460, 0.450, 0.940);"></div>
+                            </a>
+                            <ul class="ml-menu" style="display: none;">
+                                <li>
+                                    <a href="/User/Destinations/Index" class=" waves-effect waves-block">@Resource.List</a>
+                                </li>
+                                <li>
+                                    <a href="/User/Destinations/Create" class=" waves-effect waves-block">@Resource.Add</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="#" onclick="return false;" class="menu-toggle waves-effect waves-block">
+                                <i class="menu-icon ti-thought"></i>
+                                <span>@Resource.Personality</span>
+                                <div class="waves-ripple " data-hold="1742227403506" data-scale="scale(26)" data-x="172" data-y="29" style="top:29px;left:172px;-webkit-transform:scale(26);-moz-transform:scale(26);-ms-transform:scale(26);-o-transform:scale(26);transform:scale(26);opacity:1;-webkit-transition-duration:750ms;-moz-transition-duration:750ms;-o-transition-duration:750ms;transition-duration:750ms;-webkit-transition-timing-function:cubic-bezier(0.250, 0.460, 0.450, 0.940);-moz-transition-timing-function:cubic-bezier(0.250, 0.460, 0.450, 0.940);-o-transition-timing-function:cubic-bezier(0.250, 0.460, 0.450, 0.940);transition-timing-function:cubic-bezier(0.250, 0.460, 0.450, 0.940);"></div>
+                            </a>
+                            <ul class="ml-menu" style="display: none;">
+                                <li>
+                                    <a href="/User/Personality/Index" class=" waves-effect waves-block">@Resource.List</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="#" onclick="return false;" class="menu-toggle waves-effect waves-block">
+                                <i class="menu-icon ti-panel"></i>
+                                <span>اطلاعات پایه</span>
+                                <div class="waves-ripple " data-hold="1742227403506" data-scale="scale(26)" data-x="172" data-y="29" style="top:29px;left:172px;-webkit-transform:scale(26);-moz-transform:scale(26);-ms-transform:scale(26);-o-transform:scale(26);transform:scale(26);opacity:1;-webkit-transition-duration:750ms;-moz-transition-duration:750ms;-o-transition-duration:750ms;transition-duration:750ms;-webkit-transition-timing-function:cubic-bezier(0.250, 0.460, 0.450, 0.940);-moz-transition-timing-function:cubic-bezier(0.250, 0.460, 0.450, 0.940);-o-transition-timing-function:cubic-bezier(0.250, 0.460, 0.450, 0.940);transition-timing-function:cubic-bezier(0.250, 0.460, 0.450, 0.940);"></div>
+                            </a>
+                            <ul class="ml-menu" style="display: none;">
+                                <li>
+                                    <a href="/User/BaseEntity/Index?entity=Category" class=" waves-effect waves-block">@Resource.Category</a>
+                                </li>
+                                <li>
+                                    <a href="/User/BaseEntity/Index?entity=TourType" class=" waves-effect waves-block">@Resource.TourType</a>
+                                </li>
+                                <li>
+                                    <a href="/User/BaseEntity/Index?entity=DestinationType" class=" waves-effect waves-block">@Resource.DestinationType</a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <!-- #Menu -->
+        </aside>
+        <!-- #END# Left Sidebar -->
+        <!-- Right Sidebar -->
+        <aside id="rightsidebar" class="right-sidebar">
+            <ul class="nav nav-tabs tab-nav-right" role="tablist">
+                <li role="presentation">
+                    <a href="#skins" data-toggle="tab" class="active">پوسته ها</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane in active in active stretchLeft" id="skins">
+                    <div class="demo-skin">
+                        <div class="rightSetting">
+                            <p>رنگ منو نوار کناری</p>
+                            <button type="button" class="btn btn-sidebar-light btn-border-radius p-l-20 p-r-20">روشن</button>
+                            <button type="button" class="btn btn-sidebar-dark btn-default btn-border-radius p-l-20 p-r-20">تاریک</button>
+                        </div>
+                        <div class="rightSetting">
+                            <p>رنگ قالب</p>
+                            <button type="button" class="btn btn-theme-light btn-border-radius p-l-20 p-r-20">روشن</button>
+                            <button type="button" class="btn btn-theme-dark btn-default btn-border-radius p-l-20 p-r-20">تاریک</button>
+                        </div>
+                        <div class="rightSetting">
+                            <p>پوسته ها</p>
+                            <ul class="demo-choose-skin choose-theme list-unstyled">
+                                <li data-theme="black" class="actived">
+                                    <div class="black-theme"></div>
+                                </li>
+                                <li data-theme="white">
+                                    <div class="white-theme white-theme-border"></div>
+                                </li>
+                                <li data-theme="purple">
+                                    <div class="purple-theme"></div>
+                                </li>
+                                <li data-theme="blue">
+                                    <div class="blue-theme"></div>
+                                </li>
+                                <li data-theme="cyan">
+                                    <div class="cyan-theme"></div>
+                                </li>
+                                <li data-theme="green">
+                                    <div class="green-theme"></div>
+                                </li>
+                                <li data-theme="orange">
+                                    <div class="orange-theme"></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!-- #END# Right Sidebar -->
+    </div>
+    <section class="content" role="main" style="height: 40.6rem;">
+        @RenderBody()
+    </section>
+    <!-- Plugins Js -->
+    <script src="/user/js/app.min.js"></script>
+    <!-- Custom Js -->
+    <script src="/user/js/admin.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/@@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
+    <script type="text/javascript" src="~/js/jquery.toast.js/jquery.toast.js"></script> @*اسکریت مربوط به آلرت*@
+    <script type="text/javascript" src="~/js/site.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>
