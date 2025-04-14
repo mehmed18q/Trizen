@@ -10,7 +10,7 @@ using Trizen.Infrastructure.Interfaces;
 
 namespace Trizen.Application.Services;
 
-public class PersonalityService(IPersonalityRepository repository, IUnitOfWork unitOfWork) : IPersonalityService, IRegisterScoped
+public class PersonalityService(IPersonalityRepository repository, IUnitOfWork unitOfWork) : IPersonalityService, IRegisterServices
 {
     private readonly IPersonalityRepository _repository = repository;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;

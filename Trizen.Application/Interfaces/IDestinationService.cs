@@ -13,4 +13,6 @@ public interface IDestinationService
     Task<Response<bool>> DestinationCategoryInsertUpdate(CategoryDestinationDto dto);
     Task<Response<DestinationViewModel>> Get(int id);
     Task<ListResponse<DestinationViewModel>> GetAll(SearchDestinationDto dto);
+    Task<Response<DestinationViewModel>> GetById(int id, int userId);
+    Task<ListResponse<DestinationViewModel>> GetFavoriteDestinations(int userId);
 }

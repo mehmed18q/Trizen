@@ -17,10 +17,11 @@ using Trizen.Infrastructure.Utilities;
 
 namespace Trizen.Application.Services;
 
-internal class UserService(IUserRepository repository, IUnitOfWork unitOfWork, IMapper mapper, IOptions<TrizenConfiguration> configuration, ITourRepository tourRepository) : IUserService, IRegisterScoped
+internal class UserService(IUserRepository repository, IUnitOfWork unitOfWork, IMapper mapper, IOptions<TrizenConfiguration> configuration, ITourRepository tourRepository, IDestinationRepository destinationRepository) : IUserService, IRegisterServices
 {
     private readonly IUserRepository _repository = repository;
     private readonly ITourRepository _tourRepository = tourRepository;
+    private readonly IDestinationRepository _destinationRepository = destinationRepository;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IMapper _mapper = mapper;
     private readonly TrizenConfiguration _configuration = configuration.Value;
@@ -104,6 +105,34 @@ internal class UserService(IUserRepository repository, IUnitOfWork unitOfWork, I
         return Response<string>.FailResult(Message.Format(Message.EntityNotFound, Resource.Tour));
     }
 
+    public async Task<Response<string>> LikeDestination(LikeDestinationDto dto)
+    {
+        if (await _destinationRepository.Any(dto.DestinationId))
+        {
+            DestinationObserve model = _mapper.Map<DestinationObserve>(dto);
+
+            if (await _repository.AnyLikeDestination(dto.UserId, dto.DestinationId))
+            {
+                DestinationObserve? observe = await _repository.GetDestinationObserve(model);
+                if (observe is not null)
+                {
+                    observe.ObserveType = ObserveType.Visit;
+                    await _repository.UpdateDestinationObserve(observe);
+                    await _unitOfWork.SaveChangesAsync();
+
+                    return Response<string>.SuccessResult(Message.Success);
+                }
+            }
+            else
+            {
+                await _repository.ObserveDestination(model);
+                await _unitOfWork.SaveChangesAsync();
+                return Response<string>.SuccessResult(Message.LikeTourSuccess);
+            }
+        }
+        return Response<string>.FailResult(Message.Format(Message.EntityNotFound, Resource.Destination));
+    }
+
     public async Task VisitTour(LikeTourDto dto)
     {
         if (await _tourRepository.Any(dto.TourId))
@@ -145,8 +174,9 @@ internal class UserService(IUserRepository repository, IUnitOfWork unitOfWork, I
             Password = dto.Password.HashPassword(),
             PhoneNumber = dto.PhoneNumber,
             WalletAmount = _configuration.EntryGiftAmount,
-            Role = dto.InviteCode.IsNotEmpty() && dto.InviteCode == _configuration.InviteCode ? UserRoles.Admin.ToInt() : _configuration.DefaultUserRole.ToInt(),
-            ImageProfile = "DefaultImage.jpg"
+            Role = dto.InviteCode.IsNotEmpty() && dto.InviteCode == _configuration.InviteCode ? UserRoles.Admin : _configuration.DefaultUserRole,
+            Gender = UserGenders.Unset,
+            ImageProfile = Resource.DefaultImage
         };
 
         await _repository.Insert(user);
@@ -179,5 +209,15 @@ internal class UserService(IUserRepository repository, IUnitOfWork unitOfWork, I
             await _repository.ToursCounts(),
             await _repository.DestinationsCounts(),
             await _repository.TravelsCounts());
+    }
+
+    public async Task VisitDestination(LikeDestinationDto dto)
+    {
+        if (await _destinationRepository.Any(dto.DestinationId))
+        {
+            DestinationObserve model = _mapper.Map<DestinationObserve>(dto);
+            await _repository.ObserveDestination(model);
+            await _unitOfWork.SaveChangesAsync();
+        }
     }
 }

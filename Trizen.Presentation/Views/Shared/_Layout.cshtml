@@ -26,8 +26,7 @@
     <link rel="stylesheet" href="/Trizen/css/flag-icon.min.css">
     <link rel="stylesheet" href="/Trizen/css/style.css">
     <link rel="stylesheet" href="/Trizen/css/style-rtl.css">
-    <link rel="stylesheet" href="~/customize/css/styletoast/jquery.toast.css" />
-    <link rel="stylesheet" href="~/css/styletoast/jquery.toast.css" />
+    <link rel="stylesheet" href="/css/StyleToast/jquery.toast.css" />
     <link rel="stylesheet" href="https://unpkg.com/@@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
     @await RenderSectionAsync("Styles", required: false)
 </head>
@@ -66,6 +65,10 @@
                                         
                                         <li>
                                             <a asp-controller="Tours" asp-action="Index"> @Resource.Tours </a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Destinations" asp-action="Index"> @Resource.Destinations </a>
+
                                         </li>
                                         @if (User.Identity.IsAuthenticated)
                                         {

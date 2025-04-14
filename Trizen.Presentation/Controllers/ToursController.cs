@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Trizen.Presentation.Controllers;
 using Trizen.Application.Interfaces;
 using Trizen.Data.Tour.ViewModel;
 using Trizen.Data.User.Dto;
@@ -35,7 +34,8 @@ namespace Trizen.Presentation.Controllers
             {
                 int userId = User.GetUserId();
                 Response<TourViewModel> tour = await _tourService.Get(id, userId);
-                if (tour.Data is not null)
+                if (tour.Data is not null && User.Identity.IsAuthenticated)
+
                 {
                     await _userService.VisitTour(new LikeTourDto
                     {

@@ -27,6 +27,9 @@ public record UpdateProfileDto
     [Display(Name = Resource.Personality)]
     public int? PersonalityId { get; set; }
 
+    [Display(Name = Resource.Gender)]
+    public int? GenderId { get; set; }
+
     [Display(Name = Resource.Email)]
     [EmailAddress(ErrorMessage = Message.EmailAddressError)]
     [MaxLength(500, ErrorMessage = Message.MaxLengthError)]

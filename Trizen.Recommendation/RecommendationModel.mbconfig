@@ -1,0 +1,270 @@
+﻿{
+  "Scenario": "Recommendation",
+  "DataSource": {
+    "Type": "SQL",
+    "Version": 1,
+    "ColumnProperties": [
+      {
+        "ColumnName": "Id",
+        "ColumnPurpose": "Ignore",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "BatchId",
+        "ColumnPurpose": "Ignore",
+        "ColumnDataFormat": "String",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "UserId",
+        "ColumnPurpose": "User",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "PersonalityId",
+        "ColumnPurpose": "Ignore",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": true,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "UserAge",
+        "ColumnPurpose": "Ignore",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "SuggestTime",
+        "ColumnPurpose": "Ignore",
+        "ColumnDataFormat": "DateTime",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "TourId",
+        "ColumnPurpose": "Item",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "Score",
+        "ColumnPurpose": "Label",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "Gender",
+        "ColumnPurpose": "Ignore",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": true,
+        "Type": "Column",
+        "Version": 5
+      }
+    ],
+    "ConnectionString": "Data Source=.;Initial Catalog=TrizenDB;Integrated Security=True;Trust Server Certificate=True",
+    "CommandString": "SELECT CAST([UserId] as REAL), CAST([TourId] as REAL), CAST([Score] as REAL) FROM [dbo].[SuggestedTours]",
+    "DatabaseName": "TrizenDB",
+    "SelectedTableDbo": "dbo",
+    "TableName": "SuggestedTours"
+  },
+  "Environment": {
+    "Type": "LocalCPU",
+    "Version": 1
+  },
+  "RunHistory": {
+    "Version": 3,
+    "Type": "Result",
+    "Trials": [
+      {
+        "Version": 1,
+        "Type": "Trial",
+        "TrainerName": "MatrixFactorization",
+        "Score": 1.0,
+        "RuntimeInSeconds": 9.141,
+        "Parameter": {
+          "_SCHEMA_": "e0 * e1 * e2 * e3 * e4",
+          "e0": {
+            "OutputColumnName": "TourId",
+            "InputColumnName": "TourId",
+            "AddKeyValueAnnotationsAsText": false
+          },
+          "e1": {
+            "OutputColumnName": "UserId",
+            "InputColumnName": "UserId",
+            "AddKeyValueAnnotationsAsText": false
+          },
+          "e2": {
+            "LabelColumnName": "Score",
+            "MatrixColumnIndexColumnName": "UserId",
+            "MatrixRowIndexColumnName": "TourId",
+            "ApproximationRank": 21,
+            "LearningRate": 0.4021074711539957,
+            "NumberOfIterations": 281,
+            "Quiet": true
+          },
+          "e3": {
+            "OutputColumnName": "UserId",
+            "InputColumnName": "UserId"
+          },
+          "e4": {
+            "OutputColumnName": "TourId",
+            "InputColumnName": "TourId"
+          }
+        }
+      },
+      {
+        "Version": 1,
+        "Type": "Trial",
+        "TrainerName": "MatrixFactorization",
+        "Score": 1.0,
+        "RuntimeInSeconds": 20.638,
+        "Parameter": {
+          "_SCHEMA_": "e0 * e1 * e2 * e3 * e4",
+          "e0": {
+            "OutputColumnName": "TourId",
+            "InputColumnName": "TourId",
+            "AddKeyValueAnnotationsAsText": false
+          },
+          "e1": {
+            "OutputColumnName": "UserId",
+            "InputColumnName": "UserId",
+            "AddKeyValueAnnotationsAsText": false
+          },
+          "e2": {
+            "LabelColumnName": "Score",
+            "MatrixColumnIndexColumnName": "UserId",
+            "MatrixRowIndexColumnName": "TourId",
+            "ApproximationRank": 44,
+            "LearningRate": 0.072658329745536085,
+            "NumberOfIterations": 634,
+            "Quiet": true
+          },
+          "e3": {
+            "OutputColumnName": "UserId",
+            "InputColumnName": "UserId"
+          },
+          "e4": {
+            "OutputColumnName": "TourId",
+            "InputColumnName": "TourId"
+          }
+        }
+      },
+      {
+        "Version": 1,
+        "Type": "Trial",
+        "TrainerName": "MatrixFactorization",
+        "Score": 1.0,
+        "RuntimeInSeconds": 8.77,
+        "Parameter": {
+          "_SCHEMA_": "e0 * e1 * e2 * e3 * e4",
+          "e0": {
+            "OutputColumnName": "TourId",
+            "InputColumnName": "TourId",
+            "AddKeyValueAnnotationsAsText": false
+          },
+          "e1": {
+            "OutputColumnName": "UserId",
+            "InputColumnName": "UserId",
+            "AddKeyValueAnnotationsAsText": false
+          },
+          "e2": {
+            "LabelColumnName": "Score",
+            "MatrixColumnIndexColumnName": "UserId",
+            "MatrixRowIndexColumnName": "TourId",
+            "ApproximationRank": 17,
+            "LearningRate": 0.045544653384181878,
+            "NumberOfIterations": 269,
+            "Quiet": true
+          },
+          "e3": {
+            "OutputColumnName": "UserId",
+            "InputColumnName": "UserId"
+          },
+          "e4": {
+            "OutputColumnName": "TourId",
+            "InputColumnName": "TourId"
+          }
+        }
+      },
+      {
+        "Version": 1,
+        "Type": "Trial",
+        "TrainerName": "MatrixFactorization",
+        "Score": 1.0,
+        "RuntimeInSeconds": 12.683,
+        "Parameter": {
+          "_SCHEMA_": "e0 * e1 * e2 * e3 * e4",
+          "e0": {
+            "OutputColumnName": "TourId",
+            "InputColumnName": "TourId",
+            "AddKeyValueAnnotationsAsText": false
+          },
+          "e1": {
+            "OutputColumnName": "UserId",
+            "InputColumnName": "UserId",
+            "AddKeyValueAnnotationsAsText": false
+          },
+          "e2": {
+            "LabelColumnName": "Score",
+            "MatrixColumnIndexColumnName": "UserId",
+            "MatrixRowIndexColumnName": "TourId",
+            "ApproximationRank": 30,
+            "LearningRate": 0.18808438615451603,
+            "NumberOfIterations": 389,
+            "Quiet": true
+          },
+          "e3": {
+            "OutputColumnName": "UserId",
+            "InputColumnName": "UserId"
+          },
+          "e4": {
+            "OutputColumnName": "TourId",
+            "InputColumnName": "TourId"
+          }
+        }
+      }
+    ],
+    "Estimators": {
+      "e0": "MapValueToKey",
+      "e1": "MapValueToKey",
+      "e2": "MatrixFactorization",
+      "e3": "MapKeyToValue",
+      "e4": "MapKeyToValue"
+    },
+    "Schema": "e0 * e1 * e2 * e3 * e4",
+    "MetricName": "RSquared",
+    "ModelFilePath": "C:\\Users\\mehme\\source\\repos\\Trizen\\Trizen.Recommendation\\RecommendationModel.mlnet"
+  },
+  "Type": "TrainingConfig",
+  "Version": 5,
+  "TrainingOption": {
+    "Version": 2,
+    "Subsampling": false,
+    "Type": "RecommendationTrainingOption",
+    "TrainingTime": 60,
+    "LabelColumn": "Score",
+    "UserIdColumn": "UserId",
+    "ItemIdColumn": "TourId",
+    "ValidationOption": {
+      "Version": 0,
+      "Type": "CrossValidationValidationOption",
+      "NumberOfFolds": 5
+    }
+  }
+}

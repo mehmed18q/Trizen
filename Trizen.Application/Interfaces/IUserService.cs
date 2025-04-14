@@ -15,4 +15,6 @@ public interface IUserService
     Task VisitTour(LikeTourDto dto);
     Task<(bool, bool, bool)> CheckProfileStatus(int userId);
     Task<(int, int, int, int)> GetSiteStatus();
+    Task VisitDestination(LikeDestinationDto likeDestinationDto);
+    Task<Response<string>> LikeDestination(LikeDestinationDto likeDestinationDto);
 }

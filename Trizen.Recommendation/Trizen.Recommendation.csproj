@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.ML" Version="3.0.1" />
+		<PackageReference Include="Microsoft.ML.Recommender" Version="0.21.1" />
+		<PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="RecommendationModel.mlnet">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Trizen.Infrastructure\Trizen.Infrastructure.csproj" />
+	</ItemGroup>
+
+</Project>

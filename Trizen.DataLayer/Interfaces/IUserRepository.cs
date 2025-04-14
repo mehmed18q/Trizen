@@ -18,4 +18,8 @@ public interface IUserRepository
     Task<int> ToursCounts();
     Task<int> DestinationsCounts();
     Task<int> TravelsCounts();
+    Task<bool> AnyLikeDestination(int userId, int destinationId);
+    Task<DestinationObserve?> GetDestinationObserve(DestinationObserve model);
+    Task UpdateDestinationObserve(DestinationObserve observe);
+    Task ObserveDestination(DestinationObserve model);
 }

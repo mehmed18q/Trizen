@@ -6,7 +6,7 @@ using Trizen.Infrastructure.Interfaces;
 
 namespace Trizen.DataLayer.Repositories;
 
-internal class TravelRepository(TrizenDbContext dbContext) : ITravelRepository, IRepositoryScoped
+internal class TravelRepository(TrizenDbContext dbContext) : ITravelRepository, IRegisterRepositories
 {
     private readonly TrizenDbContext _dbContext = dbContext;
 

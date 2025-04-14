@@ -40,7 +40,7 @@
                    aria-expanded="false"></a>
                 <a href="#" onClick="return false;" class="bars"></a>
                 <a class="navbar-brand" asp-controller="Home" asp-action="Index">
-                    <img src="/Trizen/images/logo.png" alt="@Resource.Trizen" title="@Resource.Trizen" />
+                    <img id="menu_option" src="/Trizen/images/logo.png" alt="@Resource.Trizen" title="@Resource.Trizen" />
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
@@ -230,13 +230,13 @@
                     <div class="demo-skin">
                         <div class="rightSetting">
                             <p>رنگ منو نوار کناری</p>
-                            <button type="button" class="btn btn-sidebar-light btn-border-radius p-l-20 p-r-20">روشن</button>
-                            <button type="button" class="btn btn-sidebar-dark btn-default btn-border-radius p-l-20 p-r-20">تاریک</button>
+                            <button type="button" class="btn btn-sidebar-light btn-border-radius p-l-20 p-r-20 ChangeLogo">روشن</button>
+                            <button type="button" class="btn btn-sidebar-dark btn-default btn-border-radius p-l-20 p-r-20 ChangeLogo">تاریک</button>
                         </div>
                         <div class="rightSetting">
                             <p>رنگ قالب</p>
-                            <button type="button" class="btn btn-theme-light btn-border-radius p-l-20 p-r-20">روشن</button>
-                            <button type="button" class="btn btn-theme-dark btn-default btn-border-radius p-l-20 p-r-20">تاریک</button>
+                            <button type="button" class="btn btn-theme-light btn-border-radius p-l-20 p-r-20 ChangeLogo">روشن</button>
+                            <button type="button" class="btn btn-theme-dark btn-default btn-border-radius p-l-20 p-r-20 ChangeLogo">تاریک</button>
                         </div>
                         <div class="rightSetting">
                             <p>پوسته ها</p>
@@ -280,6 +280,23 @@
     <script type="text/javascript" src="https://unpkg.com/@@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
     <script type="text/javascript" src="~/js/jquery.toast.js/jquery.toast.js"></script> @*اسکریت مربوط به آلرت*@
     <script type="text/javascript" src="~/js/site.js"></script>
+    <script>
+        function ChangeLogo(){
+            var menu = localStorage.getItem("menu_option");
+            if (menu == "menu_light"){
+                document.getElementById("menu_option").src = "/Trizen/images/logo.png";
+            }
+            else{
+                document.getElementById("menu_option").src = "/Trizen/images/logo2.png";
+            }
+        }
+        ChangeLogo();
+
+        $(".ChangeLogo").click(function(){
+            ChangeLogo();
+        });
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 

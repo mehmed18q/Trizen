@@ -105,6 +105,22 @@
                         <span asp-validation-for="PersonalityId"></span>
                     </div>
 
+                    <label asp-for="GenderId"></label>
+                    <div class="form-group select-wrapper col-6">
+                        <select asp-for="GenderId" style="display:flex" class="theme-black btn-primary">
+                            <option value="">
+                                @Resource.PleaseSelect
+                            </option>
+                            @foreach (ListViewModel item in ViewBag.UserGenders.Data)
+                            {
+                                <option value="@item.Id">
+                                    @item.Title
+                                </option>
+                            }
+                        </select>
+                        <span asp-validation-for="GenderId"></span>
+                    </div>
+
                     <button type="submit" class="btn btn-primary m-t-15 waves-effect ">@Resource.Edit</button>
                 </form>
             </div>

@@ -8,19 +8,19 @@ using Trizen.Infrastructure.Interfaces;
 
 namespace Trizen.Application.Mappers
 {
-    internal class TourMapperConfig : Profile, IRegisterMapper
+    internal class TourMapperConfig : Profile, IRegisterMappers
     {
         public TourMapperConfig()
         {
             _ = CreateMap<CreateTourDto, Tour>()
-                 .ForMember(destination => destination.StartTime, option => option.MapFrom(source => source.StartTime.ToMiladi()))
-                  .ForMember(destination => destination.EndTime, option => option.MapFrom(source => source.EndTime.ToMiladi()));
+                 .ForMember(destination => destination.StartTime, option => option.MapFrom(source => source.StartTime.ToGregorian()))
+                  .ForMember(destination => destination.EndTime, option => option.MapFrom(source => source.EndTime.ToGregorian()));
 
             _ = CreateMap<TourViewModel, UpdateTourDto>();
 
             _ = CreateMap<UpdateTourDto, Tour>()
-                               .ForMember(destination => destination.StartTime, option => option.MapFrom(source => source.StartTime.ToMiladi()))
-                  .ForMember(destination => destination.EndTime, option => option.MapFrom(source => source.EndTime.ToMiladi()))
+                               .ForMember(destination => destination.StartTime, option => option.MapFrom(source => source.StartTime.ToGregorian()))
+                  .ForMember(destination => destination.EndTime, option => option.MapFrom(source => source.EndTime.ToGregorian()))
                 .ForMember(destination => destination.Image, option => option.Ignore());
 
             _ = CreateMap<Tour, TourViewModel>()

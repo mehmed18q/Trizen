@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Trizen.Presentation.Controllers;
 using Trizen.Application.Interfaces;
 using Trizen.Data.User.Dto;
 using Trizen.Data.User.ViewModel;
@@ -95,6 +94,25 @@ namespace Trizen.Presentation.Controllers
                 {
                     UserId = userId,
                     TourId = tourId,
+                    IsLiked = true,
+                    ObserveType = ObserveType.Like
+                });
+
+                return result;
+            }
+            return Response<string>.FailResult(Message.YouAreNotLogin, Message.YouAreNotLogin);
+        }
+
+        [HttpPost]
+        public async Task<Response<string>> LikeDestination(int destinationId)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                int userId = User.GetUserId();
+                Response<string> result = await _service.LikeDestination(new LikeDestinationDto
+                {
+                    UserId = userId,
+                    DestinationId = destinationId,
                     IsLiked = true,
                     ObserveType = ObserveType.Like
                 });

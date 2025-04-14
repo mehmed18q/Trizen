@@ -12,4 +12,5 @@ public interface IDestinationRepository
     Task<Destination?> Get(int id);
     Task<List<Destination>> GetAll(SearchDestinationDto dto);
     Task<bool> AnyCategory(int category);
+    Task<List<Destination>> GetFavoriteDestinations(int userId);
 }

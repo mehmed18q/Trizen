@@ -2,12 +2,13 @@
 using Trizen.Data.Destination.Dto;
 using Trizen.DataLayer.Entities;
 using Trizen.DataLayer.Interfaces;
+using Trizen.Infrastructure.Enumerations;
 using Trizen.Infrastructure.Extensions;
 using Trizen.Infrastructure.Interfaces;
 
 namespace Trizen.DataLayer.Repositories;
 
-internal class DestinationRepository(TrizenDbContext dbContext) : IDestinationRepository, IRepositoryScoped
+internal class DestinationRepository(TrizenDbContext dbContext) : IDestinationRepository, IRegisterRepositories
 {
     private readonly TrizenDbContext _dbContext = dbContext;
 
@@ -31,7 +32,9 @@ internal class DestinationRepository(TrizenDbContext dbContext) : IDestinationRe
     {
         Destination? destination = await _dbContext.Destinations
             .Include(destination => destination.DestinationType)
-            .Include(destination => destination.DestinationCategories)
+            .Include(destination => destination.DestinationCategories).ThenInclude(destinationCategories => destinationCategories.Category)
+            .Include(destination => destination.DestinationObserves)
+            .Include(destination => destination.Tours)
             .FirstOrDefaultAsync(destination => destination.Id == id);
 
         return destination;
@@ -42,8 +45,11 @@ internal class DestinationRepository(TrizenDbContext dbContext) : IDestinationRe
         List<Destination> destination = await _dbContext.Destinations
             .Paging(dto.Pagination)
             .Include(destination => destination.DestinationType)
-            .Include(destination => destination.DestinationCategories)
-            .ToListAsync();
+            .Include(destination => destination.DestinationCategories).ThenInclude(destinationCategories => destinationCategories.Category)
+            .Include(destination => destination.DestinationObserves)
+            .Include(destination => destination.Tours)
+         .If(dto.Title.IsNotEmpty(), query => query.Where(destination => destination.Title.Contains(dto.Title!) || (destination.Description != null && destination.Description.Contains(dto.Title!))))
+            .If(dto.DestinationTypeId.IsNotZeroOrNull(), query => query.Where(destination => destination.DestinationTypeId == dto.DestinationTypeId)).ToListAsync();
 
         return destination;
     }
@@ -74,5 +80,17 @@ internal class DestinationRepository(TrizenDbContext dbContext) : IDestinationRe
         bool exists = await _dbContext.Categories.AnyAsync(category => category.Id == id);
 
         return exists;
+    }
+
+    public async Task<List<Destination>> GetFavoriteDestinations(int userId)
+    {
+        List<Destination> observedDestination = await _dbContext.DestinationObserves.Where(destinationObserve => destinationObserve.ObserverUserId == userId && destinationObserve.ObserveType == ObserveType.Like)
+              .Include(destinationObserve => destinationObserve.Destination).ThenInclude(destination => destination.DestinationType)
+              .Include(destinationObserve => destinationObserve.Destination).ThenInclude(destination => destination.DestinationObserves)
+              .Include(destinationObserve => destinationObserve.Destination).ThenInclude(destination => destination.DestinationCategories).ThenInclude(destinationCategories => destinationCategories.Category)
+              .Include(destinationObserve => destinationObserve.Destination).ThenInclude(destination => destination.Tours)
+              .Select(destinationObserve => destinationObserve.Destination).ToListAsync();
+
+        return observedDestination;
     }
 }

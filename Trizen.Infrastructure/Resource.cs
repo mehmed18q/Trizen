@@ -24,7 +24,6 @@ public static class Resource
     public const string TourType = "نوع تور";
     public const string StartTime = "زمان شروع";
     public const string EndTime = "زمان پایان";
-    public const string GeographicalLocation = "موقعیت جغرافیایی";
     public const string DestinationType = "نوع مقصد";
     public const string North = "شمال";
     public const string Northeast = "شمال-شرقی";
@@ -62,6 +61,7 @@ public static class Resource
     public const string Role = "نقش";
     public const string NoPhotoImage = "NoPhotoImage";
     public const string Tours = "تور ها";
+    public const string Destinations = "مقصد ها";
     public const string Add = "افزودن";
     public const string List = "فهرست";
     public const string Code = "کد";
@@ -88,6 +88,14 @@ public static class Resource
     public const string NotFound = "درخواست یافت نشد";
     public const string InternalServerError = "خطای داخلی";
     public const string InviteCode = "کد دعوت";
+    public const string SuggestTime = "زمان پیشنهاد";
+    public const string Score = "امتیاز";
+    public const string Age = "سن";
+    public const string Unset = "نامشخص";
+    public const string Man = "مرد";
+    public const string Woman = "زن";
+    public const string Gender = "جنسیت";
+    public const string DefaultImage = "DefaultImage.png";
 }
 
 public static class Message

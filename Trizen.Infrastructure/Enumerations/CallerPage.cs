@@ -5,5 +5,6 @@ public enum CallerPage
     Home,
     Search,
     Details,
-    User
+    User,
+    Destination
 }

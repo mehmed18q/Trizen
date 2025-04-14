@@ -5,7 +5,7 @@ using Trizen.Infrastructure.Interfaces;
 
 namespace Trizen.Application.Mappers
 {
-    internal class ListMapperConfig : Profile, IRegisterMapper
+    internal class ListMapperConfig : Profile, IRegisterMappers
     {
         public ListMapperConfig()
         {

@@ -3,7 +3,7 @@
 public interface IDapperService<TParam, TRes> where TParam : class where TRes : class
 {
     public Task<bool> Procedure(string procedure, TParam parameters);
-    public Task<IEnumerable<TRestM>> Query<TRestM>(string query, TParam parameters);
+    public Task<List<TRestM>> Query<TRestM>(string query, TParam? parameters = null);
     public Task<TRestM?> FirstResultQuery<TRestM>(string query, TParam parameters);
     public Task<(IEnumerable<T1>, IEnumerable<T2>)> MultiQuery<T1, T2>(string query, TParam parameters);
     public Task<(IEnumerable<T1>, IEnumerable<T2>, IEnumerable<T3>)> MultiQuery<T1, T2, T3>(string query, TParam parameters);

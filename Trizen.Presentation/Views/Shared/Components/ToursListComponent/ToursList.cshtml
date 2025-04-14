@@ -164,9 +164,13 @@ else if (Model.Tours.Data.Any())
                         {
                             <h2 class="sec__title">تور های فعال</h2>
                         }
+                        else if (Model.SearchModel.CallerPage == CallerPage.Destination)
+                        {
+                            <h2 class="sec__title ">تور های مرتبط</h2>
+                        }
                         else if (Model.SearchModel.CallerPage == CallerPage.Search || Model.SearchModel.CallerPage == CallerPage.Details)
                         {
-                            <h2 class="sec__title text-white">شاید برات جالب باشه</h2>
+                            <h2 class="sec__title">شاید برات جالب باشه</h2>
                         }
                     </div><!-- end section-heading -->
                 </div><!-- end col-lg-12 -->

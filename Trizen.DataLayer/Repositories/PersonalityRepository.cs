@@ -5,7 +5,7 @@ using Trizen.Infrastructure.Interfaces;
 
 namespace Trizen.DataLayer.Repositories;
 
-internal class PersonalityRepository(TrizenDbContext dbContext) : IPersonalityRepository, IRepositoryScoped
+internal class PersonalityRepository(TrizenDbContext dbContext) : IPersonalityRepository, IRegisterRepositories
 {
     private readonly TrizenDbContext _dbContext = dbContext;
 

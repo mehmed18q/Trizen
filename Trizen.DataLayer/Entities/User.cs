@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Trizen.Infrastructure;
+using Trizen.Infrastructure.Enumerations;
 
 namespace Trizen.DataLayer.Entities;
 
@@ -39,7 +40,10 @@ public class User
     public int? PersonalityId { get; set; }
 
     [Display(Name = Resource.Role)]
-    public int Role { get; set; }
+    public UserRoles Role { get; set; }
+
+    [Display(Name = Resource.Gender)]
+    public UserGenders Gender { get; set; }
 
     [Display(Name = Resource.PhoneNumber)]
     [Required(ErrorMessage = Message.RequiredError)]

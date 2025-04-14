@@ -3,6 +3,7 @@ using Trizen.DataLayer;
 using Trizen.Infrastructure;
 using Trizen.Infrastructure.Middleware;
 using Trizen.Presentation;
+using Trizen.Recommendation;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ builder.Services.AddControllersWithViews();
 #region Registerations
 builder.Services.RegisterInfrastructure();
 builder.Services.RegisterDataLayer();
+builder.Services.RegisterPresentation();
 builder.Services.RegisterApplication();
 builder.Services.RegisterPresentation(builder.Configuration, builder.Logging);
 #endregion

@@ -17,6 +17,6 @@ public interface ITourRepository
     Task<List<Tour>> GetFavoriteTours(int userId);
     Task<List<Tour>> GetMyTours(int userId);
     Task<bool> AnyWithCapacity(int tourId, int capacity);
-    Task<List<Tour>> GetSuggestedTours(int userId);
+    Task<List<Tour>> GetRecommendedTours(int userId, int take = 10);
     Task<bool> CheckHaveTravel(int userId);
 }

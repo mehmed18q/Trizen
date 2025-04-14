@@ -72,7 +72,6 @@ public class DestinationsController : BaseController<DestinationsController>
     public async Task<IActionResult> Create()
     {
         ViewBag.DestinationTypes = await _listService.DestinationTypes();
-        ViewBag.GeographicalLocations = _listService.GeographicalLocations();
 
         return View(new CreateDestinationDto() { Title = string.Empty });
     }
@@ -95,7 +94,6 @@ public class DestinationsController : BaseController<DestinationsController>
         }
 
         ViewBag.DestinationTypes = await _listService.DestinationTypes(dto.DestinationTypeId);
-        ViewBag.GeographicalLocations = _listService.GeographicalLocations(dto.GeographicalLocation);
 
         return View(dto);
     }
@@ -109,7 +107,6 @@ public class DestinationsController : BaseController<DestinationsController>
         }
 
         ViewBag.DestinationTypes = await _listService.DestinationTypes(destination.Data.DestinationTypeId);
-        ViewBag.GeographicalLocations = _listService.GeographicalLocations(destination.Data.GeographicalLocation);
 
         return View(_mapper.Map<UpdateDestinationDto>(destination.Data));
     }
@@ -132,7 +129,6 @@ public class DestinationsController : BaseController<DestinationsController>
         }
 
         ViewBag.DestinationTypes = await _listService.DestinationTypes(dto.DestinationTypeId);
-        ViewBag.GeographicalLocations = _listService.GeographicalLocations(dto.GeographicalLocation);
 
         return View(dto);
     }

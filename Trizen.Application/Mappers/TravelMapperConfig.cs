@@ -7,7 +7,7 @@ using Trizen.Infrastructure.Interfaces;
 
 namespace Trizen.Application.Mappers
 {
-    internal class TravelMapperConfig : Profile, IRegisterMapper
+    internal class TravelMapperConfig : Profile, IRegisterMappers
     {
         public TravelMapperConfig()
         {

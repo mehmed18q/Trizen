@@ -57,20 +57,12 @@
                         </select>
                         <span asp-validation-for="DestinationTypeId"></span>
                     </div>
-                    <label asp-for="GeographicalLocation"></label>
-                    <div class="form-group select-wrapper col-6">
-                        <select asp-for="GeographicalLocation" style="display:flex" class="theme-black btn-primary">
-                            <option value="">
-                                @Resource.PleaseSelect
-                            </option>
-                            @foreach (ListViewModel item in ViewBag.GeographicalLocations.Data)
-                            {
-                                <option value="@item.Id">
-                                    @item.Title
-                                </option>
-                            }
-                        </select>
-                        <span asp-validation-for="GeographicalLocation"></span>
+                    <label asp-for="Description"></label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <textarea class="form-control" asp-for="Description"></textarea>
+                            <span asp-validation-for="Description"></span>
+                        </div>
                     </div>
 
                     <div style="display:flex">

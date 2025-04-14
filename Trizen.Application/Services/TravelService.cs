@@ -12,7 +12,7 @@ using Trizen.Infrastructure.Interfaces;
 
 namespace Trizen.Application.Services;
 
-internal class TravelService(ITravelRepository repository, IUnitOfWork unitOfWork, IMapper mapper, IUserRepository userRepository, ITourRepository tourRepository) : ITravelService, IRegisterScoped
+internal class TravelService(ITravelRepository repository, IUnitOfWork unitOfWork, IMapper mapper, IUserRepository userRepository, ITourRepository tourRepository) : ITravelService, IRegisterServices
 {
     private readonly ITravelRepository _repository = repository;
     private readonly IUserRepository _userRepository = userRepository;

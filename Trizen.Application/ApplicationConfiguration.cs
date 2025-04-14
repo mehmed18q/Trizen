@@ -22,11 +22,11 @@ public static class ApplicationConfiguration
                 return;
             }
 
-            List<Type> registerMapperProfiles = registerMapperAssembly.GetTypes().Where(x => x.IsClass && typeof(IRegisterMapper).IsAssignableFrom(x)).ToList();
+            List<Type> registerMapperProfiles = registerMapperAssembly.GetTypes().Where(x => x.IsClass && typeof(IRegisterMappers).IsAssignableFrom(x)).ToList();
 
             foreach (Type? mapper in registerMapperProfiles)
             {
-                if (typeof(IRegisterMapper).IsAssignableFrom(mapper))
+                if (typeof(IRegisterMappers).IsAssignableFrom(mapper))
                 {
                     if (Activator.CreateInstance(mapper) is Profile profileInstance)
                     {
@@ -47,7 +47,7 @@ public static class ApplicationConfiguration
             return;
         }
 
-        List<Type> registerScopedServices = registerScopedAssembly.GetTypes().Where(x => x.IsClass && (typeof(IRegisterScoped).IsAssignableFrom(x) || typeof(IRegisterHttpClient).IsAssignableFrom(x))).ToList();
+        List<Type> registerScopedServices = registerScopedAssembly.GetTypes().Where(x => x.IsClass && (typeof(IRegisterServices).IsAssignableFrom(x) || typeof(IRegisterHttpClient).IsAssignableFrom(x))).ToList();
 
         foreach (Type? service in registerScopedServices)
         {
@@ -57,7 +57,7 @@ public static class ApplicationConfiguration
                 continue;
             }
 
-            if (typeof(IRegisterScoped).IsAssignableFrom(service))
+            if (typeof(IRegisterServices).IsAssignableFrom(service))
             {
                 _ = services.AddScoped(@interface, service);
             }

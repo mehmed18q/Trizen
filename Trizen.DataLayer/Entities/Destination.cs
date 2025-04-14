@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Trizen.Infrastructure;
-using Trizen.Infrastructure.Enumerations;
 
 namespace Trizen.DataLayer.Entities;
 
@@ -16,9 +15,9 @@ public class Destination
     [MaxLength(500, ErrorMessage = Message.MaxLengthError)]
     public required string Title { get; set; }
 
-    [Display(Name = Resource.GeographicalLocation)]
+    [Display(Name = Resource.Description)]
     [Required(ErrorMessage = Message.RequiredError)]
-    public GeographicalLocation GeographicalLocation { get; set; }
+    public string? Description { get; set; }
 
 
     [Display(Name = Resource.Image)]
@@ -31,7 +30,10 @@ public class Destination
 
     [ForeignKey(nameof(DestinationTypeId))]
     public virtual DestinationType DestinationType { get; set; }
+    public virtual ICollection<DestinationObserve> DestinationObserves { get; set; } = [];
 
     public virtual ICollection<DestinationCategory> DestinationCategories { get; set; } = [];
+
+    public virtual ICollection<Tour> Tours { get; set; } = [];
 
 }

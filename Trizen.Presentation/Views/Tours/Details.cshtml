@@ -125,17 +125,6 @@
                                     </div>
                                 </div><!-- end single-tour-feature -->
                             </div><!-- end col-lg-4 -->
-                            <div class="col-lg-4 responsive-column">
-                                <div class="single-tour-feature d-flex align-items-center mb-3">
-                                    <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
-                                        <i class="la la-map-signs"></i>
-                                    </div>
-                                    <div class="single-feature-titles">
-                                        <h3 class="title font-size-15 font-weight-medium">@Resource.GeographicalLocation</h3>
-                                        <span class="font-size-13">@Model.Destination.GeographicalLocationTitle</span>
-                                    </div>
-                                </div><!-- end single-tour-feature -->
-                            </div><!-- end col-lg-4 -->
                         </div>
                         <p class="card-text py-3">@Model.Description </p>
                         @if (User.Identity.IsAuthenticated)
@@ -151,9 +140,10 @@
                             </ul>
                         </div>
                         <div class="card-img before-none">
-                            <h4 class="card-title font-size-28">@Model.Destination.Title</h4>
+                            <h4 class="card-title font-size-28"><a asp-controller="Destinations" asp-action="Details" asp-route-id="@Model.DestinationId">@Model.Destination.Title</a></h4>
                             <img src="@Model.Destination.Image" alt="@Model.Destination.Title" title="@Model.Destination.Title">
                             <div class="post-tag-wrap d-flex align-items-center justify-content-between py-4">
+                                <p class="card-text py-3">@Model.Description </p>
                                 <ul class="tag-list">
                                     @foreach (var item in Model.Destination.Categories)
                                     {

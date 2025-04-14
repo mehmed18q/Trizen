@@ -18,12 +18,12 @@ public class DapperService<TParam, TRes>(IConfiguration configuration) : IDapper
         return x >= 1;
     }
 
-    public async Task<IEnumerable<TRestM>> Query<TRestM>(string query, TParam parameters)
+    public async Task<List<TRestM>> Query<TRestM>(string query, TParam? parameters = null)
     {
         using SqlConnection connection = new(_connectionString);
         await connection.OpenAsync();
         IEnumerable<TRestM> result = await connection.QueryAsync<TRestM>(query, parameters, commandType: CommandType.StoredProcedure);
-        return result;
+        return result.ToList();
     }
 
     public async Task<TRestM?> FirstResultQuery<TRestM>(string command, TParam parameters)

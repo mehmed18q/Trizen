@@ -17,7 +17,7 @@ using Trizen.Infrastructure.Utilities;
 
 namespace Trizen.Application.Services;
 
-internal class TourService(ITourRepository repository, IUnitOfWork unitOfWork, IMapper mapper, IUserRepository userRepository) : ITourService, IRegisterScoped
+internal class TourService(ITourRepository repository, IUnitOfWork unitOfWork, IMapper mapper, IUserRepository userRepository) : ITourService, IRegisterServices
 {
     private readonly ITourRepository _repository = repository;
     private readonly IUserRepository _userRepository = userRepository;
@@ -64,7 +64,7 @@ internal class TourService(ITourRepository repository, IUnitOfWork unitOfWork, I
             IEnumerable<int> _tourCategories = dto.TourCategories?.Split(',')?.Select(int.Parse) ?? [];
             foreach (int category in _tourCategories)
             {
-                if (await _repository.AnyCategory(category) && !tour.TourCategories.Any(tourCategory => tourCategory.CategoryId == category))
+                if (await _repository.AnyCategory(category) && !tour!.TourCategories.Any(tourCategory => tourCategory.CategoryId == category))
                 {
                     tour.TourCategories.Add(new TourCategory
                     {
@@ -74,7 +74,7 @@ internal class TourService(ITourRepository repository, IUnitOfWork unitOfWork, I
                 }
             }
 
-            IEnumerable<TourCategory> deletes = tour.TourCategories.Where(tourCategory => !_tourCategories.Contains(tourCategory.CategoryId));
+            IEnumerable<TourCategory> deletes = tour!.TourCategories.Where(tourCategory => !_tourCategories.Contains(tourCategory.CategoryId));
             foreach (TourCategory? item in deletes)
             {
                 _ = tour.TourCategories.Remove(item);
@@ -126,8 +126,8 @@ internal class TourService(ITourRepository repository, IUnitOfWork unitOfWork, I
 
     public async Task<ListResponse<TourViewModel>> Search(SearchTourViewModel dto)
     {
-        dto.GoDate = dto.GoDate.ToMiladi();
-        dto.BackDate = dto.BackDate.ToMiladi();
+        dto.GoDate = dto.GoDate.ToGregorian();
+        dto.BackDate = dto.BackDate.ToGregorian();
         List<Tour> result = await _repository.Search(dto);
         dto.Pagination.TotalCount = result.Count;
         List<TourViewModel> tours = MapTours(result, dto.UserId);
@@ -221,7 +221,7 @@ internal class TourService(ITourRepository repository, IUnitOfWork unitOfWork, I
 
     public async Task<ListResponse<TourViewModel>> GetSuggestedTours(int userId)
     {
-        List<Tour> _tours = await _repository.GetSuggestedTours(userId);
+        List<Tour> _tours = await _repository.GetRecommendedTours(userId);
         List<TourViewModel> tours = MapTours(_tours, userId);
 
         return ListResponse<TourViewModel>.SuccessResult(tours);

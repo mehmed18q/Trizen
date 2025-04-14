@@ -11,12 +11,12 @@ public static class DateTimeExtensions
         return value.HasValue && value > DateTime.MinValue;
     }
 
-    public static DateTime? ToMiladi(this DateTime? date)
+    public static DateTime? ToGregorian(this DateTime? date)
     {
-        return date.IsValidDate() ? date!.Value.ToMiladi() : null;
+        return date.IsValidDate() ? date!.Value.ToGregorian() : null;
     }
 
-    public static DateTime? ToMiladi(this DateTime date)
+    public static DateTime? ToGregorian(this DateTime date)
     {
         return new DateTime(date.Year, date.Month, date.Day, PersianCalendar);
     }
@@ -69,6 +69,24 @@ public static class DateTimeExtensions
     public static string ToDate(this DateTime date)
     {
         return date.ToString("yyyy/MM/dd");
+    }
+
+    public static int? GetAge(this DateTime? date)
+    {
+        return date.IsValidDate() ? date!.Value.GetAge() : null;
+    }
+
+    public static int GetAge(this DateTime date)
+    {
+        DateTime today = DateTime.Today;
+        int age = today.Year - date.Year;
+
+        if (date.Date > today.AddYears(-age))
+        {
+            age--;
+        }
+
+        return age;
     }
 
     private static string ToPersianMonth(this PersianCalendar calendar, DateTime dateTime)

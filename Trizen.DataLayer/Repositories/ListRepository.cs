@@ -5,7 +5,7 @@ using Trizen.Infrastructure.Interfaces;
 
 namespace Trizen.DataLayer.Repositories;
 
-internal class ListRepository(TrizenDbContext dbContext) : IListRepository, IRepositoryScoped
+internal class ListRepository(TrizenDbContext dbContext) : IListRepository, IRegisterRepositories
 {
     private readonly TrizenDbContext _dbContext = dbContext;
 

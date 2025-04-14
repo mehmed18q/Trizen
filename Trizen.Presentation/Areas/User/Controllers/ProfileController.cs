@@ -46,6 +46,7 @@ public class ProfileController : BaseController<ProfileController>
         if (result.IsSuccess)
         {
             ViewBag.Personalities = await _listService.Personalities(result.Data!.PersonalityId);
+            ViewBag.UserGenders = _listService.UserGenders(result.Data!.GenderId);
 
             return View(result.Data);
         }
@@ -70,7 +71,8 @@ public class ProfileController : BaseController<ProfileController>
                 ModelState.AddModelError("", result.Message!);
             }
         }
-
+        ViewBag.Personalities = await _listService.Personalities(dto.PersonalityId);
+        ViewBag.UserGenders = _listService.UserGenders(dto.GenderId);
         return View(dto);
     }
 }

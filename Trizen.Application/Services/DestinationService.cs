@@ -10,13 +10,14 @@ using Trizen.DataLayer.Pattern;
 using Trizen.Infrastructure;
 using Trizen.Infrastructure.Base.File;
 using Trizen.Infrastructure.Base.Response;
+using Trizen.Infrastructure.Enumerations;
 using Trizen.Infrastructure.Extensions;
 using Trizen.Infrastructure.Interfaces;
 using Trizen.Infrastructure.Utilities;
 
 namespace Trizen.Application.Services;
 
-internal class DestinationService(IDestinationRepository repository, IUnitOfWork unitOfWork, IMapper mapper) : IDestinationService, IRegisterScoped
+internal class DestinationService(IDestinationRepository repository, IUnitOfWork unitOfWork, IMapper mapper) : IDestinationService, IRegisterServices
 {
     private readonly IDestinationRepository _repository = repository;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
@@ -115,8 +116,32 @@ internal class DestinationService(IDestinationRepository repository, IUnitOfWork
     public async Task<ListResponse<DestinationViewModel>> GetAll(SearchDestinationDto dto)
     {
         List<Destination> result = await _repository.GetAll(dto);
-        List<DestinationViewModel> destination = _mapper.Map<List<DestinationViewModel>>(result);
-        return ListResponse<DestinationViewModel>.SuccessResult(destination);
+        List<DestinationViewModel> destinations = MapDestinations(result, dto.UserId);
+        return ListResponse<DestinationViewModel>.SuccessResult(destinations);
+    }
+
+    public async Task<ListResponse<DestinationViewModel>> GetFavoriteDestinations(int userId)
+    {
+        List<Destination> result = await _repository.GetFavoriteDestinations(userId);
+        List<DestinationViewModel> destinations = _mapper.Map<List<DestinationViewModel>>(result);
+
+        return ListResponse<DestinationViewModel>.SuccessResult(destinations);
+    }
+
+    public async Task<Response<DestinationViewModel>> GetById(int id, int userId)
+    {
+        Destination? result = await _repository.Get(id);
+        if (result is not null)
+        {
+            DestinationViewModel destination = _mapper.Map<DestinationViewModel>(result);
+            destination.Categories = _mapper.Map<List<DestinationCategoryViewModel>>(result.DestinationCategories);
+            destination.Liked = result.DestinationObserves.Any(destinationObserve => destinationObserve.ObserverUserId == userId && destinationObserve.ObserveType == ObserveType.Like);
+            destination.ToursCount = result.Tours.Count;
+
+            return Response<DestinationViewModel>.SuccessResult(destination);
+        }
+
+        return Response<DestinationViewModel>.FailResult(null, Message.Format(Message.EntityNotFound, Resource.Destination));
     }
 
     public async Task<Response<bool>> Update(UpdateDestinationDto dto)
@@ -156,5 +181,23 @@ internal class DestinationService(IDestinationRepository repository, IUnitOfWork
         }
 
         return Response<bool>.SuccessResult(false, Message.Format(Message.EntityNotFound, Resource.Destination));
+    }
+
+    private List<DestinationViewModel> MapDestinations(List<Destination> destinations, int userId)
+    {
+        List<DestinationViewModel> result = destinations.Select(destination => new DestinationViewModel
+        {
+            Title = destination.Title,
+            Description = destination.Description,
+            Categories = _mapper.Map<List<DestinationCategoryViewModel>>(destination.DestinationCategories),
+            Id = destination.Id,
+            Image = $"/Images/Destination/{destination.Image}",
+            DestinationTypeId = destination.DestinationTypeId,
+            DestinationTypeTitle = destination.DestinationType.Title,
+            Liked = destination.DestinationObserves.Any(tourObserve => tourObserve.ObserverUserId == userId && tourObserve.ObserveType == ObserveType.Like),
+            ToursCount = destination.Tours.Count
+        }).ToList();
+
+        return result;
     }
 }

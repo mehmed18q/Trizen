@@ -10,7 +10,7 @@ using Trizen.Infrastructure.Interfaces;
 
 namespace Trizen.Application.Services;
 
-internal class ListService(IListRepository repository, IMapper mapper) : IListService, IRegisterScoped
+internal class ListService(IListRepository repository, IMapper mapper) : IListService, IRegisterServices
 {
     private readonly IListRepository _repository = repository;
     private readonly IMapper _mapper = mapper;
@@ -39,19 +39,6 @@ internal class ListService(IListRepository repository, IMapper mapper) : IListSe
         return ListResponse<ListViewModel>.SuccessResult(destinationType);
     }
 
-    public ListResponse<ListViewModel> GeographicalLocations(GeographicalLocation? geographicalLocationId = null)
-    {
-        IEnumerable<GeographicalLocation> _geographicalLocations = EnumerationExtension.GetEnumList<GeographicalLocation>();
-        List<ListViewModel> geographicalLocations = _geographicalLocations.Select(geographicalLocation => new ListViewModel
-        {
-            Id = geographicalLocation.ToInt(),
-            Title = geographicalLocation.GetDisplayName(),
-            IsSelected = geographicalLocation == geographicalLocationId
-        }).ToList();
-
-        return ListResponse<ListViewModel>.SuccessResult(geographicalLocations);
-    }
-
     public async Task<ListResponse<ListViewModel>> GetUsers()
     {
         List<User> _users = await _repository.GetUsers();
@@ -74,4 +61,18 @@ internal class ListService(IListRepository repository, IMapper mapper) : IListSe
         tourTypes.ForEach(tourType => { tourType.IsSelected = tourType.Id == tourTypeId; });
         return ListResponse<ListViewModel>.SuccessResult(tourTypes);
     }
+
+    public ListResponse<ListViewModel> UserGenders(int? genderId = null)
+    {
+        IEnumerable<UserGenders> _geographicalLocations = EnumerationExtension.GetEnumList<UserGenders>();
+        List<ListViewModel> geographicalLocations = _geographicalLocations.Select(geographicalLocation => new ListViewModel
+        {
+            Id = geographicalLocation.ToInt(),
+            Title = geographicalLocation.GetDisplayName(),
+            IsSelected = geographicalLocation.ToInt() == genderId
+        }).ToList();
+
+        return ListResponse<ListViewModel>.SuccessResult(geographicalLocations);
+    }
+
 }

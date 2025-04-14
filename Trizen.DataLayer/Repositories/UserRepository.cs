@@ -6,7 +6,7 @@ using Trizen.Infrastructure.Interfaces;
 
 namespace Trizen.DataLayer.Repositories;
 
-internal class UserRepository(TrizenDbContext dbContext) : IUserRepository, IRepositoryScoped
+internal class UserRepository(TrizenDbContext dbContext) : IUserRepository, IRegisterRepositories
 {
     private readonly TrizenDbContext _dbContext = dbContext;
 
@@ -16,6 +16,14 @@ internal class UserRepository(TrizenDbContext dbContext) : IUserRepository, IRep
 
         return exists;
     }
+
+    public async Task<bool> AnyLikeDestination(int userId, int destinationId)
+    {
+        bool exists = await _dbContext.DestinationObserves.AnyAsync(destinationObserve => destinationObserve.ObserverUserId == userId && destinationObserve.ObservedDestinationId == destinationId && destinationObserve.ObserveType == ObserveType.Like);
+
+        return exists;
+    }
+
 
     public async Task<bool> AnyUser(string userName, string phoneNumber)
     {
@@ -55,9 +63,20 @@ internal class UserRepository(TrizenDbContext dbContext) : IUserRepository, IRep
         _ = await _dbContext.TourObserves.AddAsync(dto);
     }
 
+    public async Task ObserveDestination(DestinationObserve dto)
+    {
+        _ = await _dbContext.DestinationObserves.AddAsync(dto);
+    }
+
     public async Task<TourObserve?> GetTourObserve(TourObserve dto)
     {
         TourObserve? observe = await _dbContext.TourObserves.FirstOrDefaultAsync(tourObserve => tourObserve.ObserverUserId == dto.ObserverUserId && tourObserve.ObservedTourId == dto.ObservedTourId && tourObserve.ObserveType == dto.ObserveType);
+        return observe;
+    }
+
+    public async Task<DestinationObserve?> GetDestinationObserve(DestinationObserve dto)
+    {
+        DestinationObserve? observe = await _dbContext.DestinationObserves.FirstOrDefaultAsync(destinationObserve => destinationObserve.ObserverUserId == dto.ObserverUserId && destinationObserve.ObservedDestinationId == dto.ObservedDestinationId && destinationObserve.ObserveType == dto.ObserveType);
         return observe;
     }
 
@@ -71,6 +90,13 @@ internal class UserRepository(TrizenDbContext dbContext) : IUserRepository, IRep
     public Task UpdateTourObserve(TourObserve dto)
     {
         _ = _dbContext.TourObserves.Update(dto);
+
+        return Task.CompletedTask;
+    }
+
+    public Task UpdateDestinationObserve(DestinationObserve dto)
+    {
+        _ = _dbContext.DestinationObserves.Update(dto);
 
         return Task.CompletedTask;
     }

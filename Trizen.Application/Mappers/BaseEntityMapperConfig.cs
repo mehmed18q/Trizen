@@ -6,7 +6,7 @@ using Trizen.Infrastructure.Interfaces;
 
 namespace Trizen.Application.Mappers
 {
-    internal class BaseEntityMapperConfig : Profile, IRegisterMapper
+    internal class BaseEntityMapperConfig : Profile, IRegisterMappers
     {
         public BaseEntityMapperConfig()
         {

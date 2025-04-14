@@ -23,7 +23,7 @@ public static class DataLayerConfiguration
         }
 
         List<Type> registerScopedServices = registerScopedAssembly.GetTypes().Where(x =>
-        x.IsClass && typeof(IRepositoryScoped).IsAssignableFrom(x)).ToList();
+        x.IsClass && typeof(IRegisterRepositories).IsAssignableFrom(x)).ToList();
 
         foreach (Type? service in registerScopedServices)
         {
@@ -33,7 +33,7 @@ public static class DataLayerConfiguration
                 continue;
             }
 
-            if (typeof(IRepositoryScoped).IsAssignableFrom(service))
+            if (typeof(IRegisterRepositories).IsAssignableFrom(service))
             {
                 _ = services.AddScoped(@interface, service);
             }

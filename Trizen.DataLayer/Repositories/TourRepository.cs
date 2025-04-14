@@ -3,17 +3,17 @@ using Trizen.Data.Tour.Dto;
 using Trizen.Data.Tour.ViewModel;
 using Trizen.DataLayer.Entities;
 using Trizen.DataLayer.Interfaces;
-using Trizen.Infrastructure.Dapper;
 using Trizen.Infrastructure.Enumerations;
 using Trizen.Infrastructure.Extensions;
 using Trizen.Infrastructure.Interfaces;
+using Trizen.Recommendation;
 
 namespace Trizen.DataLayer.Repositories;
 
-internal class TourRepository(TrizenDbContext dbContext, IDapperService<object, object> dapperService) : ITourRepository, IRepositoryScoped
+internal class TourRepository(TrizenDbContext dbContext, ITouRecommendation touRecommendation) : ITourRepository, IRegisterRepositories
 {
     private readonly TrizenDbContext _dbContext = dbContext;
-    private readonly IDapperService<object, object> _dapperService = dapperService;
+    private readonly ITouRecommendation _touRecommendation = touRecommendation;
 
     public async Task<bool> Delete(int id)
     {
@@ -63,7 +63,7 @@ internal class TourRepository(TrizenDbContext dbContext, IDapperService<object, 
     public async Task<List<Tour>> Search(SearchTourViewModel dto)
     {
         List<Tour> tour = await _dbContext.Tours
-            .If(dto.Title.IsNotEmpty(), query => query.Where(tour => tour.Title.Contains(dto.Title!) || (tour.Description != null && tour.Description.Contains(dto.Title!))))
+            .If(dto.Title.IsNotEmpty(), query => query.Where(tour => tour.Title.Contains(dto.Title!) || (tour.Description != null && tour.Description.Contains(dto.Title!)) || tour.Destination.Title.Contains(dto.Title!) || (tour.Destination.Description != null && tour.Destination.Description.Contains(dto.Title!))))
             .If(dto.DestinationId.IsNotZeroOrNull(), query => query.Where(tour => tour.DestinationId == dto.DestinationId))
             .If(dto.TourTypeId.IsNotZeroOrNull(), query => query.Where(tour => tour.TourTypeId == dto.TourTypeId))
             .If(dto.DestinationTypeId.IsNotZeroOrNull(), query => query.Where(tour => tour.Destination.DestinationTypeId == dto.DestinationTypeId))
@@ -140,22 +140,18 @@ internal class TourRepository(TrizenDbContext dbContext, IDapperService<object, 
         return observedTours;
     }
 
-    public async Task<List<Tour>> GetSuggestedTours(int userId)
+    public async Task<List<Tour>> GetRecommendedTours(int userId, int take = 10)
     {
-        IEnumerable<int> tourIds = await _dapperService.Query<int>("GetSuggestedTours", new
-        {
-            userId,
-            take = 10
-        });
+        List<int> recommendedToursId = await _touRecommendation.GetRecommendedTours(userId, take);
 
         List<Tour> tours = await _dbContext.Tours
-          .Include(tour => tour.Destination).ThenInclude(destination => destination.DestinationType)
-          .Include(tour => tour.TourType)
-          .Include(tour => tour.TourCategories).ThenInclude(tourCategory => tourCategory.Category)
-          .Include(tour => tour.Travels).ThenInclude(travel => travel.Passengers)
-          .Include(tour => tour.TourObserves)
-          .Where(tour => tourIds.Contains(tour.Id))
-          .ToListAsync();
+                    .Include(tour => tour.Destination).ThenInclude(destination => destination.DestinationType)
+                    .Include(tour => tour.TourType)
+                    .Include(tour => tour.TourCategories).ThenInclude(tourCategory => tourCategory.Category)
+                    .Include(tour => tour.Travels).ThenInclude(travel => travel.Passengers)
+                    .Include(tour => tour.TourObserves)
+                    .Where(tour => recommendedToursId.Contains(tour.Id))
+                    .ToListAsync();
 
         return tours;
     }
