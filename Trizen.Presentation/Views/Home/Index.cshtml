@@ -1,11 +1,159 @@
-﻿@using Trizen.Data.Tour.ViewModel
+﻿@using Trizen.Data.Base.ViewModel
+@using Trizen.Data.Destination.ViewModel
+@using Trizen.Data.Tour.ViewModel
 @using Trizen.Infrastructure.Enumerations
+@model HomeViewModel
 @{
     ViewData["Title"] = Resource.Home;
 }
 
 @await Component.InvokeAsync("SearchToursComponent", new { model = new SearchTourViewModel { CallerPage = CallerPage.Home, UserId = User.GetUserId() } })
 
-@await Component.InvokeAsync("ToursListComponent", new { model = new SearchTourViewModel { CallerPage = CallerPage.Home, UserId = User.GetUserId() } })
+@await Component.InvokeAsync("ToursListComponent", new { model = new SearchTourViewModel { CallerPage = CallerPage.Home, UserId = User.GetUserId(), Pagination = new Pagination { PageNumber = 1, PageSize = 10 } } })
 
+@if (Model.Destinations.Any())
+{
+    <!-- ================================
+        START CAR AREA
+    ================================= -->
+    <section class="trending-area position-relative section-bg section-padding ">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-heading text-center">
+                        <h2 class="sec__title">کجا بریم</h2>
+
+                    </div><!-- end section-heading -->
+                </div><!-- end col-lg-12 -->
+            </div><!-- end row -->
+            <div class="row padding-top-50px">
+                <div class="col-lg-12">
+                    <div class="trending-carousel carousel-action">
+                        @foreach (DestinationViewModel item in Model.Destinations)
+                        {
+                            <div class="card-item trending-card mb-0">
+                                <div class="card-img">
+                                    <a asp-controller="Destinations" asp-action="Details" asp-route-id="@item.Id" class="d-block">
+                                        <img src="@item.Image" alt="@item.Title" title="@item.Title">
+                                    </a>
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <span class="badge" style="cursor:pointer" onclick="LikeDestination(@item.Id)">
+                                            @if (item.Liked)
+                                            {
+                                                <i class="la la-heart"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="la la-heart-o"></i>
+                                            }
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge" style="cursor:pointer" onclick="AlertForLogin(AlertForLoginType.LikeDestination)">
+                                            <i class="la la-heart-o"></i>
+                                        </span>
+                                    }
+                                </div>
+                                <div class="card-body">
+                                    <h3 class="card-title"><a asp-controller="Destinations" asp-action="Details" asp-route-id="@item.Id">@item.Title</a></h3>
+                                    <div class="card-rating">
+                                        <span class="badge text-white">@item.DestinationTypeTitle</span>
+                                    </div>
+                                    <div class="card-attributes">
+                                        <ul class="d-flex align-items-center">
+                                            <li class="d-flex align-items-center" data-toggle="tooltip" data-placement="top" title="" data-original-title="تعداد تور"><i class="la la-suitcase"></i><span>@item.ToursCount</span></li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-price d-flex align-items-center justify-content-between">
+                                        <a asp-controller="Destinations" asp-action="Details" asp-route-id="@item.Id" class="btn-text">مشاهده جزئیات<i class="la la-angle-left"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- end card-item -->
+                        }
+                    </div><!-- end car-carousel -->
+                </div><!-- end col-lg-12 -->
+            </div><!-- end row -->
+        </div><!-- end container -->
+        <svg class="hero-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 10 0 0 A 90 59, 0, 0, 0, 100 0 L 100 10 Z"></path></svg>
+    </section>
+    <!-- end car-area -->
+    <!-- ================================
+        END CAR AREA
+    ================================= -->
+}
+
+<!-- ================================
+    START INFO AREA
+================================= -->
+<br />
+<section class="info-area padding-bottom-70px">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 responsive-column">
+                <div class="icon-box icon-layout-3 d-flex">
+                    <div class="info-icon flex-shrink-0">
+                        <i class="la la-users"></i>
+                    </div><!-- end info-icon-->
+                    <div class="info-content">
+                        <h4 class="info__title">تعداد مسافران</h4>
+                        <p class="info__desc">
+                            ما در ترایزن تا حالا @Model.UsersCounts مسافر خوشحال داریم :)
+                        </p>
+                    </div><!-- end info-content -->
+                </div><!-- end icon-box -->
+            </div><!-- end col-lg-4 -->
+
+            <div class="col-lg-4 responsive-column">
+                <div class="icon-box icon-layout-3 d-flex">
+                    <div class="info-icon flex-shrink-0">
+                        <i class="la la-flag"></i>
+                    </div><!-- end info-icon-->
+                    <div class="info-content">
+                        <h4 class="info__title">تعداد تور ها</h4>
+                        <p class="info__desc">
+                            ما در ترایزن @Model.ToursCounts تور برای خوشحال شدنت داریم :)
+                        </p>
+                    </div><!-- end info-content -->
+                </div><!-- end icon-box -->
+            </div><!-- end col-lg-4 -->
+            <div class="col-lg-4 responsive-column">
+                <div class="icon-box icon-layout-3 d-flex">
+                    <div class="info-icon flex-shrink-0">
+                        <i class="la la-map"></i>
+                    </div><!-- end info-icon-->
+                    <div class="info-content">
+                        <h4 class="info__title">تعداد مقصد ها</h4>
+                        <p class="info__desc">
+                            ما در ترایزن @Model.DestinationsCounts مقصد داریم که آمادست تا خوشحالی تو رو ببینه :)
+                        </p>
+                    </div><!-- end info-content -->
+                </div><!-- end icon-box -->
+            </div><!-- end col-lg-4 -->
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section>
+
+<!-- end info-area -->
+<!-- ================================
+    END INFO AREA
+================================= -->
 @await Component.InvokeAsync("ToursListComponent", new { model = new SearchTourViewModel { CallerPage = CallerPage.Details, UserId = User.GetUserId() } })
+
+@section Scripts {
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <script type="text/javascript">
+            AlertForLogin(AlertForLoginType.PleaseLogin);
+        </script>
+    }
+    else if (!User.GetPersonality().HasValue)
+    {
+        <script type="text/javascript">
+            AlertForLogin(AlertForLoginType.Recommendation);
+        </script>
+    }
+}

@@ -2,11 +2,12 @@
 using Trizen.Application.Interfaces;
 using Trizen.Data.User.Dto;
 using Trizen.Data.User.ViewModel;
+using Trizen.Infrastructure;
 using Trizen.Infrastructure.Base.Response;
 using Trizen.Infrastructure.Extensions;
+using Trizen.Infrastructure.Utilities;
 
 namespace Trizen.Presentation.Areas.User.Controllers;
-
 
 public class ProfileController : BaseController<ProfileController>
 {
@@ -57,13 +58,18 @@ public class ProfileController : BaseController<ProfileController>
     [AutoValidateAntiforgeryToken]
     public async Task<IActionResult> Edit(UpdateProfileDto dto)
     {
+        if (!dto.NationalCode.ValidationNationalCode())
+        {
+            ModelState.AddModelError(nameof(dto.NationalCode), Resource.InvalidNationalCode);
+        }
+
         if (ModelState.IsValid)
         {
             dto.Id = User.GetUserId();
             Response<ProfileViewModel> result = await _service.EditProfile(dto);
             if (result.IsSuccess)
             {
-                _ = LoginUser(result.Data);
+                _ = LoginUser(result.Data!);
                 return AreaRedirectToAction("Profile", nameof(Panel));
             }
             else

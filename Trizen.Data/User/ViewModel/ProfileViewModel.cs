@@ -18,4 +18,6 @@ public class ProfileViewModel
     public string? ImageProfile { get; set; }
     public double WalletAmount { get; set; }
     public UserRoles Role { get; set; }
+    public bool IsProfileCompleted => FirstName.IsNotEmpty() && LastName.IsNotEmpty() && BirthDay.HasValue && NationalCode.IsNotEmpty() && PersonalityId.IsNotZeroOrNull() && PhoneNumber.IsNotEmpty();
+    public bool IsSetPersonality => PersonalityId.IsNotZeroOrNull();
 }

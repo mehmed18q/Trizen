@@ -102,6 +102,10 @@ internal class TravelService(ITravelRepository repository, IUnitOfWork unitOfWor
         {
             travel.Status = TravelStatus.Paid;
             await _repository.Update(travel);
+            double priceOfTravel = travel.Tour.Price * travel.Passengers.Count;
+            priceOfTravel += priceOfTravel / 10; // tax
+            priceOfTravel *= -1; // Draw from Wallet
+            await _userRepository.ChangeWallet(travel.UserId, priceOfTravel);
             await _unitOfWork.SaveChangesAsync();
         }
 
@@ -113,6 +117,11 @@ internal class TravelService(ITravelRepository repository, IUnitOfWork unitOfWor
         Travel? travel = await _repository.Get(travelId);
         if (travel is not null)
         {
+            if (travel.Status == TravelStatus.Paid)
+            {
+                double priceOfTravel = travel.Tour.Price * travel.Passengers.Count;
+                await _userRepository.ChangeWallet(travel.UserId, priceOfTravel);
+            }
             travel.Status = TravelStatus.Cancelled;
             await _repository.Update(travel);
             await _unitOfWork.SaveChangesAsync();

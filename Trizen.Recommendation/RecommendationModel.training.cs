@@ -91,7 +91,7 @@ namespace Trizen_Recommendation
             // Data process configuration with pipeline data transformations
             var pipeline = mlContext.Transforms.Conversion.MapValueToKey(outputColumnName:@"TourId",inputColumnName:@"TourId",addKeyValueAnnotationsAsText:false)      
                                     .Append(mlContext.Transforms.Conversion.MapValueToKey(outputColumnName:@"UserId",inputColumnName:@"UserId",addKeyValueAnnotationsAsText:false))      
-                                    .Append(mlContext.Recommendation().Trainers.MatrixFactorization(new MatrixFactorizationTrainer.Options(){LabelColumnName=@"Score",MatrixColumnIndexColumnName=@"UserId",MatrixRowIndexColumnName=@"TourId",ApproximationRank=21,LearningRate=0.4021074711539957,NumberOfIterations=281,Quiet=true}))      
+                                    .Append(mlContext.Recommendation().Trainers.MatrixFactorization(new MatrixFactorizationTrainer.Options(){LabelColumnName=@"Score",MatrixColumnIndexColumnName=@"UserId",MatrixRowIndexColumnName=@"TourId",ApproximationRank=12,LearningRate=0.4285023467902906,NumberOfIterations=60,Quiet=true}))      
                                     .Append(mlContext.Transforms.Conversion.MapKeyToValue(outputColumnName:@"UserId",inputColumnName:@"UserId"))      
                                     .Append(mlContext.Transforms.Conversion.MapKeyToValue(outputColumnName:@"TourId",inputColumnName:@"TourId"));
 

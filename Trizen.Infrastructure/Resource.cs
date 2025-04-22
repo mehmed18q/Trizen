@@ -96,6 +96,8 @@ public static class Resource
     public const string Woman = "زن";
     public const string Gender = "جنسیت";
     public const string DefaultImage = "DefaultImage.png";
+    public const string AboutUs = "درباره ما";
+    public const string InvalidNationalCode = "کد ملی معتبر نیست!";
 }
 
 public static class Message

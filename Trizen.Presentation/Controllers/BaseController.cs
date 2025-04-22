@@ -26,9 +26,11 @@ namespace Trizen.Presentation.Controllers
                 new Claim(IdentityClaims.UserId, user.Id.ToString()),
                 new Claim(IdentityClaims.Email, StringExtensions.Coalesce(user.Email)),
                 new Claim(IdentityClaims.MobilePhone, StringExtensions.Coalesce(user.PhoneNumber)),
-                new Claim(IdentityClaims.DateOfBirth, StringExtensions.Coalesce(user.BirthDay?.ToString())),
+                new Claim(IdentityClaims.BirthDate, StringExtensions.Coalesce(user.BirthDay?.ToString())),
                 new Claim(IdentityClaims.Role, StringExtensions.Coalesce(user.Role.ToInt().ToString())),
-                new Claim(IdentityClaims.ProfileImage, StringExtensions.Coalesce(user.ImageProfile))
+                new Claim(IdentityClaims.ProfileImage, StringExtensions.Coalesce(user.ImageProfile)),
+                new Claim(IdentityClaims.IsProfileCompleted, StringExtensions.Coalesce(user.IsProfileCompleted.ToString())),
+                new Claim(IdentityClaims.Personality, StringExtensions.Coalesce(user.PersonalityId.ToString()))
             ];
 
             ClaimsIdentity identity = new(claims, CookieAuthenticationDefaults.AuthenticationScheme);

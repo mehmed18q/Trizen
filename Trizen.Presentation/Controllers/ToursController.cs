@@ -34,15 +34,17 @@ namespace Trizen.Presentation.Controllers
             {
                 int userId = User.GetUserId();
                 Response<TourViewModel> tour = await _tourService.Get(id, userId);
-                if (tour.Data is not null && User.Identity.IsAuthenticated)
-
+                if (tour.Data is not null)
                 {
-                    await _userService.VisitTour(new LikeTourDto
+                    if (User.Identity.IsAuthenticated)
                     {
-                        ObserveType = ObserveType.Visit,
-                        TourId = id,
-                        UserId = userId
-                    });
+                        await _userService.VisitTour(new LikeTourDto
+                        {
+                            ObserveType = ObserveType.Visit,
+                            TourId = id,
+                            UserId = userId
+                        });
+                    }
 
                     return View(tour.Data);
                 }

@@ -32,6 +32,12 @@
                                     }
                                 </div>
                             }
+                            else
+                            {
+                                <span class="badge" style="cursor:pointer" onclick="AlertForLogin(AlertForLoginType.LikeTour)">
+                                    <i class="la la-heart-o"></i>
+                                </span>
+                            }
                         </div>
                         <div class="section-block"></div>
                         <br />
@@ -99,7 +105,7 @@
                                     </div>
                                     <div class="single-feature-titles">
                                         <h3 class="title font-size-15 font-weight-medium">@Resource.Price</h3>
-                                        <span class="font-size-13">@Model.Price تومان</span>
+                                        <span class="font-size-13">@Model.Price.To3Digit() تومان</span>
                                     </div>
                                 </div><!-- end single-tour-feature -->
                             </div><!-- end col-lg-4 -->
@@ -127,9 +133,17 @@
                             </div><!-- end col-lg-4 -->
                         </div>
                         <p class="card-text py-3">@Model.Description </p>
-                        @if (User.Identity.IsAuthenticated)
+                        @if (User.Identity.IsAuthenticated && User.CompareAge(Model.MinimumAge, Model.MaximumAge))
                         {
-                            <a class="theme-btn  theme-btn-transparent" asp-controller="Travels" asp-action="AddTravel" asp-route-tourId="@Model.Id" style="width: 80%;text-align: center;margin: 0 10% 0 10%;">بریم سفر</a>
+                            <a class="theme-btn theme-btn-transparent" asp-controller="Travels" asp-action="AddTravel" asp-route-tourId="@Model.Id" style="width: 80%;text-align: center;margin: 0 10% 0 10%;">بریم سفر</a>
+                        }
+                        else if (User.Identity.IsAuthenticated)
+                        {
+                            <a class="theme-btn theme-btn-transparent" onclick="Alert(AlertType.AgeNotValid)" style="width: 80%;text-align: center;margin: 0 10% 0 10%;">بریم سفر</a>
+                        }
+                        else
+                        {
+                            <a class="theme-btn theme-btn-transparent" onclick="AlertForLogin(AlertForLoginType.GoToTravel)" style="width: 80%;text-align: center;margin: 0 10% 0 10%;">بریم سفر</a>
                         }
                         <div class="post-tag-wrap d-flex align-items-center justify-content-between py-4">
                             <ul class="tag-list">

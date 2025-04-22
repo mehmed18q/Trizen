@@ -15,7 +15,7 @@ public class ToursListComponent(ITourService tourService) : ViewComponent
     {
         TourListViewModel viewModel = new()
         {
-            SearchModel = model,
+            SearchModel = model
         };
 
         if (model.CallerPage is CallerPage.Details or CallerPage.User)

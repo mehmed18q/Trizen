@@ -127,7 +127,7 @@
                             <label for="agreechb">برای ادامه دادن،  با <a href="#">شرایط و ضوابط </a> موافقت میکنم . </label>
                         </div>
                         <a class="theme-btn  theme-btn-transparent" asp-controller="Travels" asp-action="Pay" asp-route-travelId="@Model.Id" style="width: 80%;text-align: center;margin: 0 10% 0 10%;">@Resource.Payment</a>
-                        <a asp-controller="Travels" asp-action="Cancel" asp-route-travelId="@Model.Id" class="btn-text">لفو<i class="la la-trash"></i></a>
+                        <a asp-controller="Travels" asp-action="Cancel" asp-route-travelId="@Model.Id" class="btn-text">@(Model.Status == TravelStatus.Paid? "لفو" : "حذف")<i class="la la-trash"></i></a>
                     </div><!-- form-title-wrap -->
                     <div class="form-content">
                     </div><!-- end form-content -->
@@ -290,7 +290,7 @@
         var SelectUserElement = document.getElementById("SelectUserElement");
         var TableUserElement = document.getElementById("TableUserElement");
 
-        var ListPassengers = [@Model.PassengersList];
+        var ListPassengers = [@Model.Passengers];
 
         function AddPassenger(el){
             var selectedIndex = el.options[el.options.selectedIndex];

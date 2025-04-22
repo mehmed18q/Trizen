@@ -53,14 +53,22 @@ namespace Trizen.Presentation.Controllers
         {
             _ = await _service.Pay(travelId);
 
-            return LocalRedirect("/User/Tours/My");
+            return RedirectToAction("PaymentStatus", new { travelId, type = nameof(Pay) });
         }
 
         public async Task<IActionResult> Cancel(int travelId)
         {
             _ = await _service.Cancel(travelId);
 
-            return LocalRedirect("/User/Tours/My");
+            return RedirectToAction("PaymentStatus", new { travelId, type = nameof(Cancel) });
+        }
+
+        public async Task<IActionResult> PaymentStatus(int travelId, string type)
+        {
+            Response<BasketViewModel> tourInformation = await _service.Get(travelId);
+            ViewBag.Type = type;
+            ViewBag.Tour = tourInformation.Data;
+            return View();
         }
     }
 }

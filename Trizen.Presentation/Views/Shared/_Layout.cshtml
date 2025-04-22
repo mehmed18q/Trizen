@@ -2,10 +2,10 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <meta name="author" content="arezohosseini">
+    <meta name="author" content="MohammadSadeqKiumarsi">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> @ViewData["Title"] - @Resource.Trizen</title>
+    <title> @ViewData["Title"] | @Resource.Trizen</title>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&amp;display=swap" rel="stylesheet">
@@ -40,7 +40,7 @@
         </div>
     </div>
     <!-- ================================
-                START HEADER AREA
+    START HEADER AREA
     ================================= -->
     <header class="header-area">
         <div class="header-menu-wrapper padding-right-100px padding-left-100px">
@@ -60,15 +60,14 @@
                                 <nav>
                                     <ul>
                                         <li>
-                                            <a href="/"> @Resource.Home </a>
+                                            <a href="/">@Resource.Home</a>
                                         </li>
-                                        
-                                        <li>
-                                            <a asp-controller="Tours" asp-action="Index"> @Resource.Tours </a>
-                                        </li>
-                                        <li>
-                                            <a asp-controller="Destinations" asp-action="Index"> @Resource.Destinations </a>
 
+                                        <li>
+                                            <a asp-controller="Tours" asp-action="Index">@Resource.Tours</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Destinations" asp-action="Index">@Resource.Destinations</a>
                                         </li>
                                         @if (User.Identity.IsAuthenticated)
                                         {
@@ -79,13 +78,16 @@
                                                 <a href="/Travels/Basket" class="mr-1">@Resource.TravelBasket</a>
                                             </li>
                                         }
+                                        <li>
+                                            <a asp-controller="Home" asp-action="AboutUs">@Resource.AboutUs</a>
+                                        </li>
                                     </ul>
                                 </nav>
                             </div><!-- end main-menu-content -->
                             <div class="nav-btn">
                                 @if (User.Identity.IsAuthenticated)
                                 {
-                                    <a href="User/Profile/Panel" class="mr-1">@User.GetFullName()</a>
+                                    <a href="/User/Profile/Panel" class="mr-1">@User.GetFullName()</a>
                                     <a asp-controller="Account" asp-action="Logout" class="theme-btn theme-btn-small theme-btn-transparent mr-1">@Resource.Logout</a>
                                 }
                                 else
@@ -101,15 +103,14 @@
         </div><!-- end header-menu-wrapper -->
     </header>
     <!-- ================================
-             END HEADER AREA
+    END HEADER AREA
     ================================= -->
     @RenderBody()
 
     <div class="section-block"></div>
 
-
     <!-- ================================
-           START FOOTER AREA
+    START FOOTER AREA
     ================================= -->
     <section class="footer-area section-bg padding-top-50px padding-bottom-10px">
         <div class="container">
@@ -125,12 +126,12 @@
                 </div><!-- end col-lg-3 -->
                 <div class="col-lg-3 responsive-column">
                     <div class="footer-item">
-                        <p class="footer__desc"><a href="tell:+989217074647" dir="ltr">+98-921-707-4647</a></p>
+                        <p class="footer__desc"><a title="محمد صادق کیومرثی" href="tell:+989217074647" dir="ltr">+98-921-707-4647</a></p>
                     </div><!-- end footer-item -->
                 </div><!-- end col-lg-3 -->
                 <div class="col-lg-3 responsive-column">
                     <div class="footer-item">
-                        <p class="footer__desc"><a href="mailto:mehmed2002q@gmail.com">mehmed2002q@gmail.com</a></p>
+                        <p class="footer__desc"><a title="محمد صادق کیومرثی" href="mailto:mehmed2002q@gmail.com">mehmed2002q@gmail.com</a></p>
                     </div><!-- end footer-item -->
                 </div><!-- end col-lg-3 -->
             </div><!-- end row -->
@@ -142,7 +143,7 @@
                     <div class="copy-right padding-top-30px">
                         <p class="copy__desc">
                             کپی رایت &copy; تمامی حقوق محفوظ است . توسعه با
-                            <span class="la la-heart"></span>  توسط محمد صادق کیومرثی
+                            <span class="la la-heart"></span>  توسط ترایزن
                         </p>
                     </div><!-- end copy-right -->
                 </div><!-- end col-lg-7 -->
@@ -156,7 +157,7 @@
         </div><!-- end container -->
     </section><!-- end footer-area -->
     <!-- ================================
-           START FOOTER AREA
+    START FOOTER AREA
     ================================= -->
     <!-- start back-to-top -->
     <div id="back-to-top">
@@ -181,7 +182,9 @@
     <script src="/Trizen/js/main-rtl.js"></script>
     <script type="text/javascript" src="https://unpkg.com/@@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
     <script type="text/javascript" src="~/js/jquery.toast.js/jquery.toast.js"></script> @*اسکریت مربوط به آلرت*@
-    <script type="text/javascript" src="~/js/site.js"></script> 
+    <script type="text/javascript" src="~/js/site.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   
     @await RenderSectionAsync("Scripts", required: false)
 
 </body>

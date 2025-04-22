@@ -1,4 +1,5 @@
-﻿using Trizen.Data.Tour.Dto;
+﻿using Trizen.Data.Destination.ViewModel;
+using Trizen.Data.Tour.Dto;
 using Trizen.Data.Tour.ViewModel;
 using Trizen.Infrastructure.Base.Response;
 
@@ -16,4 +17,5 @@ public interface ITourService
     Task<ListResponse<TourViewModel>> GetFavoriteTours(int userId);
     Task<ListResponse<TourViewModel>> GetMyTours(int userId);
     Task<ListResponse<TourViewModel>> GetSuggestedTours(int userId);
+    Task<ListResponse<DestinationViewModel>> GetFavoriteDestinations(int userId);
 }

@@ -19,4 +19,5 @@ public record TourViewModel : BaseTourDto
 
     public bool Liked { get; set; }
     public int Capacity { get; set; }
+    public float? Score { get; set; }
 }

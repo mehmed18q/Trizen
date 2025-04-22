@@ -120,5 +120,15 @@ internal class UserRepository(TrizenDbContext dbContext) : IUserRepository, IReg
     {
         return await _dbContext.Travels.CountAsync(travel => travel.Status == TravelStatus.Paid);
     }
+
+    public async Task ChangeWallet(int userId, double price)
+    {
+        User? user = await GetUserById(userId);
+        if (user is not null)
+        {
+            user.WalletAmount += price;
+            _ = _dbContext.Users.Update(user);
+        }
+    }
 }
 

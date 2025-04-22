@@ -1,12 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Trizen.Data.Base.Dto;
 using Trizen.Data.Tour.Dto;
 using Trizen.Data.Tour.ViewModel;
 using Trizen.DataLayer.Entities;
 using Trizen.DataLayer.Interfaces;
+using Trizen.DataLayer.Pattern;
 using Trizen.Infrastructure.Enumerations;
 using Trizen.Infrastructure.Extensions;
 using Trizen.Infrastructure.Interfaces;
-using Trizen.Recommendation;
+using Trizen.Recommendation.Services;
 
 namespace Trizen.DataLayer.Repositories;
 
@@ -140,11 +142,12 @@ internal class TourRepository(TrizenDbContext dbContext, ITouRecommendation touR
         return observedTours;
     }
 
-    public async Task<List<Tour>> GetRecommendedTours(int userId, int take = 10)
+    public async Task<List<EntityObject<Tour, float>>> GetRecommendedTours(int userId, int take = 10)
     {
-        List<int> recommendedToursId = await _touRecommendation.GetRecommendedTours(userId, take);
+        List<TourScoreDto> recommendedTours = await _touRecommendation.GetRecommendedTours(userId, take);
+        IEnumerable<int> recommendedToursId = recommendedTours.Select(recommendedTour => recommendedTour.TourId);
 
-        List<Tour> tours = await _dbContext.Tours
+        List<Tour> _tours = await _dbContext.Tours
                     .Include(tour => tour.Destination).ThenInclude(destination => destination.DestinationType)
                     .Include(tour => tour.TourType)
                     .Include(tour => tour.TourCategories).ThenInclude(tourCategory => tourCategory.Category)
@@ -152,6 +155,14 @@ internal class TourRepository(TrizenDbContext dbContext, ITouRecommendation touR
                     .Include(tour => tour.TourObserves)
                     .Where(tour => recommendedToursId.Contains(tour.Id))
                     .ToListAsync();
+
+        List<EntityObject<Tour, float>> tours = _tours
+                    .Select(tour => new EntityObject<Tour, float>
+                    {
+                        Entity = tour,
+                        Value = recommendedTours.First(recommendedTour => recommendedTour.TourId == tour.Id).Score
+                    })
+                    .ToList();
 
         return tours;
     }
@@ -161,5 +172,17 @@ internal class TourRepository(TrizenDbContext dbContext, ITouRecommendation touR
         bool haveTour = await _dbContext.Travels.AnyAsync(travel => travel.Status == TravelStatus.Paid && (travel.UserId == userId || travel.Passengers.Any(passenger => passenger.PassengerUserId == userId)));
 
         return haveTour;
+    }
+
+    public async Task<List<Destination>> GetFavoriteDestinations(int userId)
+    {
+        List<Destination> observedDestinations = await _dbContext.DestinationObserves.Where(destinationObserve => destinationObserve.ObserverUserId == userId && destinationObserve.ObserveType == ObserveType.Like)
+        .Include(destinationObserve => destinationObserve.Destination).ThenInclude(destination => destination.DestinationType)
+        .Include(destinationObserve => destinationObserve.Destination)
+        .Include(destinationObserve => destinationObserve.Destination).ThenInclude(destinationObserve => destinationObserve.DestinationCategories).ThenInclude(tourCategory => tourCategory.Category)
+        .Include(destinationObserve => destinationObserve.Destination).ThenInclude(destination => destination.DestinationObserves)
+        .Select(destinationObserve => destinationObserve.Destination).ToListAsync();
+
+        return observedDestinations;
     }
 }

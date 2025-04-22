@@ -40,14 +40,17 @@ namespace Trizen.Presentation.Controllers
             {
                 int userId = User.GetUserId();
                 Response<DestinationViewModel> destination = await _destinationService.GetById(id, userId);
-                if (destination.Data is not null && User.Identity.IsAuthenticated)
+                if (destination.Data is not null)
                 {
-                    await _userService.VisitDestination(new LikeDestinationDto
+                    if (User.Identity.IsAuthenticated)
                     {
-                        ObserveType = ObserveType.Visit,
-                        DestinationId = id,
-                        UserId = userId
-                    });
+                        await _userService.VisitDestination(new LikeDestinationDto
+                        {
+                            ObserveType = ObserveType.Visit,
+                            DestinationId = id,
+                            UserId = userId
+                        });
+                    }
 
                     return View(destination.Data);
                 }

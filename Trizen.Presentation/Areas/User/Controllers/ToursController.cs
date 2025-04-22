@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Trizen.Application.Interfaces;
+using Trizen.Data.Destination.ViewModel;
 using Trizen.Data.Tour.Dto;
 using Trizen.Data.Tour.ViewModel;
 using Trizen.Infrastructure.Base.Response;
@@ -157,6 +158,8 @@ public class ToursController : BaseController<ToursController>
     {
         int userId = User.GetUserId();
         ListResponse<TourViewModel> tour = await _service.GetFavoriteTours(userId);
+        ListResponse<DestinationViewModel> destinations = await _service.GetFavoriteDestinations(userId);
+        ViewBag.Destinations = destinations.Data;
         return View(tour.Data);
     }
 

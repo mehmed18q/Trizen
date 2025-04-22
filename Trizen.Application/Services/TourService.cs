@@ -174,7 +174,6 @@ internal class TourService(ITourRepository repository, IUnitOfWork unitOfWork, I
         return Response<bool>.SuccessResult(false, Message.Format(Message.EntityNotFound, Resource.Tour));
     }
 
-
     private List<TourViewModel> MapTours(List<Tour> tours, int userId)
     {
         List<TourViewModel> result = tours.Select(tour => new TourViewModel
@@ -221,9 +220,45 @@ internal class TourService(ITourRepository repository, IUnitOfWork unitOfWork, I
 
     public async Task<ListResponse<TourViewModel>> GetSuggestedTours(int userId)
     {
-        List<Tour> _tours = await _repository.GetRecommendedTours(userId);
+        List<EntityObject<Tour, float>> _tours = await _repository.GetRecommendedTours(userId);
         List<TourViewModel> tours = MapTours(_tours, userId);
 
         return ListResponse<TourViewModel>.SuccessResult(tours);
+    }
+    private List<TourViewModel> MapTours(List<EntityObject<Tour, float>> tours, int userId)
+    {
+        List<TourViewModel> result = tours.Select(tour => new TourViewModel
+        {
+            Title = tour.Entity.Title,
+            DaysCount = tour.Entity.DaysCount,
+            Description = tour.Entity.Description,
+            Destination = _mapper.Map<DestinationViewModel>(tour.Entity.Destination),
+            Categories = _mapper.Map<List<TourCategoryViewModel>>(tour.Entity.TourCategories),
+            DestinationId = tour.Entity.DestinationId,
+            EndTime = tour.Entity.EndTime,
+            Id = tour.Entity.Id,
+            Image = $"/Images/Tour/{tour.Entity.Image}",
+            MaximumAge = tour.Entity.MaximumAge,
+            MaximumPassenger = tour.Entity.MaximumPassenger,
+            MinimumAge = tour.Entity.MinimumAge,
+            Price = tour.Entity.Price,
+            SleepNightsCount = tour.Entity.SleepNightsCount,
+            StartTime = tour.Entity.StartTime,
+            TourTypeId = tour.Entity.TourTypeId,
+            TourTypeTitle = tour.Entity.TourType.Title,
+            Liked = tour.Entity.TourObserves.Any(tourObserve => tourObserve.ObserverUserId == userId && tourObserve.ObserveType == ObserveType.Like),
+            Capacity = tour.Entity.MaximumPassenger - tour.Entity.Travels.Sum(travel => travel.Passengers.Count),
+            Score = tour.Value
+        }).ToList();
+
+        return result;
+    }
+
+    public async Task<ListResponse<DestinationViewModel>> GetFavoriteDestinations(int userId)
+    {
+        List<Destination> result = await _repository.GetFavoriteDestinations(userId);
+        List<DestinationViewModel> destinations = _mapper.Map<List<DestinationViewModel>>(result);
+
+        return ListResponse<DestinationViewModel>.SuccessResult(destinations);
     }
 }

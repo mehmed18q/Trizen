@@ -22,4 +22,5 @@ public interface IUserRepository
     Task<DestinationObserve?> GetDestinationObserve(DestinationObserve model);
     Task UpdateDestinationObserve(DestinationObserve observe);
     Task ObserveDestination(DestinationObserve model);
+    Task ChangeWallet(int userId, double price);
 }

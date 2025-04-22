@@ -46,14 +46,15 @@ namespace Trizen_Recommendation
 
         #endregion
 
-        private static readonly string MLNetModelPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "RecommendationModel.mlnet");
+        private static readonly string MLNetModelPath = Path.Combine(AppContext.BaseDirectory, "RecommendationModel.mlnet");
+
         public static readonly Lazy<PredictionEngine<ModelInput, ModelOutput>> PredictEngine = new(CreatePredictEngine, true);
 
 
         private static PredictionEngine<ModelInput, ModelOutput> CreatePredictEngine()
         {
             MLContext mlContext = new();
-            ITransformer mlModel = mlContext.Model.Load(MLNetModelPath, out DataViewSchema? _);
+            ITransformer mlModel = mlContext.Model.Load(MLNetModelPath, out DataViewSchema _);
             return mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(mlModel);
         }
 

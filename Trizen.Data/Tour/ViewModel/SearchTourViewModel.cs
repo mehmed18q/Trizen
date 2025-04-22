@@ -33,5 +33,4 @@ public record SearchTourViewModel
     public int UserId { get; set; }
 
     public Pagination Pagination { get; set; } = new();
-
 }

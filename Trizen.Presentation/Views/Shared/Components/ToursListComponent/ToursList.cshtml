@@ -42,6 +42,12 @@
                                         }
                                     </span>
                                 }
+                                else
+                                {
+                                    <span class="badge" style="cursor:pointer" onclick="AlertForLogin(AlertForLoginType.LikeTour)">
+                                        <i class="la la-heart-o"></i>
+                                    </span>
+                                }
                             </div>
                             <div class="card-body">
                                 <h3 class="card-title"><a asp-controller="Tours" asp-action="Details" asp-route-id="@item.Id">@item.Title</a></h3>
@@ -56,7 +62,18 @@
                                     </p>
                                     <a asp-controller="Tours" asp-action="Details" asp-route-id="@item.Id" class="btn-text">مشاهده جزئیات<i class="la la-angle-left"></i></a>
                                 </div>
-                                <a class="theme-btn  theme-btn-transparent" asp-controller="Travels" asp-action="AddTravel" asp-route-tourId="@item.Id" style="width: 80%;text-align: center;margin: 0 10% 0 10%;">بریم سفر</a>
+                                @if (User.Identity.IsAuthenticated && User.CompareAge(item.MinimumAge, item.MaximumAge))
+                                {
+                                    <a class="theme-btn  theme-btn-transparent" asp-controller="Travels" asp-action="AddTravel" asp-route-tourId="@item.Id" style="width: 80%;text-align: center;margin: 0 10% 0 10%;">بریم سفر</a>
+                                }
+                                else if (User.Identity.IsAuthenticated)
+                                {
+                                    <a class="theme-btn theme-btn-transparent" onclick="Alert(AlertType.AgeNotValid)" style="width: 80%;text-align: center;margin: 0 10% 0 10%;">بریم سفر</a>
+                                }
+                                else
+                                {
+                                    <a class="theme-btn theme-btn-transparent" onclick="AlertForLogin(AlertForLoginType.GoToTravel)" style="width: 80%;text-align: center;margin: 0 10% 0 10%;">بریم سفر</a>
+                                }
                             </div>
                         </div><!-- end card-item -->
                     </div>
@@ -71,7 +88,8 @@
         END CARD AREA
     ================================= -->
 }
-else if (Model.SearchModel.CallerPage == CallerPage.User && Model.Tours.Data.Any()){
+else if (Model.SearchModel.CallerPage == CallerPage.User && Model.Tours.Data.Any())
+{
     <div class="row clearfix">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
@@ -198,6 +216,18 @@ else if (Model.Tours.Data.Any())
                                             }
                                         </span>
                                     }
+                                    else
+                                    {
+                                        <span class="badge" style="cursor:pointer" onclick="AlertForLogin(AlertForLoginType.LikeTour)">
+                                            <i class="la la-heart-o"></i>
+                                        </span>
+                                    }
+                                    @if (item.Score.IsNotZeroOrNull())
+                                    {
+                                        <span class="badgel">
+                                            <p>@Math.Round((decimal)item.Score!, 2)</p>
+                                        </span>
+                                    }
                                 </div>
                                 <div class="card-body">
                                     <h3 class="card-title"><a asp-controller="Tours" asp-action="Details" asp-route-id="@item.Id">@item.Title</a></h3>
@@ -208,11 +238,22 @@ else if (Model.Tours.Data.Any())
                                     </div>
                                     <div class="card-price d-flex align-items-center justify-content-between">
                                         <p>
-                                            <span class="price__num">@item.Price.To3Digit()  تومان</span>
+                                            <span class="price__num">@item.Price.To3Digit() تومان</span>
                                         </p>
                                         <a asp-controller="Tours" asp-action="Details" asp-route-id="@item.Id" class="btn-text">مشاهده جزئیات<i class="la la-angle-left"></i></a>
                                     </div>
-                                    <a class="theme-btn  theme-btn-transparent" asp-controller="Travels" asp-action="AddTravel" asp-route-tourId="@item.Id" style="width: 80%;text-align: center;margin: 0 10% 0 10%;">بریم سفر</a>
+                                    @if (User.Identity.IsAuthenticated && User.CompareAge(item.MinimumAge, item.MaximumAge))
+                                    {
+                                        <a class="theme-btn  theme-btn-transparent" asp-controller="Travels" asp-action="AddTravel" asp-route-tourId="@item.Id" style="width: 80%;text-align: center;margin: 0 10% 0 10%;">بریم سفر</a>
+                                    }
+                                    else if (User.Identity.IsAuthenticated)
+                                    {
+                                        <a class="theme-btn theme-btn-transparent" onclick="Alert(AlertType.AgeNotValid)" style="width: 80%;text-align: center;margin: 0 10% 0 10%;">بریم سفر</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="theme-btn theme-btn-transparent" onclick="AlertForLogin(AlertForLoginType.GoToTravel)" style="width: 80%;text-align: center;margin: 0 10% 0 10%;">بریم سفر</a>
+                                    }
                                 </div>
                             </div>
 

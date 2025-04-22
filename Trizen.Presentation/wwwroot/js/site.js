@@ -1,6 +1,6 @@
 ﻿try {
     jalaliDatepicker.startWatch();
-} catch (e) {}
+} catch (e) { }
 
 ToastActions = {
     Success: "success",
@@ -9,6 +9,18 @@ ToastActions = {
     Error: "error",
     Alert: "alert",
     Reload: "reload"
+};
+
+AlertForLoginType = {
+    LikeTour: "برای افزودن تور به لیست علاقه مندی های خود، ابتدا وارد حساب کاربری شوید یا ثبت نام کنید.",
+    LikeDestination: "برای افزودن مقصد به لیست علاقه مندی های خود، ابتدا وارد حساب کاربری شوید یا ثبت نام کنید.",
+    Recommendation: "برای دریافت پیشنهادات تور ها، در پروفایل خود، اطلاعات خود را تکمیل کنید",
+    PleaseLogin: "اگه می خوای بری سفر، بیا باهم بریم",
+    GoToTravel: " برای ثبت سفر، ابتدا وارد حساب کاربری شوید یا ثبت نام کنید."
+};
+
+AlertType = {
+    AgeNotValid: "سن شما برای این سفر مناسب نیست",
 };
 
 async function PostAsync(url, Indata, inindataType = "json") {
@@ -90,8 +102,49 @@ async function LikeDestination(destinationId) {
     toast('خطا', `!خطای ${data.status} رخ داده است`, ToastActions.Error);
 }
 
+function AlertForLogin(title) {
+    var _showDenyButton = true;
+    var _confirmButtonText = "ورود";
+    var _denyButtonText = "ثبت نام";
+    var _returnUrl = window.location.pathname;
+    var _confirmLink = `/Account/Login?returnUrl=${_returnUrl}`;
+    if (AlertForLoginType.Recommendation == title) {
+        _showDenyButton = false;
+        _confirmButtonText = "ویرایش پروفایل";
+        _denyButtonText = "";
+        _confirmLink = "/User/Profile/Edit";
+    }
 
+    Swal.fire({
+        title: title,
+        icon: "info",
+        showDenyButton: _showDenyButton,
+        showCancelButton: true,
+        confirmButtonText: _confirmButtonText,
+        denyButtonText: _denyButtonText,
+        cancelButtonText: `بیخیال!`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = _confirmLink;
+        } else if (result.isDenied) {
+            window.location.href = `/Account/Register?returnUrl=${_returnUrl}`;
+        }
+    });
+}
 
+function Alert(title) {
+    Swal.fire({
+        title: title,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "ویرایش پروفایل",
+        cancelButtonText: `بیخیال!`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = "/User/Profile/Edit";
+        }
+    });
+}
 async function TravelPassengers(travelId, travelPassengers) {
     if (travelId != undefined && travelId != null && travelId != 0) {
         var data = await PostAsync("/Travels/TravelPassengers", { TravelId: travelId, TravelPassengers: travelPassengers });

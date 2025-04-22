@@ -96,7 +96,7 @@
         "Type": "Trial",
         "TrainerName": "MatrixFactorization",
         "Score": 1.0,
-        "RuntimeInSeconds": 9.141,
+        "RuntimeInSeconds": 2.97,
         "Parameter": {
           "_SCHEMA_": "e0 * e1 * e2 * e3 * e4",
           "e0": {
@@ -113,9 +113,9 @@
             "LabelColumnName": "Score",
             "MatrixColumnIndexColumnName": "UserId",
             "MatrixRowIndexColumnName": "TourId",
-            "ApproximationRank": 21,
-            "LearningRate": 0.4021074711539957,
-            "NumberOfIterations": 281,
+            "ApproximationRank": 12,
+            "LearningRate": 0.42850234679029059,
+            "NumberOfIterations": 60,
             "Quiet": true
           },
           "e3": {
@@ -133,7 +133,7 @@
         "Type": "Trial",
         "TrainerName": "MatrixFactorization",
         "Score": 1.0,
-        "RuntimeInSeconds": 20.638,
+        "RuntimeInSeconds": 2.103,
         "Parameter": {
           "_SCHEMA_": "e0 * e1 * e2 * e3 * e4",
           "e0": {
@@ -150,9 +150,9 @@
             "LabelColumnName": "Score",
             "MatrixColumnIndexColumnName": "UserId",
             "MatrixRowIndexColumnName": "TourId",
-            "ApproximationRank": 44,
-            "LearningRate": 0.072658329745536085,
-            "NumberOfIterations": 634,
+            "ApproximationRank": 36,
+            "LearningRate": 0.18370805509505342,
+            "NumberOfIterations": 40,
             "Quiet": true
           },
           "e3": {
@@ -170,7 +170,7 @@
         "Type": "Trial",
         "TrainerName": "MatrixFactorization",
         "Score": 1.0,
-        "RuntimeInSeconds": 8.77,
+        "RuntimeInSeconds": 3.937,
         "Parameter": {
           "_SCHEMA_": "e0 * e1 * e2 * e3 * e4",
           "e0": {
@@ -187,9 +187,9 @@
             "LabelColumnName": "Score",
             "MatrixColumnIndexColumnName": "UserId",
             "MatrixRowIndexColumnName": "TourId",
-            "ApproximationRank": 17,
-            "LearningRate": 0.045544653384181878,
-            "NumberOfIterations": 269,
+            "ApproximationRank": 10,
+            "LearningRate": 0.19727497102435351,
+            "NumberOfIterations": 80,
             "Quiet": true
           },
           "e3": {
@@ -207,7 +207,7 @@
         "Type": "Trial",
         "TrainerName": "MatrixFactorization",
         "Score": 1.0,
-        "RuntimeInSeconds": 12.683,
+        "RuntimeInSeconds": 4.308,
         "Parameter": {
           "_SCHEMA_": "e0 * e1 * e2 * e3 * e4",
           "e0": {
@@ -224,9 +224,46 @@
             "LabelColumnName": "Score",
             "MatrixColumnIndexColumnName": "UserId",
             "MatrixRowIndexColumnName": "TourId",
-            "ApproximationRank": 30,
-            "LearningRate": 0.18808438615451603,
-            "NumberOfIterations": 389,
+            "ApproximationRank": 10,
+            "LearningRate": 0.18739614818221953,
+            "NumberOfIterations": 90,
+            "Quiet": true
+          },
+          "e3": {
+            "OutputColumnName": "UserId",
+            "InputColumnName": "UserId"
+          },
+          "e4": {
+            "OutputColumnName": "TourId",
+            "InputColumnName": "TourId"
+          }
+        }
+      },
+      {
+        "Version": 1,
+        "Type": "Trial",
+        "TrainerName": "MatrixFactorization",
+        "Score": 1.0,
+        "RuntimeInSeconds": 2.035,
+        "Parameter": {
+          "_SCHEMA_": "e0 * e1 * e2 * e3 * e4",
+          "e0": {
+            "OutputColumnName": "TourId",
+            "InputColumnName": "TourId",
+            "AddKeyValueAnnotationsAsText": false
+          },
+          "e1": {
+            "OutputColumnName": "UserId",
+            "InputColumnName": "UserId",
+            "AddKeyValueAnnotationsAsText": false
+          },
+          "e2": {
+            "LabelColumnName": "Score",
+            "MatrixColumnIndexColumnName": "UserId",
+            "MatrixRowIndexColumnName": "TourId",
+            "ApproximationRank": 13,
+            "LearningRate": 0.3301723667219712,
+            "NumberOfIterations": 41,
             "Quiet": true
           },
           "e3": {

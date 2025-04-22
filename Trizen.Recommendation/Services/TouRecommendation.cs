@@ -1,23 +1,23 @@
-﻿using Trizen.Infrastructure.Dapper;
+﻿using Trizen.Data.Base.Dto;
+using Trizen.Infrastructure.Dapper;
 using Trizen.Infrastructure.Interfaces;
 using Trizen_Recommendation;
 
-namespace Trizen.Recommendation;
+namespace Trizen.Recommendation.Services;
 
 public class TouRecommendation(IDapperService<object, object> dapperService) : ITouRecommendation, IRegisterServices
 {
     private readonly IDapperService<object, object> _dapperService = dapperService;
-    public async Task<List<int>> GetRecommendedTours(int userId, int take)
+    public async Task<List<TourScoreDto>> GetRecommendedTours(int userId, int take)
     {
-        List<int> toursId;
         var parameter = new
         {
             userId
         };
 
-        List<TourScore> tours = await _dapperService.Query<TourScore>("GetSuggestedTours", parameter);
+        List<TourScoreDto> tours = await _dapperService.Query<TourScoreDto>("GetSuggestedTours", parameter);
 
-        foreach (TourScore tour in tours)
+        foreach (TourScoreDto tour in tours)
         {
             RecommendationModel.ModelInput modelParameter = new()
             {
@@ -30,8 +30,6 @@ public class TouRecommendation(IDapperService<object, object> dapperService) : I
             tour.Score = result.Score;
         }
 
-        toursId = tours.OrderByDescending(tour => tour.Score).Take(take).Select(tour => tour.TourId).ToList();
-
-        return toursId;
+        return tours.OrderByDescending(tour => tour.Score).Take(take).ToList();
     }
 }

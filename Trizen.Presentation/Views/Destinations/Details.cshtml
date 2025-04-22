@@ -33,6 +33,12 @@
                                     }
                                 </div>
                             }
+                            else
+                            {
+                                <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3" style="cursor:pointer" onclick="AlertForLogin(AlertForLoginType.LikeDestination)">
+                                    <i class="la la-heart-o"></i>
+                                </div>
+                            }
                         </div>
                         <div class="section-block"></div>
                         <br />
@@ -41,7 +47,7 @@
                             <ul class="tag-list">
                                 @foreach (var item in Model.Categories)
                                 {
-                                    <li><a asp-controller="Tours" asp-action="Index" asp-route-CategoryId="@item.Id">@item.Title</a></li>
+                                    <li><a asp-controller="Destinations" asp-action="Index" asp-route-CategoryId="@item.Id">@item.Title</a></li>
                                 }
                             </ul>
                         </div>
@@ -58,8 +64,8 @@
 @await Component.InvokeAsync("ToursListComponent", new
     {
         model = new SearchTourViewModel
-        {
-            CallerPage = CallerPage.Destination,
-            DestinationTypeId = Model.DestinationTypeId
-        }
+    {
+        CallerPage = CallerPage.Destination,
+        DestinationTypeId = Model.DestinationTypeId
+    }
     })

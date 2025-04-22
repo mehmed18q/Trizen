@@ -1,6 +1,7 @@
 ﻿using Trizen.Data.Tour.Dto;
 using Trizen.Data.Tour.ViewModel;
 using Trizen.DataLayer.Entities;
+using Trizen.DataLayer.Pattern;
 
 namespace Trizen.DataLayer.Interfaces;
 
@@ -17,6 +18,7 @@ public interface ITourRepository
     Task<List<Tour>> GetFavoriteTours(int userId);
     Task<List<Tour>> GetMyTours(int userId);
     Task<bool> AnyWithCapacity(int tourId, int capacity);
-    Task<List<Tour>> GetRecommendedTours(int userId, int take = 10);
+    Task<List<EntityObject<Tour, float>>> GetRecommendedTours(int userId, int take = 10);
     Task<bool> CheckHaveTravel(int userId);
+    Task<List<Destination>> GetFavoriteDestinations(int userId);
 }
