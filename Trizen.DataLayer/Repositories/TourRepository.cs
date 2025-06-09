@@ -164,6 +164,8 @@ internal class TourRepository(TrizenDbContext dbContext, ITouRecommendation touR
                     })
                     .ToList();
 
+        tours = FixScores(tours);
+
         return tours;
     }
 
@@ -184,5 +186,22 @@ internal class TourRepository(TrizenDbContext dbContext, ITouRecommendation touR
         .Select(destinationObserve => destinationObserve.Destination).ToListAsync();
 
         return observedDestinations;
+    }
+
+    private static List<EntityObject<Tour, float>> FixScores(List<EntityObject<Tour, float>> tours)
+    {
+        if (tours.Count != 0)
+        {
+            float max = tours.Select(tour => tour.Value).Max() / 100;
+            if (max.IsNotZeroOrNull())
+            {
+                foreach (EntityObject<Tour, float> tour in tours)
+                {
+                    tour.Value = (float)Math.Round(tour.Value / max, 2);
+                }
+            }
+        }
+
+        return tours;
     }
 }

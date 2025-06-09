@@ -96,7 +96,7 @@
         "Type": "Trial",
         "TrainerName": "MatrixFactorization",
         "Score": 1.0,
-        "RuntimeInSeconds": 2.97,
+        "RuntimeInSeconds": 5.782,
         "Parameter": {
           "_SCHEMA_": "e0 * e1 * e2 * e3 * e4",
           "e0": {
@@ -113,9 +113,9 @@
             "LabelColumnName": "Score",
             "MatrixColumnIndexColumnName": "UserId",
             "MatrixRowIndexColumnName": "TourId",
-            "ApproximationRank": 12,
-            "LearningRate": 0.42850234679029059,
-            "NumberOfIterations": 60,
+            "ApproximationRank": 25,
+            "LearningRate": 0.15993822344875533,
+            "NumberOfIterations": 177,
             "Quiet": true
           },
           "e3": {
@@ -133,44 +133,7 @@
         "Type": "Trial",
         "TrainerName": "MatrixFactorization",
         "Score": 1.0,
-        "RuntimeInSeconds": 2.103,
-        "Parameter": {
-          "_SCHEMA_": "e0 * e1 * e2 * e3 * e4",
-          "e0": {
-            "OutputColumnName": "TourId",
-            "InputColumnName": "TourId",
-            "AddKeyValueAnnotationsAsText": false
-          },
-          "e1": {
-            "OutputColumnName": "UserId",
-            "InputColumnName": "UserId",
-            "AddKeyValueAnnotationsAsText": false
-          },
-          "e2": {
-            "LabelColumnName": "Score",
-            "MatrixColumnIndexColumnName": "UserId",
-            "MatrixRowIndexColumnName": "TourId",
-            "ApproximationRank": 36,
-            "LearningRate": 0.18370805509505342,
-            "NumberOfIterations": 40,
-            "Quiet": true
-          },
-          "e3": {
-            "OutputColumnName": "UserId",
-            "InputColumnName": "UserId"
-          },
-          "e4": {
-            "OutputColumnName": "TourId",
-            "InputColumnName": "TourId"
-          }
-        }
-      },
-      {
-        "Version": 1,
-        "Type": "Trial",
-        "TrainerName": "MatrixFactorization",
-        "Score": 1.0,
-        "RuntimeInSeconds": 3.937,
+        "RuntimeInSeconds": 8.916,
         "Parameter": {
           "_SCHEMA_": "e0 * e1 * e2 * e3 * e4",
           "e0": {
@@ -188,8 +151,8 @@
             "MatrixColumnIndexColumnName": "UserId",
             "MatrixRowIndexColumnName": "TourId",
             "ApproximationRank": 10,
-            "LearningRate": 0.19727497102435351,
-            "NumberOfIterations": 80,
+            "LearningRate": 0.24528242711520473,
+            "NumberOfIterations": 280,
             "Quiet": true
           },
           "e3": {
@@ -207,7 +170,7 @@
         "Type": "Trial",
         "TrainerName": "MatrixFactorization",
         "Score": 1.0,
-        "RuntimeInSeconds": 4.308,
+        "RuntimeInSeconds": 3.728,
         "Parameter": {
           "_SCHEMA_": "e0 * e1 * e2 * e3 * e4",
           "e0": {
@@ -224,9 +187,9 @@
             "LabelColumnName": "Score",
             "MatrixColumnIndexColumnName": "UserId",
             "MatrixRowIndexColumnName": "TourId",
-            "ApproximationRank": 10,
-            "LearningRate": 0.18739614818221953,
-            "NumberOfIterations": 90,
+            "ApproximationRank": 77,
+            "LearningRate": 0.10428890328914354,
+            "NumberOfIterations": 111,
             "Quiet": true
           },
           "e3": {
@@ -244,7 +207,7 @@
         "Type": "Trial",
         "TrainerName": "MatrixFactorization",
         "Score": 1.0,
-        "RuntimeInSeconds": 2.035,
+        "RuntimeInSeconds": 4.667,
         "Parameter": {
           "_SCHEMA_": "e0 * e1 * e2 * e3 * e4",
           "e0": {
@@ -261,9 +224,46 @@
             "LabelColumnName": "Score",
             "MatrixColumnIndexColumnName": "UserId",
             "MatrixRowIndexColumnName": "TourId",
-            "ApproximationRank": 13,
-            "LearningRate": 0.3301723667219712,
-            "NumberOfIterations": 41,
+            "ApproximationRank": 37,
+            "LearningRate": 0.025696205188061486,
+            "NumberOfIterations": 138,
+            "Quiet": true
+          },
+          "e3": {
+            "OutputColumnName": "UserId",
+            "InputColumnName": "UserId"
+          },
+          "e4": {
+            "OutputColumnName": "TourId",
+            "InputColumnName": "TourId"
+          }
+        }
+      },
+      {
+        "Version": 1,
+        "Type": "Trial",
+        "TrainerName": "MatrixFactorization",
+        "Score": 1.0,
+        "RuntimeInSeconds": 10.109,
+        "Parameter": {
+          "_SCHEMA_": "e0 * e1 * e2 * e3 * e4",
+          "e0": {
+            "OutputColumnName": "TourId",
+            "InputColumnName": "TourId",
+            "AddKeyValueAnnotationsAsText": false
+          },
+          "e1": {
+            "OutputColumnName": "UserId",
+            "InputColumnName": "UserId",
+            "AddKeyValueAnnotationsAsText": false
+          },
+          "e2": {
+            "LabelColumnName": "Score",
+            "MatrixColumnIndexColumnName": "UserId",
+            "MatrixRowIndexColumnName": "TourId",
+            "ApproximationRank": 28,
+            "LearningRate": 0.20711033682330993,
+            "NumberOfIterations": 314,
             "Quiet": true
           },
           "e3": {
@@ -294,7 +294,7 @@
     "Version": 2,
     "Subsampling": false,
     "Type": "RecommendationTrainingOption",
-    "TrainingTime": 60,
+    "TrainingTime": 150,
     "LabelColumn": "Score",
     "UserIdColumn": "UserId",
     "ItemIdColumn": "TourId",

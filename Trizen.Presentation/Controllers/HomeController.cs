@@ -53,23 +53,25 @@ namespace Trizen.Presentation.Controllers
             [
                 new TeamViewModel{
                     FullName = "محمد صادق کیومرثی",
-                    Position = "سرپرست واحد توسعه دهنده وب",
-                    Email = "mehmed2002q@gmail.com",
                     Image = "/Images/User/34dac24d-3b74-47c3-9d24-55ed90e5a696__sadeq.png",
-                    Instagram = "https://www.instagram.com/sadeq.dev",
-                    LinkedIn = "https://www.linkedin.com/in/sadeq-kiomarsi",
-                    PhoneNumber = "+989217074647",
-                    Telegram = "https://telegram.org/msk18q",
-                    Whatsapp = "https://wa.me/+989217074647",
-                    Website ="http://sadeqkiumarsi.ir/"
+                    Position = "سرپرست واحد توسعه دهنده وب",
+                    //Email = "mehmed2002q@gmail.com",
+                    //Instagram = "https://www.instagram.com/sadeq.dev",
+                    //LinkedIn = "https://www.linkedin.com/in/sadeq-kiomarsi",
+                    //PhoneNumber = "+989217074647",
+                    //Telegram = "https://telegram.org/msk18q",
+                    //Whatsapp = "https://wa.me/+989217074647",
+                    //Website ="http://sadeqkiumarsi.ir/"
                 },
                 new TeamViewModel{
                     FullName = "فاطمه داشخواه",
                     Image = $"/Images/User/{Resource.DefaultImage}",
+                    Position = "تحلیلگر و توسعه دهنده"
                 },
                 new TeamViewModel{
                     FullName = "هانیه گرامی",
                     Image = $"/Images/User/{Resource.DefaultImage}",
+                    Position = "تحلیلگر و توسعه دهنده"
                 },
             ];
 

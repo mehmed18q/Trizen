@@ -11,11 +11,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trizen.DataLayer", "Trizen.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trizen.Infrastructure", "Trizen.Infrastructure\Trizen.Infrastructure.csproj", "{267AEDB8-DE70-4BEB-A7D5-BD6174A64693}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trizen.Test", "Trizen.Test\Trizen.Test.csproj", "{DB6DA2C1-9FD5-4100-A211-462704D532AF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trizen.Data", "Trizen.Data\Trizen.Data.csproj", "{AF61BC15-9AE5-4615-A6F5-EADCB0C03D5B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trizen.Recommendation", "Trizen.Recommendation\Trizen.Recommendation.csproj", "{D396F043-1C69-48F3-A3A8-88CF2F6F36F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trizen.DataLayer.Test", "Trizen.DataLayer.Test\Trizen.DataLayer.Test.csproj", "{8E28DA34-1583-4156-9F98-F3D9FBE8B410}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trizen.Application.Test", "Trizen.Application.Test\Trizen.Application.Test.csproj", "{6B841C17-71EE-4369-A559-F3392E7D7E12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,10 +41,6 @@ Global
 		{267AEDB8-DE70-4BEB-A7D5-BD6174A64693}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{267AEDB8-DE70-4BEB-A7D5-BD6174A64693}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{267AEDB8-DE70-4BEB-A7D5-BD6174A64693}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DB6DA2C1-9FD5-4100-A211-462704D532AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DB6DA2C1-9FD5-4100-A211-462704D532AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DB6DA2C1-9FD5-4100-A211-462704D532AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DB6DA2C1-9FD5-4100-A211-462704D532AF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AF61BC15-9AE5-4615-A6F5-EADCB0C03D5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AF61BC15-9AE5-4615-A6F5-EADCB0C03D5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF61BC15-9AE5-4615-A6F5-EADCB0C03D5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -51,6 +49,14 @@ Global
 		{D396F043-1C69-48F3-A3A8-88CF2F6F36F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D396F043-1C69-48F3-A3A8-88CF2F6F36F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D396F043-1C69-48F3-A3A8-88CF2F6F36F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E28DA34-1583-4156-9F98-F3D9FBE8B410}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E28DA34-1583-4156-9F98-F3D9FBE8B410}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E28DA34-1583-4156-9F98-F3D9FBE8B410}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E28DA34-1583-4156-9F98-F3D9FBE8B410}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B841C17-71EE-4369-A559-F3392E7D7E12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B841C17-71EE-4369-A559-F3392E7D7E12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B841C17-71EE-4369-A559-F3392E7D7E12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B841C17-71EE-4369-A559-F3392E7D7E12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

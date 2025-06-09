@@ -50,6 +50,7 @@
                                             <th>@Resource.StartTime</th>
                                             <th>@Resource.EndTime</th>
                                             <th>@Resource.Price</th>
+                                            <th>@Resource.Score</th>
                                             <th>@Resource.Status</th>
                                             <th>@Resource.Commands</th>
                                         </tr>
@@ -71,6 +72,7 @@
                                                 <td>@item.MaximumPassenger</td>
                                                 <td>@item.StartTime.ToShamsiWithTime()</td>
                                                 <td>@item.EndTime.ToShamsiWithTime()</td>
+                                                <td>@item.Score %</td>
                                                 <td>@item.Price</td>
                                                 @if (item.StartTime < DateTime.Now)
                                                 {

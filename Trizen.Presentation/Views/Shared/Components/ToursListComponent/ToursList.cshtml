@@ -225,7 +225,7 @@ else if (Model.Tours.Data.Any())
                                     @if (item.Score.IsNotZeroOrNull())
                                     {
                                         <span class="badgel">
-                                            <p>@Math.Round((decimal)item.Score!, 2)</p>
+                                            <p>@item.Score %</p>
                                         </span>
                                     }
                                 </div>
