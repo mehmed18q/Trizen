@@ -13,23 +13,24 @@ using Trizen.Infrastructure.Base.Response;
 using Trizen.Infrastructure.Enumerations;
 using Trizen.Infrastructure.Extensions;
 using Trizen.Infrastructure.Interfaces;
-using Trizen.Infrastructure.Utilities;
 
 namespace Trizen.Application.Services;
 
-internal class TourService(ITourRepository repository, IUnitOfWork unitOfWork, IMapper mapper, IUserRepository userRepository) : ITourService, IRegisterServices
+internal class TourService(ITourRepository repository, IUnitOfWork unitOfWork, IMapper mapper, IUserRepository userRepository, IFileUtility fileUtility) : ITourService, IRegisterServices
 {
     private readonly ITourRepository _repository = repository;
     private readonly IUserRepository _userRepository = userRepository;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IMapper _mapper = mapper;
+    private readonly IFileUtility _fileUtility = fileUtility;
+
 
     public async Task<Response<bool>> Create(CreateTourDto dto)
     {
         Tour tour = _mapper.Map<Tour>(dto);
         if (dto.UploadImage is not null)
         {
-            Response<string> newImage = await FileUtility.UploadFileLocal(new UploadFileDto
+            Response<string> newImage = await _fileUtility.UploadFileLocal(new UploadFileDto
             {
                 Entity = nameof(Tour),
                 File = dto.UploadImage,
@@ -37,7 +38,7 @@ internal class TourService(ITourRepository repository, IUnitOfWork unitOfWork, I
 
             if (newImage.IsSuccess && tour.Image.IsNotEmpty())
             {
-                _ = FileUtility.DeleteFileLocal(new DeleteFileDto
+                _ = _fileUtility.DeleteFileLocal(new DeleteFileDto
                 {
                     Entity = nameof(Tour),
                     FileName = tour.Image!
@@ -144,7 +145,7 @@ internal class TourService(ITourRepository repository, IUnitOfWork unitOfWork, I
             tour = _mapper.Map(dto, tour!);
             if (dto.UploadImage is not null)
             {
-                Response<string> newImage = await FileUtility.UploadFileLocal(new UploadFileDto
+                Response<string> newImage = await _fileUtility.UploadFileLocal(new UploadFileDto
                 {
                     Entity = nameof(Tour),
                     File = dto.UploadImage,
@@ -152,7 +153,7 @@ internal class TourService(ITourRepository repository, IUnitOfWork unitOfWork, I
 
                 if (newImage.IsSuccess && tour.Image.IsNotEmpty())
                 {
-                    _ = FileUtility.DeleteFileLocal(new DeleteFileDto
+                    _ = _fileUtility.DeleteFileLocal(new DeleteFileDto
                     {
                         Entity = nameof(Tour),
                         FileName = tour.Image!

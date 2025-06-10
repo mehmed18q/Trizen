@@ -13,22 +13,23 @@ using Trizen.Infrastructure.Base.Response;
 using Trizen.Infrastructure.Enumerations;
 using Trizen.Infrastructure.Extensions;
 using Trizen.Infrastructure.Interfaces;
-using Trizen.Infrastructure.Utilities;
 
 namespace Trizen.Application.Services;
 
-internal class DestinationService(IDestinationRepository repository, IUnitOfWork unitOfWork, IMapper mapper) : IDestinationService, IRegisterServices
+internal class DestinationService(IDestinationRepository repository, IUnitOfWork unitOfWork, IMapper mapper,
+        IFileUtility fileUtility) : IDestinationService, IRegisterServices
 {
     private readonly IDestinationRepository _repository = repository;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IMapper _mapper = mapper;
+    private readonly IFileUtility _fileUtility = fileUtility;
 
     public async Task<Response<bool>> Create(CreateDestinationDto dto)
     {
         Destination destination = _mapper.Map<Destination>(dto);
         if (dto.UploadImage is not null)
         {
-            Response<string> newImage = await FileUtility.UploadFileLocal(new UploadFileDto
+            Response<string> newImage = await _fileUtility.UploadFileLocal(new UploadFileDto
             {
                 Entity = nameof(Destination),
                 File = dto.UploadImage,
@@ -36,7 +37,7 @@ internal class DestinationService(IDestinationRepository repository, IUnitOfWork
 
             if (newImage.IsSuccess && destination.Image.IsNotEmpty())
             {
-                _ = FileUtility.DeleteFileLocal(new DeleteFileDto
+                _ = _fileUtility.DeleteFileLocal(new DeleteFileDto
                 {
                     Entity = nameof(Destination),
                     FileName = destination.Image!
@@ -153,7 +154,7 @@ internal class DestinationService(IDestinationRepository repository, IUnitOfWork
             destination = _mapper.Map(dto, destination!);
             if (dto.UploadImage is not null)
             {
-                Response<string> newImage = await FileUtility.UploadFileLocal(new UploadFileDto
+                Response<string> newImage = await _fileUtility.UploadFileLocal(new UploadFileDto
                 {
                     Entity = nameof(Destination),
                     File = dto.UploadImage,
@@ -161,7 +162,7 @@ internal class DestinationService(IDestinationRepository repository, IUnitOfWork
 
                 if (newImage.IsSuccess && destination.Image.IsNotEmpty())
                 {
-                    _ = FileUtility.DeleteFileLocal(new DeleteFileDto
+                    _ = _fileUtility.DeleteFileLocal(new DeleteFileDto
                     {
                         Entity = nameof(Destination),
                         FileName = destination.Image!

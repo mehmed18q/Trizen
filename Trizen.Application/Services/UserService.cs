@@ -13,17 +13,18 @@ using Trizen.Infrastructure.Base.Response;
 using Trizen.Infrastructure.Enumerations;
 using Trizen.Infrastructure.Extensions;
 using Trizen.Infrastructure.Interfaces;
-using Trizen.Infrastructure.Utilities;
 
 namespace Trizen.Application.Services;
 
-internal class UserService(IUserRepository repository, IUnitOfWork unitOfWork, IMapper mapper, IOptions<TrizenConfiguration> configuration, ITourRepository tourRepository, IDestinationRepository destinationRepository) : IUserService, IRegisterServices
+internal class UserService(IUserRepository repository, IUnitOfWork unitOfWork, IMapper mapper, IOptions<TrizenConfiguration> configuration, ITourRepository tourRepository, IDestinationRepository destinationRepository, IFileUtility fileUtility) : IUserService, IRegisterServices
 {
     private readonly IUserRepository _repository = repository;
     private readonly ITourRepository _tourRepository = tourRepository;
     private readonly IDestinationRepository _destinationRepository = destinationRepository;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IMapper _mapper = mapper;
+    private readonly IFileUtility _fileUtility = fileUtility;
+
     private readonly TrizenConfiguration _configuration = configuration.Value;
 
     public async Task<Response<ProfileViewModel>> EditProfile(UpdateProfileDto dto)
@@ -34,7 +35,7 @@ internal class UserService(IUserRepository repository, IUnitOfWork unitOfWork, I
             user = _mapper.Map(dto, user);
             if (dto.UploadImageProfile is not null)
             {
-                Response<string> newImage = await FileUtility.UploadFileLocal(new UploadFileDto
+                Response<string> newImage = await _fileUtility.UploadFileLocal(new UploadFileDto
                 {
                     Entity = nameof(User),
                     File = dto.UploadImageProfile,
@@ -42,7 +43,7 @@ internal class UserService(IUserRepository repository, IUnitOfWork unitOfWork, I
 
                 if (newImage.IsSuccess && user.ImageProfile.IsNotEmpty())
                 {
-                    _ = FileUtility.DeleteFileLocal(new DeleteFileDto
+                    _ = _fileUtility.DeleteFileLocal(new DeleteFileDto
                     {
                         Entity = nameof(User),
                         FileName = user.ImageProfile!

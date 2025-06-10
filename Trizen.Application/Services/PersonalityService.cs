@@ -76,8 +76,11 @@ public class PersonalityService(IPersonalityRepository repository, IUnitOfWork u
                 }
             }
 
-            IEnumerable<PersonalityCategory> deletes = personality.PersonalityCategories.Where(personalityCategory => !_personalityCategories.Contains(personalityCategory.CategoryId));
-            foreach (PersonalityCategory? item in deletes)
+            List<PersonalityCategory> deletes = personality.PersonalityCategories
+         .Where(personalityCategory => !_personalityCategories.Contains(personalityCategory.CategoryId))
+         .ToList();
+
+            foreach (PersonalityCategory item in deletes)
             {
                 _ = personality.PersonalityCategories.Remove(item);
             }
@@ -90,7 +93,7 @@ public class PersonalityService(IPersonalityRepository repository, IUnitOfWork u
             return Response<bool>.SuccessResult(true);
         }
 
-        return Response<bool>.SuccessResult(false, Message.Format(Message.EntityNotFound, Resource.Personality));
+        return Response<bool>.FailResult(false, Message.Format(Message.EntityNotFound, Resource.Personality));
     }
 
     public async Task<Response<bool>> PersonalityDestinationTypeInsertUpdate(UpdatePersonalityDto dto)
@@ -112,7 +115,10 @@ public class PersonalityService(IPersonalityRepository repository, IUnitOfWork u
                 }
             }
 
-            IEnumerable<PersonalityDestinationType> deletes = personality.PersonalityDestinationTypes.Where(personalityDestinationType => !_personalityDestinationTypes.Contains(personalityDestinationType.DestinationTypeId));
+            List<PersonalityDestinationType> deletes = personality.PersonalityDestinationTypes
+    .Where(personalityDestinationType => !_personalityDestinationTypes.Contains(personalityDestinationType.DestinationTypeId))
+    .ToList();
+
             foreach (PersonalityDestinationType? item in deletes)
             {
                 _ = personality.PersonalityDestinationTypes.Remove(item);
@@ -123,7 +129,7 @@ public class PersonalityService(IPersonalityRepository repository, IUnitOfWork u
             return Response<bool>.SuccessResult(true);
         }
 
-        return Response<bool>.SuccessResult(false, Message.Format(Message.EntityNotFound, Resource.Personality));
+        return Response<bool>.FailResult(false, Message.Format(Message.EntityNotFound, Resource.Personality));
     }
 
     public async Task<Response<bool>> PersonalityTourTypeInsertUpdate(UpdatePersonalityDto dto)
@@ -145,8 +151,11 @@ public class PersonalityService(IPersonalityRepository repository, IUnitOfWork u
                 }
             }
 
-            IEnumerable<PersonalityTourType> deletes = personality.PersonalityTourTypes.Where(personalityTourType => !_personalityTourTypes.Contains(personalityTourType.TourTypeId));
-            foreach (PersonalityTourType? item in deletes)
+            List<PersonalityTourType> deletes = personality.PersonalityTourTypes
+    .Where(personalityTourType => !_personalityTourTypes.Contains(personalityTourType.TourTypeId))
+    .ToList();
+
+            foreach (PersonalityTourType item in deletes)
             {
                 _ = personality.PersonalityTourTypes.Remove(item);
             }
@@ -156,6 +165,6 @@ public class PersonalityService(IPersonalityRepository repository, IUnitOfWork u
             return Response<bool>.SuccessResult(true);
         }
 
-        return Response<bool>.SuccessResult(false, Message.Format(Message.EntityNotFound, Resource.Personality));
+        return Response<bool>.FailResult(false, Message.Format(Message.EntityNotFound, Resource.Personality));
     }
 }

@@ -1,11 +1,12 @@
 ﻿using Trizen.Infrastructure.Base.File;
 using Trizen.Infrastructure.Base.Response;
+using Trizen.Infrastructure.Interfaces;
 
 namespace Trizen.Infrastructure.Utilities;
 
-public class FileUtility
+public class FileUtility : IFileUtility
 {
-    public static async Task<Response<string>> UploadFileLocal(UploadFileDto dto)
+    public async Task<Response<string>> UploadFileLocal(UploadFileDto dto)
     {
         try
         {
@@ -25,7 +26,7 @@ public class FileUtility
         return Response<string>.FailResult(null);
     }
 
-    public static bool DeleteFileLocal(DeleteFileDto dto)
+    public bool DeleteFileLocal(DeleteFileDto dto)
     {
         try
         {

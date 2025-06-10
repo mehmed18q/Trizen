@@ -11,7 +11,7 @@ using Trizen.Infrastructure.Interfaces;
 
 namespace Trizen.Application.Services;
 
-public class BaseEntityService(IBaseEntityRepository<Category> categoryRepository, IBaseEntityRepository<DestinationType> destinationTypeRepository, IBaseEntityRepository<TourType> tourTypeRepository, IUnitOfWork unitOfWork, IMapper mapper) : IBaseEntityService, IRegisterServices
+internal class BaseEntityService(IBaseEntityRepository<Category> categoryRepository, IBaseEntityRepository<DestinationType> destinationTypeRepository, IBaseEntityRepository<TourType> tourTypeRepository, IUnitOfWork unitOfWork, IMapper mapper) : IBaseEntityService, IRegisterServices
 {
     private readonly IBaseEntityRepository<Category> _categoryRepository = categoryRepository;
     private readonly IBaseEntityRepository<DestinationType> _destinationTypeRepository = destinationTypeRepository;

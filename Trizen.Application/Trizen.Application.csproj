@@ -1,17 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="14.0.0" />
-    <PackageReference Include="Microsoft.ML.Recommender" Version="0.21.1" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Trizen.DataLayer\Trizen.DataLayer.csproj" />
-    <ProjectReference Include="..\Trizen.Data\Trizen.Data.csproj" />
-    <ProjectReference Include="..\Trizen.Infrastructure\Trizen.Infrastructure.csproj" />
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="14.0.0" />
+		<PackageReference Include="Microsoft.ML.Recommender" Version="0.22.2" />
+		<PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Trizen.DataLayer\Trizen.DataLayer.csproj" />
+		<ProjectReference Include="..\Trizen.Data\Trizen.Data.csproj" />
+		<ProjectReference Include="..\Trizen.Infrastructure\Trizen.Infrastructure.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+			<_Parameter1>Trizen.Application.Test</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
 </Project>

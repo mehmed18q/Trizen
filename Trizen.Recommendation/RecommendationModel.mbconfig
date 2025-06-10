@@ -96,7 +96,7 @@
         "Type": "Trial",
         "TrainerName": "MatrixFactorization",
         "Score": 1.0,
-        "RuntimeInSeconds": 5.782,
+        "RuntimeInSeconds": 5.056,
         "Parameter": {
           "_SCHEMA_": "e0 * e1 * e2 * e3 * e4",
           "e0": {
@@ -113,9 +113,9 @@
             "LabelColumnName": "Score",
             "MatrixColumnIndexColumnName": "UserId",
             "MatrixRowIndexColumnName": "TourId",
-            "ApproximationRank": 25,
-            "LearningRate": 0.15993822344875533,
-            "NumberOfIterations": 177,
+            "ApproximationRank": 16,
+            "LearningRate": 0.25258769338967507,
+            "NumberOfIterations": 154,
             "Quiet": true
           },
           "e3": {
@@ -133,7 +133,7 @@
         "Type": "Trial",
         "TrainerName": "MatrixFactorization",
         "Score": 1.0,
-        "RuntimeInSeconds": 8.916,
+        "RuntimeInSeconds": 3.838,
         "Parameter": {
           "_SCHEMA_": "e0 * e1 * e2 * e3 * e4",
           "e0": {
@@ -151,8 +151,8 @@
             "MatrixColumnIndexColumnName": "UserId",
             "MatrixRowIndexColumnName": "TourId",
             "ApproximationRank": 10,
-            "LearningRate": 0.24528242711520473,
-            "NumberOfIterations": 280,
+            "LearningRate": 0.20804672659906212,
+            "NumberOfIterations": 117,
             "Quiet": true
           },
           "e3": {
@@ -170,7 +170,7 @@
         "Type": "Trial",
         "TrainerName": "MatrixFactorization",
         "Score": 1.0,
-        "RuntimeInSeconds": 3.728,
+        "RuntimeInSeconds": 6.54,
         "Parameter": {
           "_SCHEMA_": "e0 * e1 * e2 * e3 * e4",
           "e0": {
@@ -187,9 +187,9 @@
             "LabelColumnName": "Score",
             "MatrixColumnIndexColumnName": "UserId",
             "MatrixRowIndexColumnName": "TourId",
-            "ApproximationRank": 77,
-            "LearningRate": 0.10428890328914354,
-            "NumberOfIterations": 111,
+            "ApproximationRank": 34,
+            "LearningRate": 0.30666448780455896,
+            "NumberOfIterations": 201,
             "Quiet": true
           },
           "e3": {
@@ -207,7 +207,7 @@
         "Type": "Trial",
         "TrainerName": "MatrixFactorization",
         "Score": 1.0,
-        "RuntimeInSeconds": 4.667,
+        "RuntimeInSeconds": 6.21,
         "Parameter": {
           "_SCHEMA_": "e0 * e1 * e2 * e3 * e4",
           "e0": {
@@ -224,9 +224,9 @@
             "LabelColumnName": "Score",
             "MatrixColumnIndexColumnName": "UserId",
             "MatrixRowIndexColumnName": "TourId",
-            "ApproximationRank": 37,
-            "LearningRate": 0.025696205188061486,
-            "NumberOfIterations": 138,
+            "ApproximationRank": 18,
+            "LearningRate": 0.0681398484685359,
+            "NumberOfIterations": 192,
             "Quiet": true
           },
           "e3": {
@@ -244,7 +244,7 @@
         "Type": "Trial",
         "TrainerName": "MatrixFactorization",
         "Score": 1.0,
-        "RuntimeInSeconds": 10.109,
+        "RuntimeInSeconds": 3.663,
         "Parameter": {
           "_SCHEMA_": "e0 * e1 * e2 * e3 * e4",
           "e0": {
@@ -261,9 +261,9 @@
             "LabelColumnName": "Score",
             "MatrixColumnIndexColumnName": "UserId",
             "MatrixRowIndexColumnName": "TourId",
-            "ApproximationRank": 28,
-            "LearningRate": 0.20711033682330993,
-            "NumberOfIterations": 314,
+            "ApproximationRank": 18,
+            "LearningRate": 0.21056694279986485,
+            "NumberOfIterations": 107,
             "Quiet": true
           },
           "e3": {
@@ -294,7 +294,7 @@
     "Version": 2,
     "Subsampling": false,
     "Type": "RecommendationTrainingOption",
-    "TrainingTime": 150,
+    "TrainingTime": 180,
     "LabelColumn": "Score",
     "UserIdColumn": "UserId",
     "ItemIdColumn": "TourId",

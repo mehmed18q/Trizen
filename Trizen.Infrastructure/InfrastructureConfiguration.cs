@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Trizen.Infrastructure.Dapper;
+using Trizen.Infrastructure.Interfaces;
 using Trizen.Infrastructure.Utilities;
 
 namespace Trizen.Infrastructure;
@@ -14,5 +15,6 @@ public static class InfrastructureConfiguration
     {
         _ = services.AddSingleton<RedisCacheUtility>();
         _ = services.AddScoped(typeof(IDapperService<,>), typeof(DapperService<,>));
+        _ = services.AddScoped<IFileUtility, FileUtility>();
     }
 }

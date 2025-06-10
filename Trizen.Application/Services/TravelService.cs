@@ -73,8 +73,11 @@ internal class TravelService(ITravelRepository repository, IUnitOfWork unitOfWor
                 }
             }
 
-            IEnumerable<Passenger> deletes = travel!.Passengers.Where(passenger => !_travelPassengers.Contains(passenger.PassengerUserId));
-            foreach (Passenger? item in deletes)
+            List<Passenger> deletes = travel!.Passengers
+    .Where(passenger => !_travelPassengers.Contains(passenger.PassengerUserId))
+    .ToList();
+
+            foreach (Passenger item in deletes)
             {
                 _ = travel.Passengers.Remove(item);
             }
