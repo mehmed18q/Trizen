@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trizen.DataLayer.Test", "Tr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trizen.Application.Test", "Trizen.Application.Test\Trizen.Application.Test.csproj", "{6B841C17-71EE-4369-A559-F3392E7D7E12}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trizen.Documentation", "Trizen.Documentation\Trizen.Documentation.csproj", "{721F2687-B58D-428C-BC5B-631A871C632E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,8 +59,15 @@ Global
 		{6B841C17-71EE-4369-A559-F3392E7D7E12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B841C17-71EE-4369-A559-F3392E7D7E12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B841C17-71EE-4369-A559-F3392E7D7E12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{721F2687-B58D-428C-BC5B-631A871C632E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{721F2687-B58D-428C-BC5B-631A871C632E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{721F2687-B58D-428C-BC5B-631A871C632E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{721F2687-B58D-428C-BC5B-631A871C632E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B59ED732-9F5B-4B40-AB7B-E7F1CF238F3D}
 	EndGlobalSection
 EndGlobal
