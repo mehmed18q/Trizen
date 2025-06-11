@@ -12,7 +12,7 @@ using Trizen.DataLayer;
 namespace Trizen.DataLayer.Migrations
 {
     [DbContext(typeof(TrizenDbContext))]
-    [Migration("20250414160700_InitialDatabase")]
+    [Migration("20250611050747_InitialDatabase")]
     partial class InitialDatabase
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace Trizen.DataLayer.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.3")
+                .HasAnnotation("ProductVersion", "9.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -4178,7 +4178,10 @@ namespace Trizen.DataLayer.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<int>("PersonalityId")
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PersonalityId")
                         .HasColumnType("int");
 
                     b.Property<int>("Score")
@@ -4190,7 +4193,7 @@ namespace Trizen.DataLayer.Migrations
                     b.Property<int>("TourId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserAge")
+                    b.Property<int?>("UserAge")
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
@@ -7246,9 +7249,7 @@ namespace Trizen.DataLayer.Migrations
                 {
                     b.HasOne("Trizen.DataLayer.Entities.Personality", "Personality")
                         .WithMany()
-                        .HasForeignKey("PersonalityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PersonalityId");
 
                     b.HasOne("Trizen.DataLayer.Entities.Tour", "Tour")
                         .WithMany()

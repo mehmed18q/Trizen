@@ -98,7 +98,7 @@ public class DestinationServiceTests
         _fileUtilityMock.Verify(f => f.DeleteFileLocal(It.IsAny<DeleteFileDto>()), Times.Never);
     }
 
-    private IFormFile CreateFakeFormFile()
+    private static FormFile CreateFakeFormFile()
     {
         string content = "Fake file content";
         MemoryStream stream = new(Encoding.UTF8.GetBytes(content));

@@ -5,6 +5,8 @@ using Trizen.Data.Base.ViewModel;
 using Trizen.DataLayer.Entities;
 using Trizen.DataLayer.Interfaces;
 using Trizen.Infrastructure.Base.Response;
+using Trizen.Infrastructure.Enumerations;
+using Trizen.Infrastructure.Extensions;
 
 namespace Trizen.Application.Test;
 
@@ -37,7 +39,7 @@ public class ListServiceTests
         ];
         _ = _repositoryMock.Setup(r => r.GetCategories()).ReturnsAsync(categories);
 
-        List<ListViewModel> mappedCategories = categories.Select(c => new ListViewModel { Id = c.Id, Title = c.Title }).ToList();
+        List<ListViewModel> mappedCategories = [.. categories.Select(c => new ListViewModel { Id = c.Id, Title = c.Title })];
         _ = _mapperMock.Setup(m => m.Map<List<ListViewModel>>(categories)).Returns(mappedCategories);
 
         // Act
@@ -61,7 +63,7 @@ public class ListServiceTests
         ];
         _ = _repositoryMock.Setup(r => r.GetDestinations()).ReturnsAsync(destinations);
 
-        List<ListViewModel> mappedDestinations = destinations.Select(d => new ListViewModel { Id = d.Id, Title = d.Title }).ToList();
+        List<ListViewModel> mappedDestinations = [.. destinations.Select(d => new ListViewModel { Id = d.Id, Title = d.Title })];
         _ = _mapperMock.Setup(m => m.Map<List<ListViewModel>>(destinations)).Returns(mappedDestinations);
 
         // Act
@@ -165,7 +167,7 @@ public class ListServiceTests
     public void UserGenders_WithSelectedId_SetsIsSelected()
     {
         // Arrange
-        int selectedGenderId = 2; // مثلاً Female
+        int selectedGenderId = UserGenders.Woman.ToInt();
 
         // Act
         ListResponse<ListViewModel> response = _service.UserGenders(selectedGenderId);

@@ -6,6 +6,7 @@ using Trizen.Data.Base.ViewModel;
 using Trizen.DataLayer.Entities;
 using Trizen.DataLayer.Interfaces;
 using Trizen.DataLayer.Pattern;
+using Trizen.Infrastructure;
 using Trizen.Infrastructure.Base.Response;
 
 namespace Trizen.Application.Test;
@@ -55,7 +56,8 @@ public class BaseEntityServiceCategoryTests
         Category category = new() { Title = dto.Title };
 
         _ = _mapperMock.Setup(m => m.Map<Category>(dto)).Returns(category);
-        _ = _categoryRepoMock.Setup(r => r.Insert(category)).ReturnsAsync(It.IsAny<int>()); ;
+        _ = _categoryRepoMock.Setup(r => r.Insert(category)).ReturnsAsync(It.IsAny<int>());
+        ;
         _ = _unitOfWorkMock.Setup(u => u.SaveChangesAsync()).Returns(Task.CompletedTask);
 
         Response<bool> result = await _service.CreateCategory(dto);
@@ -71,12 +73,12 @@ public class BaseEntityServiceCategoryTests
         Category category = new() { Title = dto.Title };
 
         _ = _mapperMock.Setup(m => m.Map<Category>(dto)).Returns(category);
-        _ = _categoryRepoMock.Setup(r => r.Insert(category)).ReturnsAsync(It.IsAny<int>()); ;
+        _ = _categoryRepoMock.Setup(r => r.Insert(category)).ReturnsAsync(It.IsAny<int>());
         _ = _unitOfWorkMock.Setup(u => u.SaveChangesAsync()).Returns(Task.CompletedTask);
 
         Response<bool> result = await _service.CreateCategory(dto);
 
-        Assert.That(result.IsSuccess, Is.True); // چون Insert مقدار برگشتی رو چک نمیکنه، true هست
+        Assert.That(result.IsSuccess, Is.True);
     }
 
     [Test]
@@ -115,7 +117,7 @@ public class BaseEntityServiceCategoryTests
 
         Assert.That(result.IsSuccess, Is.False);
         Assert.That(result.Data, Is.False);
-        Assert.That(result.Message, Does.Contain("یافت نشد"));
+        Assert.That(result.Message, Does.Contain(Message.Format(Message.EntityNotFound, Resource.Category)));
     }
 
     [Test]
@@ -146,7 +148,7 @@ public class BaseEntityServiceCategoryTests
 
         Assert.That(result.IsSuccess, Is.False);
         Assert.That(result.Data, Is.Null);
-        Assert.That(result.Message, Does.Contain("یافت نشد"));
+        Assert.That(result.Message, Does.Contain(Message.Format(Message.EntityNotFound, Resource.Category)));
     }
 
     [Test]

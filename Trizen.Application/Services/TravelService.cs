@@ -44,7 +44,7 @@ internal class TravelService(ITravelRepository repository, IUnitOfWork unitOfWor
 
             return Response<BasketViewModel>.SuccessResult(travel.Data);
         }
-        return Response<BasketViewModel>.FailResult(null, "تور مورد نظر ظرفیت ندارد.");
+        return Response<BasketViewModel>.FailResult(null, Message.TheTourHaveNotCapacity);
     }
 
     public async Task<Response<BasketViewModel>> Get(int travelId)

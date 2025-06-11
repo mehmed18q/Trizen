@@ -117,6 +117,7 @@ public static class Message
     public const string InternalServerError = "خطایی رخ داده است.";
     public const string Success = "موفق";
     public const string YouAlreadyLikeTour = "شما قبلا این تور را به لیست علاقه مندی ها اضافه کرده اید.";
+    public const string TheTourHaveNotCapacity = "تور مورد نظر ظرفیت ندارد.";
 
     public static string Format(string text, params object[] values)
     {
